@@ -1,0 +1,977 @@
+- Label_consumMinMenMaq_leadCreado:
+    Control: Label@2.5.1
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =40
+      Size: =20
+      Text: ="Consumo mínimo mensual:"
+      Visible: =_maquinasVista
+      Width: =380
+      X: =734
+      Y: =107
+- Label_mesColocaMaq_leadCreado:
+    Control: Label@2.5.1
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =69
+      Size: =20
+      Text: ="Mes de colocación estimado:"
+      Visible: =_maquinasVista
+      Width: =258
+      X: =71
+      Y: =187
+- Label_maquinaName_leadCreado:
+    Control: Label@2.5.1
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =40
+      Size: =20
+      Text: ="Máquina:"
+      Visible: =_maquinasVista
+      Width: =150
+      X: =71
+      Y: =107
+- TextInp_viewBack_nameMaq_leadCreado:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =50
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_maquinasVista
+      Width: =450
+      X: =240
+      Y: =111
+- TextInp_viewBack_mesColMaq_leadCreado:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionado.estatus_cuenta
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =50
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_maquinasVista
+      Width: =400
+      X: =348
+      Y: =182
+- TextInp_edit_consMinMenMaq_leadCreado:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =Text(_maquinaSeleccionada.ConsumoMinimoSugerido)
+      DelayOutput: =true
+      Font: =Font.'Open Sans'
+      Height: =37
+      HintText: ="Ingrese consumo mín mensual"
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =15
+      Tooltip: =
+      Visible: =_maquinasVista
+      Width: =315
+      X: =1127
+      Y: =111
+- Button_edit_Add_asignMaqu_leadCrado:
+    Control: Classic/Button@2.2.0
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =RGBA(104, 110, 72, 1)
+      Font: =Font.'Open Sans'
+      Height: =40
+      HoverBorderColor: |-
+        =ColorFade(
+            Self.BorderColor,
+            20%
+        )
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: |-
+        =// Activar spinner
+        Set(
+            _spinner,
+            true
+        );
+        // Validaciones
+        If(
+            IsBlank(_tipoMaquinaSeleccionada),
+            Notify(
+                "Debe seleccionar el tipo de máquina",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(TextInp_edit_consMinMenMaq_leadCreado.Text),
+            Notify(
+                "Debe ingresar el consumo mínimo",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(_mesColocacionMaquinaSeleccionada),
+            Notify(
+                "Debe seleccionar el mes de colocación",
+                NotificationType.Warning,
+                6000
+            ),
+                    // Si pasa validaciones: CREAR O ACTUALIZAR
+            If(
+                IsBlank(_maquinaSeleccionada),
+                        // ====== CREAR NUEVA MÁQUINA ======
+                Set(
+                    _maquinaCreada,
+                    Patch(
+                        tab_maquinas_porCuenta,
+                        Defaults(tab_maquinas_porCuenta),
+                        {
+                            Cuenta: {
+                                Id: _itemSeleccionadoLead.ID,
+                                Value: _itemSeleccionadoLead.RazonSocial
+                            },
+                            TipoMaquina: {
+                                Id: _tipoMaquinaSeleccionada.ID,
+                                Value: _tipoMaquinaSeleccionada.nombre_maquina
+                            },
+                            EstadoMaquina: {
+                                Id: 1,
+                                Value: "0 - Sin Serial"
+                            },
+                            EstadoCuentaAlSolicitar: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                            Status_maquina: {Value: "Inactiva"},
+                            FechaSolicitud: Now(),
+                            ComercialSolicitante: {
+                                '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                Department: "",
+                                DisplayName: _infoUsuarioLoggeado.FullName,
+                                Email: _infoUsuarioLoggeado.Email,
+                                JobTitle: "",
+                                Picture: ""
+                            },
+                            ConsumoMinimoSugerido: Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                            MesColocacionEstimado: {Value: _mesColocacionMaquinaSeleccionada},
+                            TieneCondicionesEspeciales: If(
+                                IsBlank(_tieneCondicioEspecialesMaquinaSelecionada),
+                                false,
+                                _tieneCondicioEspecialesMaquinaSelecionada = 1
+                            ),
+                            DescripcionCondiciones: If(
+                                IsBlank(TextInp_edit_obsvMaqu_leadCreado.Text),
+                                "No tiene condiciones especiales",
+                                TextInp_edit_obsvMaqu_leadCreado.Text
+                            ),
+                            AprobadoBackOffice: false,
+                            AprobadoSupply: false
+                        }
+                    )
+                );
+                // Crear registro histórico de la máquina creada
+        Patch(
+                    tab_hist_cambioEstd_maqu,
+                    Defaults(tab_hist_cambioEstd_maqu),
+                    {
+                        Maquina: {
+                            Id: _maquinaCreada.ID,
+                            Value: _tipoMaquinaSeleccionada.nombre_maquina
+                        },
+                        Cuenta: _itemSeleccionadoLead.RazonSocial,
+                        MaquinaAnterior: _tipoMaquinaSeleccionada.nombre_maquina,
+                        FechaRegistroMaquina: Now(),
+                        ConsumoInicial: Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                        StatusMaquina: {Value: "Inactiva"},
+                        EstadoAnterior: {
+                            Id: 1,
+                            Value: "0 - Sin Serial"
+                        },
+                        EstadoNuevo: Blank(),
+                        FechaCambio: Blank(),
+                        UsuarioResponsable: {
+                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                            Department: "",
+                            DisplayName: _infoUsuarioLoggeado.FullName,
+                            Email: _infoUsuarioLoggeado.Email,
+                            JobTitle: "",
+                            Picture: ""
+                        }
+                        //Comentario: "Máquina solicitada - Creación inicial"
+                    }
+                );
+                Notify(
+                    "✓ Máquina agregada exitosamente",
+                    NotificationType.Success,
+                    6000
+                ),
+                        // ====== ACTUALIZAR MÁQUINA EXISTENTE ======
+                Patch(
+                    tab_maquinas_porCuenta,
+                    LookUp(
+                        tab_maquinas_porCuenta,
+                        ID = _maquinaSeleccionada.ID
+                    ),
+                    {
+                        TipoMaquina: {
+                            Id: _tipoMaquinaSeleccionada.ID,
+                            Value: _tipoMaquinaSeleccionada.nombre_maquina
+                        },
+                        ConsumoMinimoSugerido: Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                        MesColocacionEstimado: {Value: _mesColocacionMaquinaSeleccionada},
+                        TieneCondicionesEspeciales: If(
+                            IsBlank(_tieneCondicioEspecialesMaquinaSelecionada),
+                            false,
+                            _tieneCondicioEspecialesMaquinaSelecionada = 1
+                        ),
+                        DescripcionCondiciones: If(
+                            IsBlank(TextInp_edit_obsvMaqu_leadCreado.Text),
+                            "No tiene condiciones especiales",
+                            TextInp_edit_obsvMaqu_leadCreado.Text
+                        )
+                    }
+                );
+                // Registrar cambio en histórico SOLO para los campos que cambiaron
+        If(
+                    _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID || _maquinaSeleccionada.ConsumoMinimoSugerido <> Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                    Patch(
+                        tab_hist_cambioEstd_maqu,
+                        LookUp(
+                            tab_hist_cambioEstd_maqu,
+                            Maquina.Id = _maquinaSeleccionada.ID
+                        ),
+                        {
+                            MaquinaNueva: If(
+                                _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID,
+                                _tipoMaquinaSeleccionada.nombre_maquina,
+                                Blank()
+                            ),
+                            ConsumoNuevo: If(
+                                _maquinaSeleccionada.ConsumoMinimoSugerido <> Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                Blank()
+                            ),
+                            FechaCambio: Now(),
+                            UsuarioResponsable: {
+                                '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                Department: "",
+                                DisplayName: _infoUsuarioLoggeado.FullName,
+                                Email: _infoUsuarioLoggeado.Email,
+                                JobTitle: "",
+                                Picture: ""
+                            },
+                            Comentario: If(
+                                _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID && _maquinaSeleccionada.ConsumoMinimoSugerido <> Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                "Máquina actualizada - Tipo: " & _tipoMaquinaSeleccionada.nombre_maquina & " - Consumo: " & Text(Value(TextInp_edit_consMinMenMaq_leadCreado.Text)),
+                                _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID,
+                                "Máquina actualizada - Tipo: " & _tipoMaquinaSeleccionada.nombre_maquina,
+                                "Máquina actualizada - Consumo: " & Text(Value(TextInp_edit_consMinMenMaq_leadCreado.Text))
+                            )
+                        }
+                    )
+                );
+                Notify(
+                    "✓ Máquina actualizada exitosamente",
+                    NotificationType.Success,
+                    6000
+                )
+            );
+            // Actualizar colección de máquinas
+        ClearCollect(
+                colMaquinas,
+                Filter(
+                    tab_maquinas_porCuenta,
+                    Cuenta.Id = _itemSeleccionadoLead.ID && Status_maquina.Value <> "Eliminada"
+                )
+            );
+            // Resetear componentes
+        Reset(Select_edit_namMaqu_leadCreado);
+            Reset(TextInp_edit_consMinMenMaq_leadCreado);
+            Reset(Select_edit_mesColocMaq_leadCreado);
+            Reset(Select_edit_condEspMaq_leadCreado);
+            Reset(TextInp_edit_obsvMaqu_leadCreado);
+            Set(
+                _maquinaSeleccionada,
+                Blank()
+            );
+            Set(
+                _tipoMaquinaSeleccionada,
+                Blank()
+            );
+            Set(
+                _mesColocacionMaquinaSeleccionada,
+                Blank()
+            );
+            Set(
+                _tieneCondicioEspecialesMaquinaSelecionada,
+                Blank()
+            )
+        );
+        Set(
+            _spinner,
+            false
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: |-
+        =If(
+            IsBlank(_maquinaSeleccionada),
+            "AGREGAR",
+            "ACTUALIZAR"
+        )
+      Visible: =_maquinasVista
+      Width: =180
+      X: =1262
+      Y: =379
+- Select_edit_mesColocMaq_leadCreado:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: |-
+        =RGBA(
+            _r_boton_claro_nw,
+            _g_boton_claro_nw,
+            _b_boton_claro_nw,
+            _a_boton_claro_nw
+        )
+      ChevronHoverBackground: |-
+        =RGBA(
+            _r_fondo_claro,
+            _g_fondo_claro,
+            _b_fondo_claro,
+            _a_fondo_claro
+        )
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: |-
+        =If(
+            !IsBlank(_maquinaSeleccionada),
+            [LookUp(
+                Choices(tab_maquinas_porCuenta.MesColocacionEstimado),
+                Value = _maquinaSeleccionada.MesColocacionEstimado.Value
+            )],
+            Blank()
+        )
+      DisplayFields: =["Value"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =43
+      HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: ="Seleccione mes de colocación"
+      IsSearchable: =false
+      Items: =Choices(tab_maquinas_porCuenta.MesColocacionEstimado)
+      OnChange: |-
+        =Set(
+            _mesColocacionMaquinaSeleccionada,
+            Self.Selected.Value
+        )
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["Value"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =16
+      Visible: =_maquinasVista
+      Width: =399
+      X: =351
+      Y: =187
+- Container_maquinasAsign_leadCreado:
+    Control: GroupContainer@1.3.0
+    Variant: ManualLayout
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      Height: =347
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Visible: =_maquinasVista
+      Width: =1360
+      X: =82
+      Y: =445
+    Children:
+      - TextCanvas_title_nameMaqu_leadCreado:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            FontColor: =RGBA(85, 69, 49, 1)
+            Height: =54
+            Size: =25
+            Text: ="Máquina"
+            VerticalAlign: =VerticalAlign.Middle
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =426
+            X: =24
+            Y: =20
+      - TextCanvas_title_mesColoc_leadCreado:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            FontColor: =RGBA(85, 69, 49, 1)
+            Height: =54
+            Size: =25
+            Text: ="Mes de colocación"
+            VerticalAlign: =VerticalAlign.Middle
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =426
+            X: =858
+            Y: =20
+      - TextCanvas_title_consumMinMenMaq_leadCreado:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            FontColor: =RGBA(85, 69, 49, 1)
+            Height: =54
+            Size: =25
+            Text: ="Consumo mínimo mensual"
+            VerticalAlign: =VerticalAlign.Middle
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =426
+            X: =438
+            Y: =20
+      - Rectangle_lineSeparated_titles_listMaq:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(218, 195, 177, 0.5)
+            Height: =2
+            Width: =1250
+            X: =20
+            Y: =80
+      - Gallery_listMaquinsAsign_leadCreado:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =252
+            Items: |-
+              =Filter(
+                  colMaquinas,
+                  Cuenta.Id = _itemSeleccionadoLead.ID && (Status_maquina.Value = "Activa" || Status_maquina.Value = "Inactiva")
+              )
+            OnSelect: =
+            TemplateSize: =66
+            Width: =1270
+            X: =20
+            Y: =95
+          Children:
+            - Button_viewBack_maquCreadas_leadCreado:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  DisplayMode: =DisplayMode.View
+                  Fill: =RGBA(207, 182, 157, 0.2)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =18
+                  Text: =
+                  Width: =1250
+                  X: =3
+            - Label_namMaq_maquCreadas_leadCreado:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.TipoMaquina.Value
+                  Width: =425
+            - Label_consMinMen_maquCreadas_leadCreado:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.ConsumoMinimoSugerido
+                  Width: =296
+                  X: =480
+            - Label_mesColoc_maquCreadas_leadCreado:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.MesColocacionEstimado.Value
+                  Width: =393
+                  X: =851
+            - Icon_trash_list_maquCreadas_leadCreado:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(0, 0, 0, 1)
+                  Height: =46
+                  Icon: =Icon.Trash
+                  OnSelect: |-
+                    =// Capturar el item antes de cualquier operación
+                    Set(
+                        _itemAEliminar,
+                        ThisItem
+                    );
+                    // Validar que se haya seleccionado la máquina y que haya motivo de eliminación
+                    If(
+                        IsBlank(_maquinaSeleccionada) || _maquinaSeleccionada.ID <> _itemAEliminar.ID,
+                                            // Si no está seleccionada la máquina correcta, mostrar mensaje y limpiar campo
+                        Notify(
+                            "⚠ Primero debe seleccionar la máquina haciendo clic en la fila",
+                            NotificationType.Warning,
+                            6000
+                        );
+                        Set(
+                            _motivoEliminacionIngresado,
+                            false
+                        );
+                        Reset(TextInp_edit_obsvMaqu_leadCreado),
+                        !_motivoEliminacionIngresado || IsBlank(TextInp_edit_obsvMaqu_leadCreado.Text) || TextInp_edit_obsvMaqu_leadCreado.Text = _maquinaSeleccionada.DescripcionCondiciones,
+                                            // Si no se ha ingresado un motivo nuevo de eliminación, limpiar campo y mostrar mensaje
+                        Reset(TextInp_edit_obsvMaqu_leadCreado);
+                        Set(
+                            _motivoEliminacionIngresado,
+                            false
+                        );
+                        Notify(
+                            "⚠ Debe ingresar el 'Motivo de Eliminación' en el campo 'Observaciones de máquina'. El campo ha sido limpiado para que ingrese el motivo.",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                                            // Si pasa las validaciones, proceder con la eliminación
+                    // Cambiar estado a Eliminada en tab_maquinas_porCuenta usando LookUp
+                        Patch(
+                            tab_maquinas_porCuenta,
+                            LookUp(
+                                tab_maquinas_porCuenta,
+                                ID = _itemAEliminar.ID
+                            ),
+                            {
+                                Status_maquina: {Value: "Eliminada"},
+                                DescripcionCondiciones: "ELIMINADA - Motivo: " & TextInp_edit_obsvMaqu_leadCreado.Text
+                            }
+                        );
+                        // Actualizar el registro existente en histórico (NO crear nuevo)
+                    Patch(
+                            tab_hist_cambioEstd_maqu,
+                            LookUp(
+                                tab_hist_cambioEstd_maqu,
+                                Maquina.Id = _itemAEliminar.ID
+                            ),
+                            {
+                                StatusMaquina: {Value: "Eliminada"},
+                                FechaCambio: Now(),
+                                UsuarioResponsable: {
+                                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                    Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                    Department: "",
+                                    DisplayName: _infoUsuarioLoggeado.FullName,
+                                    Email: _infoUsuarioLoggeado.Email,
+                                    JobTitle: "",
+                                    Picture: ""
+                                },
+                                Comentario: "Máquina eliminada - Motivo: " & TextInp_edit_obsvMaqu_leadCreado.Text
+                            }
+                        );
+                        // Remover solo el item eliminado de la colección (NO recargar todo)
+                    RemoveIf(
+                            colMaquinas,
+                            ID = _itemAEliminar.ID
+                        );
+                        // Limpiar selección y resetear campo de observaciones
+                    Set(
+                            _maquinaSeleccionada,
+                            Blank()
+                        );
+                        Set(
+                            _motivoEliminacionIngresado,
+                            false
+                        );
+                        Reset(TextInp_edit_obsvMaqu_leadCreado);
+                        Notify(
+                            "✓ Máquina eliminada exitosamente",
+                            NotificationType.Success,
+                            6000
+                        )
+                    )
+                  Width: =40
+                  X: =1196
+            - Button_edit_list_maquSelec_leadCreado:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.Transparent
+                  Color: =Color.Transparent
+                  DisabledBorderColor: =Color.Transparent
+                  DisabledColor: =Color.Transparent
+                  DisabledFill: =Color.Transparent
+                  Fill: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  Height: =66
+                  HoverBorderColor: =Color.Transparent
+                  HoverColor: =Color.Transparent
+                  HoverFill: =Color.Transparent
+                  OnSelect: |-
+                    =Set(
+                        _maquinaSeleccionada,
+                        ThisItem
+                    );
+                    Set(
+                        _tipoMaquinaSeleccionada,
+                        LookUp(
+                            colNombreMaquinas,
+                            ID = ThisItem.TipoMaquina.Id
+                        )
+                    );
+                    Set(
+                        _mesColocacionMaquinaSeleccionada,
+                        ThisItem.MesColocacionEstimado.Value
+                    );
+                    Set(
+                        _tieneCondicioEspecialesMaquinaSelecionada,
+                        If(
+                            ThisItem.TieneCondicionesEspeciales,
+                            1,
+                            0
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Width: =1196
+- Label_condEspcMaq_leadCreado:
+    Control: Label@2.5.1
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =42
+      Size: =20
+      Text: ="Condiciones especiales:"
+      Visible: =_maquinasVista
+      Width: =337
+      X: =790
+      Y: =185
+- TextInp_viewBack_condEspMaq_leadCreado:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionado.estatus_cuenta
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =55
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_maquinasVista
+      Width: =315
+      X: =1127
+      Y: =180
+- Select_edit_condEspMaq_leadCreado:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: |-
+        =RGBA(
+            _r_boton_claro_nw,
+            _g_boton_claro_nw,
+            _b_boton_claro_nw,
+            _a_boton_claro_nw
+        )
+      ChevronHoverBackground: |-
+        =RGBA(
+            _r_fondo_claro,
+            _g_fondo_claro,
+            _b_fondo_claro,
+            _a_fondo_claro
+        )
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: |-
+        =If(
+            !IsBlank(_maquinaSeleccionada),
+            [If(
+                _maquinaSeleccionada.TieneCondicionesEspeciales = true,
+                "Sí",
+                "No"
+            )],
+            Blank()
+        )
+      DisplayFields: =["Value"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =47
+      HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: =
+      IsSearchable: =false
+      Items: =["Sí","No"]
+      OnChange: |-
+        =Set(
+            _tieneCondicioEspecialesMaquinaSelecionada,
+            If(
+                Self.Selected.Value = "Sí",
+                1,
+                Self.Selected.Value = "No",
+                0
+            )
+        )
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["Value"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =16
+      Visible: =_maquinasVista
+      Width: =315
+      X: =1129
+      Y: =185
+- Label_obsvMaqu_leadCreado:
+    Control: Label@2.5.1
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =79
+      Size: =20
+      Text: ="Observaciones de máquina:"
+      Visible: =_maquinasVista
+      Width: =207
+      X: =71
+      Y: =273
+- TextInp_edit_obsvMaqu_leadCreado:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_maquinaSeleccionada.DescripcionCondiciones
+      DelayOutput: =true
+      Font: =Font.'Open Sans'
+      Height: =142
+      HintText: ="Ingrese observaciones, comentarios o condiciones especiales de la máquina"
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      Mode: =TextMode.MultiLine
+      OnChange: |-
+        =// Marcar que el usuario ha ingresado un motivo de eliminación
+        If(
+            !IsBlank(Self.Text) && Self.Text <> _maquinaSeleccionada.DescripcionCondiciones,
+            Set(
+                _motivoEliminacionIngresado,
+                true
+            )
+        )
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_maquinasVista
+      Width: =943
+      X: =278
+      Y: =277
+- Button_edit_Cancel_asignMaqu_leadCrado:
+    Control: Classic/Button@2.2.0
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+      Font: =Font.'Open Sans'
+      Height: =40
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: =Set(_maquinaSeleccionada,Blank())
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: ="CANCELAR"
+      Visible: =!IsBlank(_maquinaSeleccionada) && _maquinasVista
+      Width: =180
+      X: =1262
+      Y: =322
+- Select_edit_namMaqu_leadCreado:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCon6_Form_Maquinas_LeadCreado
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: |-
+        =RGBA(
+            _r_boton_claro_nw,
+            _g_boton_claro_nw,
+            _b_boton_claro_nw,
+            _a_boton_claro_nw
+        )
+      ChevronHoverBackground: |-
+        =RGBA(
+            _r_fondo_claro,
+            _g_fondo_claro,
+            _b_fondo_claro,
+            _a_fondo_claro
+        )
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: |-
+        =[
+            If(
+                !IsBlank(_maquinaSeleccionada),
+                LookUp(
+                    colNombreMaquinas,
+                    ID = _maquinaSeleccionada.TipoMaquina.Id
+                )
+            )
+        ]
+      DisplayFields: =["nombre_maquina"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =40
+      HoverBorderColor: |-
+        =RGBA(
+            _r_fondo_claro,
+            _g_fondo_claro,
+            _b_fondo_claro,
+            _a_fondo_claro
+        )
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: ="Seleccione tipo de máquina"
+      IsSearchable: =false
+      Items: =colNombreMaquinas
+      OnChange: |-
+        =Set(
+            _tipoMaquinaSeleccionada,
+            Self.Selected
+        )
+        /*If(
+            _seleccion;
+            Set(
+                _nombreMaquinaSeleccionada;
+                Self.Selected.nombre_maquina
+            );
+            Set(
+                _seleccion;
+                false
+            )
+        )*/
+      OnSelect: =Set(_seleccion,true)
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["nombre_maquina"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =14
+      Visible: =_maquinasVista
+      Width: =450
+      X: =239
+      Y: =116

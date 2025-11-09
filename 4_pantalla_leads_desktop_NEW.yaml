@@ -1,0 +1,1065 @@
+Screens:
+  4_pantalla_leads_desktop:
+    Properties:
+      Fill: |-
+        =RGBA(243,239,230, 1
+        )
+      Height: =_altoDesktop
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Set(
+            _vencidasVista,
+            false
+        );
+        Set(
+            _activasVista,
+            false
+        );
+        Set(
+            _indicadoresVista,
+            true
+        );
+        Set(
+            _mesVista,
+            true
+        );
+        Set(
+            _semestreVista,
+            false
+        );
+        Set(
+            _anioVista,
+            false
+        );
+        // Colección de leads desde la nueva lista tab_cuentas
+        ClearCollect(
+            colLeads,
+            Filter(
+                tab_cuentas,
+                EstadoCuenta.Value = "Lead" && (ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado || _rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6)
+            )
+        );
+        // Colección para seguimiento comercial desde la nueva lista
+        ClearCollect(
+            colSeguimiento,
+            Filter(
+                tab_seguimiento_porCuenta,
+                RequiereAccion = true
+            )
+        )
+      Width: =_anchoDesktop
+    Children:
+      - Body_Container_Leads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(243, 239, 230, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(243,239,230,255)
+            Height: =930
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Visible: =_indicadoresVista
+            Width: =1510
+            X: =385
+            Y: =125
+          Children:
+            - Container_Galery_Leads:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Regular
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =707
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Width: =1441
+                  X: =39
+                  Y: =183
+                Children:
+                  - Rectangle_linea_separ_galery_leads:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(218, 195, 177, 0.5)
+                        Height: =2
+                        Width: =1441
+                        Y: =95
+                  - Label_razsoc_lead_row:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Text: ="Razón Social"
+                        Width: =290
+                        X: =18
+                        Y: =24
+                  - Label_act_lead_row:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Text: ="Actividad"
+                        Width: =290
+                        X: =461
+                        Y: =24
+                  - Label_fecha_lead_row:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Text: ="Fecha"
+                        Width: =343
+                        X: =842
+                        Y: =24
+                  - Label_stat_interes_lead_row:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Text: ="Interés"
+                        Width: =290
+                        X: =1151
+                        Y: =24
+                  - Gallery_List_LeadsCreados:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderStyle: =BorderStyle.None
+                        Height: =514
+                        Items: |-
+                          =SortByColumns(
+                          If(
+                              IsBlank(_filter);
+                              // Si no hay filtro activo; ordenar por ID descendente (más reciente primero)
+                              SortByColumns(
+                                  If(
+                                      _rolUsuarioLoggeado = 6;
+                                      Filter(
+                                          tab_cuentas;
+                                          EstadoCuenta.Value = "Lead";
+                                          IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                          IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                      );
+                                      Filter(
+                                          tab_cuentas;
+                                          EstadoCuenta.Value = "Lead";
+                                          IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                          IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                          ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
+                                      )
+                                  );
+                                  "ID";
+                                  Descending
+                              );
+                              // Si hay filtro activo; usar el ordenamiento dinámico
+                              If(
+                                  _rolUsuarioLoggeado = 6;
+                                  Filter(
+                                      tab_cuentas;
+                                      EstadoCuenta.Value = "Lead";
+                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                      IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                  );
+                                  Filter(
+                                      tab_cuentas;
+                                      EstadoCuenta.Value = "Lead";
+                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                      IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                      ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
+                                  )
+                              )
+                          );
+                          _filter;
+                          _order
+                          )
+                        OnSelect: =
+                        TabIndex: =0
+                        TemplateSize: =112
+                        Transition: =Transition.Pop
+                        Width: =1423
+                        X: =18
+                        Y: =141
+                      Children:
+                        - Container_select_lead:
+                            Control: GroupContainer@1.3.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(214, 221, 224, 1)
+                              BorderThickness: =2
+                              DropShadow: =DropShadow.Semibold
+                              Height: =84
+                              RadiusBottomLeft: =30
+                              RadiusBottomRight: =30
+                              RadiusTopLeft: =30
+                              RadiusTopRight: =30
+                              Width: =1382
+                              X: =10
+                              Y: =5
+                        - Label_razsoc_lead:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =20
+                              PaddingLeft: =20
+                              PaddingRight: =20
+                              PaddingTop: =20
+                              Size: =19
+                              Text: =ThisItem.RazonSocial
+                              Width: =283
+                              X: =37
+                              Y: =21
+                        - Label_act_lead:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              Size: =19
+                              Text: |-
+                                =If(
+                                    IsBlank(
+                                        First(
+                                            SortByColumns(
+                                                Filter(
+                                                    colSeguimiento,
+                                                    Cuenta.Id = ThisItem.ID
+                                                ),
+                                                "FechaSeguimiento",
+                                                SortOrder.Descending
+                                            )
+                                        ).Anotaciones
+                                    ),
+                                    "No tiene seguimientos pendientes",
+                                    First(
+                                        SortByColumns(
+                                            Filter(
+                                                colSeguimiento,
+                                                Cuenta.Id = ThisItem.ID
+                                            ),
+                                            "FechaSeguimiento",
+                                            SortOrder.Descending
+                                        )
+                                    ).Anotaciones
+                                )
+                              Width: =471
+                              X: =371
+                              Y: =21
+                        - Label_fecha_lead:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              Size: =19
+                              Text: |-
+                                =If(
+                                    IsBlank(
+                                        First(
+                                            SortByColumns(
+                                                Filter(
+                                                    colSeguimiento,
+                                                    Cuenta.Id = ThisItem.ID
+                                                ),
+                                                "FechaSeguimiento",
+                                                SortOrder.Descending
+                                            )
+                                        ).FechaSeguimiento
+                                    ),
+                                    "No tiene fechas futuras",
+                                    First(
+                                        SortByColumns(
+                                            Filter(
+                                                colSeguimiento,
+                                                Cuenta.Id = ThisItem.ID
+                                            ),
+                                            "FechaSeguimiento",
+                                            SortOrder.Descending
+                                        )
+                                    ).FechaSeguimiento
+                                )
+                              Width: =280
+                              X: =853
+                              Y: =21
+                        - Label_est_interes:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: |+
+                                =If(
+                                    ThisItem.estado_interes.Value = "Descartado",
+                                    RGBA(
+                                        184,
+                                        0,
+                                        0,
+                                        1
+                                    ),// Rojo para Descartado
+                                    If(
+                                        ThisItem.estado_interes.Value = "Interesado",
+                                        RGBA(
+                                            50,
+                                            129,
+                                            45,
+                                            1
+                                        ),// Verde para Interesado
+                                        RGBA(
+                                            249,
+                                            178,
+                                            63,
+                                            1
+                                        )// Morado para Por definir
+                                    )
+                                )
+                                //RGBA(85; 69; 49; 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              Size: =19
+                              Text: =ThisItem.estado_interes.Value
+                              Width: =280
+                              X: =1133
+                              Y: =21
+                        - Button_accces_view_lead:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.Transparent
+                              Color: =Color.Transparent
+                              DisabledBorderColor: =Color.Transparent
+                              DisabledColor: =Color.Transparent
+                              DisabledFill: =Color.Transparent
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =102
+                              HoverBorderColor: =Color.Transparent
+                              HoverColor: =Color.Transparent
+                              HoverFill: =Color.Transparent
+                              OnSelect: |-
+                                =Set(
+                                    _spinner,
+                                    true
+                                );
+                                Set(
+                                    _itemSeleccionadoLead,
+                                    ThisItem
+                                );
+                                Set(
+                                    _itemSeleccionadoLeadSegmento,
+                                    _itemSeleccionadoLead.segmento
+                                );
+                                Set(
+                                    _itemSeleccionadoLeadSubSegmento,
+                                    _itemSeleccionadoLead.subsegmento
+                                );
+                                Set(
+                                    _itemSeleccionadoLeadModeloComercial;
+                                    _itemSeleccionadoLead.ModeloComercial
+                                );
+                                Set(
+                                    _estadoSeleccionadoLead,
+                                    _itemSeleccionadoLead.EstadoCuenta.Value
+                                );
+                                Set(
+                                    _interesSeleccionadoLead,
+                                    _itemSeleccionadoLead.estado_interes.Value
+                                );
+                                Set(
+                                    _consulta,
+                                    true
+                                );
+                                ClearCollect(
+                                    colMaquinas,
+                                    Filter(
+                                        tab_maquinas_porCuenta,
+                                        Cuenta.Id = _itemSeleccionadoLead.ID && (Status_maquina.Value = "Activo" || Status_maquina.Value = "Inactivo")
+                                    )
+                                );
+                                // Colección para seguimiento comercial muestra
+                                ClearCollect(
+                                    colSeguimiento,
+                                    Filter(
+                                        tab_seguimiento_porCuenta,
+                                        Cuenta.Id = _itemSeleccionadoLead.ID
+                                    )
+                                );
+                                Navigate('4_2_ver_lead_desktop');
+                                Set(
+                                    _spinner,
+                                    false
+                                )
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Width: =1403
+                              Y: =5
+                        - Button_status_interes_lead:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.White
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: =Color.White
+                              DisabledBorderColor: =Color.White
+                              DisabledColor: =Color.White
+                              DisabledFill: |-
+                                =Switch(
+                                    ThisItem.estado_interes.Value,
+                                    "Interesado",
+                                    RGBA(
+                                        50,
+                                        129,
+                                        45,
+                                        100
+                                    ),
+                                    "Por definir",
+                                    RGBA(
+                                        239,
+                                        194,
+                                        14,
+                                        64
+                                    ),
+                                    "Descartado",
+                                    RGBA(
+                                        219,
+                                        15,
+                                        15,
+                                        64
+                                    )
+                                )
+                              DisplayMode: =DisplayMode.Disabled
+                              Fill: =RGBA(184, 0, 0, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: |-
+                                =RGBA(
+                                    _r_fondo_crema,
+                                    _g_fondo_crema,
+                                    _b_fondo_crema,
+                                    _a_fondo_crema
+                                )
+                              HoverFill: |-
+                                =RGBA(
+                                    _rBotonClaro,
+                                    _gBotonClaro,
+                                    _bBotonClaro,
+                                    _aBotonClaro
+                                )
+                              OnSelect: =
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: |-
+                                =RGBA(
+                                    _r_fondo_crema,
+                                    _g_fondo_crema,
+                                    _b_fondo_crema,
+                                    _a_fondo_crema
+                                )
+                              PressedFill: |-
+                                =RGBA(
+                                    _r_boton_claro_nw,
+                                    _g_boton_claro_nw,
+                                    _b_boton_claro_nw,
+                                    _a_boton_claro_nw
+                                )
+                              RadiusBottomLeft: =100
+                              RadiusBottomRight: =100
+                              RadiusTopLeft: =100
+                              RadiusTopRight: =100
+                              Size: =5
+                              Text: =
+                              Width: =20
+                              X: =1349
+                              Y: =37
+                  - Icon_up_rs_lead:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_RazSoc_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowUp
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "RazonSocial"
+                          );;
+                          Set(
+                              _order;
+                              Ascending
+                          )
+                        Width: =30
+                        X: =251
+                        Y: =31
+                  - Icon_down_rs_lead:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_RazSoc_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowDown
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "RazonSocial"
+                          );;
+                          Set(
+                              _order;
+                              Descending
+                          )
+                        Width: =30
+                        X: =268
+                        Y: =31
+                  - Icon_up_act_lead:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_Actividad_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowUp
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "ID"
+                          );;
+                          Set(
+                              _order;
+                              Ascending
+                          )
+                        Width: =30
+                        X: =665
+                        Y: =31
+                  - Icon_down_act_lead:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_Actividad_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowDown
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "ID"
+                          );;
+                          Set(
+                              _order;
+                              Descending
+                          )
+                        Width: =30
+                        X: =682
+                        Y: =31
+                  - Icon_up_fecha_lead:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_Fecha_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowUp
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "ID"
+                          );;
+                          Set(
+                              _order;
+                              Ascending
+                          )
+                        Width: =30
+                        X: =1054
+                        Y: =31
+                  - Icon_down_fecha_lead:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_Fecha_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowDown
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "ID"
+                          );;
+                          Set(
+                              _order;
+                              Descending
+                          )
+                        Width: =30
+                        X: =1071
+                        Y: =31
+                  - Icon_up_inter:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_Interes_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowUp
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "estado_interes"
+                          );;
+                          Set(
+                              _order;
+                              Ascending
+                          )
+                        Width: =30
+                        X: =1344
+                        Y: =31
+                  - Icon_down_inter:
+                      Control: Classic/Icon@2.5.0
+                      Group: Sorter_Interes_Lead
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =30
+                        Icon: =Icon.ArrowDown
+                        OnSelect: |-
+                          =Set(
+                              _filter;
+                              "estado_interes"
+                          );;
+                          Set(
+                              _order;
+                              Descending
+                          )
+                        Width: =30
+                        X: =1361
+                        Y: =31
+            - Container_Button_CrearLead:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Height: =69
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Width: =292
+                  X: =39
+                  Y: =40
+                Children:
+                  - Button_crear_lead:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        Font: =Font.'Open Sans'
+                        Height: =69
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: |-
+                          =Set(
+                              _itemSeleccionadoLead,
+                              Blank()
+                          );
+                          Set(
+                              _itemSeleccionadoLeadSegmento,
+                              Blank()
+                          );
+                          Set(
+                              _itemSeleccionadoLeadSubSegmento,
+                              Blank()
+                          );
+                          Set(
+                              _primeraAccion,
+                              Blank()
+                          );
+                          Reset(Select_edit_segmento_creaLeads);
+                          Reset(Select_edit_subsegmento_creaLeads);
+                          // Limpiar campos de formulario de creacion
+                          Reset(TextInp_view_canalCom_creaLeads);
+                          Reset(TextInp_view_idNess_creaLeads);
+                          Reset(TextInp_razon_social_creaLeads);
+                          Reset(Select_edit_ciudades_creaLeads);
+                          Reset(TextInp_view_segmento_creaLeads);
+                          Reset(TextInp_view_subsegmento_creaLeads);
+                          Reset(TextInp_editView_nombreCont_creaLeads);
+                          Reset(TextInp_editView_apellidosCont_creaLeads);
+                          Reset(TextInp_editView_cargoCont_creaLeads);
+                          Reset(TextInp_editView_emailCont_creaLeads);
+                          Reset(TextInp_viewBack_nameMaq_leadCreado);
+                          Reset(TextInp_viewBack_mesColMaq_leadCreado);
+                          Reset(TextInp_edit_consMinMenMaq_leadCreado);
+                          Reset(TextInp_view_back_estad_leadCread_creaLeads);
+                          Reset(TextInput_viewBack_modComer_leadCreado);
+                          Reset(TextInput_edit_detalOporCom_leadCreado);
+                          Reset(TextInput_edit_constMarc_leadCreado);
+                          Reset(Select_edit_mesColocMaq_leadCreado);
+                          Reset(Select_edit_estad_leadCread_creaLeads);
+                          Set(
+                              _leadCreado,
+                              false
+                          );
+                          Navigate('4_1_creacion_lead_escritorio')
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Size: =23
+                        Text: ="Crear Lead"
+                        Width: =292
+            - Container_RazSoc_filter:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  Height: =70
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  X: =350
+                  Y: =40
+                Children:
+                  - Select_RazSoc_lead:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =0
+                        ChevronBackground: =Color.Transparent
+                        ChevronFill: =RGBA(92, 75, 55, 1)
+                        ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["Value"]
+                        Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        Font: =Font.'Open Sans'
+                        Height: =60
+                        HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        HoverFill: =RGBA(235, 222, 184, 1)
+                        InputTextPlaceholder: ="Razón Social"
+                        Items: |-
+                          =Distinct(
+                              If(
+                                  _rolUsuarioLoggeado = 6,
+                                  Filter(
+                                      tab_cuentas,
+                                      EstadoCuenta.Value = "Lead"
+                                  ),
+                                  Filter(
+                                      tab_cuentas,
+                                      (ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado),
+                                      EstadoCuenta.Value = "Lead"
+                                  )
+                              ),
+                              RazonSocial
+                          )
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(198, 179, 126, 1)
+                        Size: =22
+                        Width: =452
+                        X: =27
+                        Y: =3
+            - Container_Interes_filter:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  Height: =70
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  X: =880
+                  Y: =40
+                Children:
+                  - Select_interes_lead:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        AccessibleLabel: ="Interes"
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =0
+                        ChevronBackground: =Color.Transparent
+                        ChevronFill: =RGBA(92, 75, 55, 1)
+                        ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["Value"]
+                        Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        Font: =Font.'Open Sans'
+                        Height: =60
+                        HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        HoverFill: =RGBA(235, 222, 184, 1)
+                        InputTextPlaceholder: ="Interés Lead"
+                        Items: =Choices(tab_cuentas.estado_interes)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        SearchFields: =["Value"]
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(198, 179, 126, 1)
+                        Size: =22
+                        Width: =452
+                        X: =24
+                        Y: =3
+            - Container_ContLeads_Kp:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Height: =50
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Width: =400
+                  X: =1070
+                  Y: =123
+                Children:
+                  - Button_contLeads_created:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(0, 0, 0, 0)
+                        Font: =Font.'Open Sans'
+                        Height: =50
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: false
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =20
+                        Text: |-
+                          ="Número de Leads:  " & CountRows(Gallery_List_LeadsCreados.AllItems)
+                        Width: =Container_ContLeads_Kp.Width
+      - Img_comp_leads:
+          Control: Image@2.2.3
+          Group: Group1_Header_NavBar_BodyRectangle_leads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =80
+            Image: =nesp-corp
+            Width: =500
+            X: =811
+            Y: =10
+      - Label_user_name_leads:
+          Control: Label@2.5.1
+          Group: Group1_Header_NavBar_BodyRectangle_leads
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =72
+            Size: =20
+            Text: =User().FullName
+            Width: =500
+            X: =1268
+            Y: =10
+      - Image_user_leads:
+          Control: Image@2.2.3
+          Group: Group1_Header_NavBar_BodyRectangle_leads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =60
+            Image: =picture_15506108
+            Width: =100
+            X: =1768
+            Y: =15
+      - Rectangle_line_header_leads:
+          Control: Rectangle@2.3.0
+          Group: Group1_Header_NavBar_BodyRectangle_leads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(218, 195, 177, 0.5)
+            Height: =2
+            Width: =1900
+            X: =10
+            Y: =95
+      - Nav_bar_leads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group1_Header_NavBar_BodyRectangle_leads
+          Properties:
+            BorderColor: =RGBA(218, 195, 177, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(218, 195, 177, 1)
+            Height: =935
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =334
+            X: =23
+            Y: =125
+          Children:
+            - Gallery_nav_bar_leads:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =814
+                  Items: =col_navegacion_menu
+                  ShowScrollbar: =false
+                  TemplateSize: =78
+                  Width: =303
+                  X: =27
+                  Y: =26
+                Children:
+                  - Container_selection_mods_leads:
+                      Control: GroupContainer@1.3.0
+                      Variant: ManualLayout
+                      Properties:
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =If(ThisItem.ID = _idSeleccionadoPantalla, DropShadow.Semibold, DropShadow.None)
+                        Height: =70
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =283
+                        X: =8
+                      Children:
+                        - Rectangle_undergr_mods_leads:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              Height: =70
+                              OnSelect: =
+                              Visible: =ThisItem.ID = _idSeleccionadoPantalla
+                              Width: =283
+                  - Button_mods_leads:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Align: =Align.Left
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledColor: =Color.Transparent
+                        Fill: =Color.Transparent
+                        Font: =Font.'Open Sans'
+                        Height: =71
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: |
+                          =Set(_idSeleccionadoPantalla,ThisItem.ID);
+
+                          Navigate(ThisItem.pantalla)
+                        PaddingLeft: =60
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Size: =20
+                        Text: =ThisItem.nombre
+                        Width: =283
+                        X: =8
+                  - Image_icon_mods_leads:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =35
+                        Image: =ThisItem.img
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =35
+                        X: =22
+                        Y: =18
+                  - Rectangle_mods_leads:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        Height: =71
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =283
+                        X: =8
+      - body_load_leads:
+          Control: Rectangle@2.3.0
+          Group: Spinner_load_leads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(243, 239, 230, 0.8)
+            Height: =1070
+            Visible: =_spinner
+            Width: =1920
+            Y: =10
+      - gif_load_leads:
+          Control: Image@2.2.3
+          Group: Spinner_load_leads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =432
+            Image: ='Gif nesspreso'
+            Visible: =_spinner
+            Width: =960
+            X: =480
+            Y: =316
