@@ -381,16 +381,16 @@ Screens:
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSegmento,
-                                    _itemSeleccionadoLead.segmento
+                                    _itemSeleccionadoLead.Segmento
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSubSegmento,
-                                    _itemSeleccionadoLead.subsegmento
+                                    _itemSeleccionadoLead.Subsegmento
                                 );
-                                Set(
-                                    _itemSeleccionadoLeadModeloComercial;
-                                    _itemSeleccionadoLead.ModeloComercial
-                                );
+                                // Set(
+                                //     _itemSeleccionadoLeadModeloComercial;
+                                //     _itemSeleccionadoLead.ModeloComercial
+                                // );
                                 Set(
                                     _estadoSeleccionadoLead,
                                     _itemSeleccionadoLead.EstadoCuenta.Value
@@ -518,7 +518,7 @@ Screens:
                           =Set(
                               _filter;
                               "RazonSocial"
-                          );;
+                          );
                           Set(
                               _order;
                               Ascending
@@ -538,7 +538,7 @@ Screens:
                           =Set(
                               _filter;
                               "RazonSocial"
-                          );;
+                          );
                           Set(
                               _order;
                               Descending
@@ -558,7 +558,7 @@ Screens:
                           =Set(
                               _filter;
                               "ID"
-                          );;
+                          );
                           Set(
                               _order;
                               Ascending
@@ -578,7 +578,7 @@ Screens:
                           =Set(
                               _filter;
                               "ID"
-                          );;
+                          );
                           Set(
                               _order;
                               Descending
@@ -598,7 +598,7 @@ Screens:
                           =Set(
                               _filter;
                               "ID"
-                          );;
+                          );
                           Set(
                               _order;
                               Ascending
@@ -618,7 +618,7 @@ Screens:
                           =Set(
                               _filter;
                               "ID"
-                          );;
+                          );
                           Set(
                               _order;
                               Descending
@@ -637,8 +637,8 @@ Screens:
                         OnSelect: |-
                           =Set(
                               _filter;
-                              "estado_interes"
-                          );;
+                              "estado_interes.Value"
+                          );
                           Set(
                               _order;
                               Ascending
@@ -657,8 +657,8 @@ Screens:
                         OnSelect: |-
                           =Set(
                               _filter;
-                              "estado_interes"
-                          );;
+                              "estado_interes.Value"
+                          );
                           Set(
                               _order;
                               Descending
