@@ -156,47 +156,47 @@ Screens:
                         Items: |-
                           =SortByColumns(
                           If(
-                              IsBlank(_filter);
-                              // Si no hay filtro activo; ordenar por ID descendente (más reciente primero)
+                              IsBlank(_filter);;
+                              // Si no hay filtro activo;; ordenar por ID descendente (más reciente primero)
                               SortByColumns(
                                   If(
-                                      _rolUsuarioLoggeado = 6;
+                                      _rolUsuarioLoggeado = 6;;
                                       Filter(
-                                          tab_cuentas;
-                                          EstadoCuenta.Value = "Lead";
-                                          IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                          tab_cuentas;;
+                                          EstadoCuenta.Value = "Lead";;
+                                          IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;;
                                           IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
-                                      );
+                                      );;
                                       Filter(
-                                          tab_cuentas;
-                                          EstadoCuenta.Value = "Lead";
-                                          IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
-                                          IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                          tab_cuentas;;
+                                          EstadoCuenta.Value = "Lead";;
+                                          IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;;
+                                          IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;;
                                           ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                       )
-                                  );
-                                  "ID";
+                                  );;
+                                  "ID";;
                                   Descending
-                              );
-                              // Si hay filtro activo; usar el ordenamiento dinámico
+                              );;
+                              // Si hay filtro activo;; usar el ordenamiento dinámico
                               If(
-                                  _rolUsuarioLoggeado = 6;
+                                  _rolUsuarioLoggeado = 6;;
                                   Filter(
-                                      tab_cuentas;
-                                      EstadoCuenta.Value = "Lead";
-                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                      tab_cuentas;;
+                                      EstadoCuenta.Value = "Lead";;
+                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;;
                                       IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
-                                  );
+                                  );;
                                   Filter(
-                                      tab_cuentas;
-                                      EstadoCuenta.Value = "Lead";
-                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
-                                      IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                      tab_cuentas;;
+                                      EstadoCuenta.Value = "Lead";;
+                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;;
+                                      IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;;
                                       ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                   )
                               )
-                          );
-                          _filter;
+                          );;
+                          _filter;;
                           _order
                           )
                         OnSelect: =
@@ -387,10 +387,10 @@ Screens:
                                     _itemSeleccionadoLeadSubSegmento,
                                     _itemSeleccionadoLead.Subsegmento
                                 );
-                                // Set(
-                                //     _itemSeleccionadoLeadModeloComercial;
-                                //     _itemSeleccionadoLead.ModeloComercial
-                                // );
+                                Set(
+                                    _itemSeleccionadoLeadModeloComercial,
+                                    _tipoOportunidadSeleccionada.oportunidad
+                                );
                                 Set(
                                     _estadoSeleccionadoLead,
                                     _itemSeleccionadoLead.EstadoCuenta.Value
@@ -637,7 +637,7 @@ Screens:
                         OnSelect: |-
                           =Set(
                               _filter;
-                              "estado_interes.Value"
+                              "estado_interes"
                           );
                           Set(
                               _order;
@@ -657,7 +657,7 @@ Screens:
                         OnSelect: |-
                           =Set(
                               _filter;
-                              "estado_interes.Value"
+                              "estado_interes"
                           );
                           Set(
                               _order;
