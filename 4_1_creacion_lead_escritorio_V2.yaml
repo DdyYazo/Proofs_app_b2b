@@ -1,0 +1,4195 @@
+Screens:
+  4_1_creacion_lead_escritorio:
+    Properties:
+      Fill: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      Height: =_altoDesktop
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =// Inicializar variables de vista (como el original)
+        Set(_seguimientoVista, false);
+        Set(_oportunidadVista, false);
+        Set(_maquinasVista, false);
+        Set(_crearAgenda, false);
+        Set(_datosVista, true);
+
+        // Variables adicionales para nuevo modelo
+        Set(_leadCreado, false);
+        Set(_cuentaCreada, Defaults(tab_cuentas));
+        Set(_itemSeleccionadoLead, Blank());
+
+        // Limpiar variables de formulario
+        Set(_itemSeleccionadoLeadCiudad, Blank());
+        Set(_itemSeleccionadoLeadSegmento, Blank());
+        Set(_itemSeleccionadoLeadSubSegmento, Blank());
+        Set(_interesSeleccionadoLead, Blank())
+
+        //Propiedas previas
+        /*Set(_seguimientoVista;false);;
+        Set(_oportunidadVista;false);;
+        Set(_maquinasVista;false);;
+        Set(_crearAgenda;false);;
+        Set(_datosVista;true)*/
+      Width: =_anchoDesktop
+    Children:
+      - Img_comp_creaLeads:
+          Control: Image@2.2.3
+          Group: Group1_Body_NavBar_Header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =80
+            Image: =nesp-corp
+            Width: =500
+            X: =811
+            Y: =10
+      - Label_user_name_creaLeads:
+          Control: Label@2.5.1
+          Group: Group1_Body_NavBar_Header
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =72
+            Size: =20
+            Text: =User().FullName
+            Width: =500
+            X: =1268
+            Y: =10
+      - Image_user_creaLeads:
+          Control: Image@2.2.3
+          Group: Group1_Body_NavBar_Header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =60
+            Image: =picture_15506108
+            Width: =100
+            X: =1768
+            Y: =15
+      - Rectangle_line_header_creaLeads:
+          Control: Rectangle@2.3.0
+          Group: Group1_Body_NavBar_Header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(218, 195, 177, 0.5)
+            Height: =2
+            Width: =1900
+            X: =10
+            Y: =95
+      - Container_body_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group1_Body_NavBar_Header
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =960
+            RadiusBottomLeft: =40
+            RadiusBottomRight: =40
+            RadiusTopLeft: =40
+            RadiusTopRight: =40
+            Visible: =false
+            Width: =1920
+            Y: =106
+      - boton_maquinas_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group2_Secciones_statusInicial_creaLeads
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =70
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =350
+            X: =1288
+            Y: =113
+          Children:
+            - Button_editDisab_secc_maqu_creaLeads:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  DisplayMode: |-
+                    =If(
+                        _leadCreado,
+                        DisplayMode.Edit,
+                        DisplayMode.Disabled
+                    )
+                  Fill: |-
+                    =If(
+                        _maquinasVista,
+                        RGBA(
+                            _r_boton_claro_nw,
+                            _g_boton_claro_nw,
+                            _b_boton_claro_nw,
+                            _a_boton_claro_nw
+                        ),// Color cuando el grupo es visible 
+                        RGBA(
+                            _r_fondo_crema,
+                            _g_fondo_crema,
+                            _b_fondo_crema,
+                            _a_fondo_crema
+                        )// Color original
+                    )
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        true
+                    );
+                    Set(
+                        _maquinaSeleccionada,
+                        Blank()
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: ="MÁQUINAS"
+                  Width: =350
+      - boton_oportunidad_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group2_Secciones_statusInicial_creaLeads
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =70
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =350
+            X: =988
+            Y: =113
+          Children:
+            - Button_editDisab_secc_oport_creaLeads:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  DisplayMode: |-
+                    =If(
+                        _leadCreado,
+                        DisplayMode.Edit,
+                        DisplayMode.Disabled
+                    )
+                  Fill: |-
+                    =If(
+                        _oportunidadVista,
+                        RGBA(
+                            _r_boton_claro_nw,
+                            _g_boton_claro_nw,
+                            _b_boton_claro_nw,
+                            _a_boton_claro_nw
+                        ),// Color cuando el grupo es visible 
+                        RGBA(
+                            _r_fondo_crema,
+                            _g_fondo_crema,
+                            _b_fondo_crema,
+                            _a_fondo_crema
+                        )// Color original
+                    )
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        true
+                    );
+                    Reset(Select_edit_oportunidad_leadCreado);
+                    Reset(TextInput_edit_detalOporCom_leadCreado);
+                    Reset(TextInput_edit_constMarc_leadCreado)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: ="OPORTUNIDAD"
+                  Width: =350
+      - boton_seguimiento_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group2_Secciones_statusInicial_creaLeads
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =70
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =350
+            X: =688
+            Y: =113
+          Children:
+            - Button_editDisab_secc_segu_creaLeads:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  DisplayMode: |-
+                    =If(
+                        _leadCreado,
+                        DisplayMode.Edit,
+                        DisplayMode.Disabled
+                    )
+                  Fill: |-
+                    =If(
+                        _seguimientoVista,
+                        RGBA(
+                            _r_boton_claro_nw,
+                            _g_boton_claro_nw,
+                            _b_boton_claro_nw,
+                            _a_boton_claro_nw
+                        ),// Color cuando el grupo es visible 
+                        RGBA(
+                            _r_fondo_crema,
+                            _g_fondo_crema,
+                            _b_fondo_crema,
+                            _a_fondo_crema
+                        )// Color original
+                    )
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |-
+                    =Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _seguimientoVista,
+                        true
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  Size: =22
+                  Text: ="SEGUIMIENTO"
+                  Width: =350
+      - boton_datos_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group2_Secciones_statusInicial_creaLeads
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =70
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =30
+            RadiusTopLeft: =0
+            RadiusTopRight: =30
+            Width: =350
+            X: =388
+            Y: =113
+          Children:
+            - Button_Edit_secc_datos_creaLeads:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: |-
+                    =If(
+                        _datosVista,
+                        RGBA(
+                            _r_boton_claro_nw,
+                            _g_boton_claro_nw,
+                            _b_boton_claro_nw,
+                            _a_boton_claro_nw
+                        ),// Color cuando el grupo es visible 
+                        RGBA(
+                            _r_fondo_crema,
+                            _g_fondo_crema,
+                            _b_fondo_crema,
+                            _a_fondo_crema
+                        )// Color original
+                    )
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        true
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: ="DATOS"
+                  Width: =350
+      - Container_GeneralBody_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(243, 239, 230, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            Height: =850
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Visible: =_indicadoresVista
+            Width: =1510
+            X: =388
+            Y: =200
+          Children:
+            - Image_Rectangle_Intern_Shadow_BannerRS:
+                Control: Image@2.2.3
+                Group: GroupAdi_BackGround_Shadow_Banner_RazSoc
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =170
+                  Image: ='Rectangle 30'
+                  ImagePosition: =ImagePosition.Stretch
+                  Visible: |-
+                    =If(_leadCreado,
+
+                    true && _datosVista,
+                    false)
+                  Width: =1301
+                  X: =111
+                  Y: =15
+            - Image_Rectangle_Extern_Shadow_BannerRS:
+                Control: Image@2.2.3
+                Group: GroupAdi_BackGround_Shadow_Banner_RazSoc
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DisabledFill: =Color.Transparent
+                  Height: =245
+                  Image: ='Rectangle 24'
+                  ImagePosition: =ImagePosition.Center
+                  Visible: =_seguimientoVista
+                  Width: =1324
+                  X: =72
+                  Y: =18
+            - Label_inters_creaLeds:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =40
+                  Size: =20
+                  Text: ="Interés:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =328
+                  X: =128
+                  Y: =707
+            - TextInp_view_estadoInters_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =45
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =314
+                  X: =476
+                  Y: =707
+            - Select_edit_estadoInters_creaLeads:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =Color.White
+                  ChevronHoverFill: =RGBA(92, 75, 55, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoLead.estado_interese]
+                  DisplayFields: =["Value"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(207, 182, 157, 0.38)
+                  InputTextPlaceholder: =
+                  IsSearchable: =false
+                  Items: =Choices(tab_cuentas.estado_interes)
+                  OnChange: |-
+                    =Set(
+                        _interesSeleccionadoLead,
+                        Self.Selected.Value
+                    );
+                    /*Set(
+                        _seleccion;
+                        false
+                    )*/
+                  OnSelect: =Set(_seleccion,true)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(207, 182, 157, 0.38)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(207, 182, 157, 0.38)
+                  Size: =16
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =305
+                  X: =486
+                  Y: =707
+            - Button_edit_newActv_leadCreado:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(85, 69, 49, 1)
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  Height: =71
+                  HoverBorderColor: |-
+                    =ColorFade(
+                        Self.BorderColor,
+                        20%
+                    )
+                  HoverColor: |-
+                    =RGBA(
+                        _r_fondo_crema,
+                        _g_fondo_crema,
+                        _b_fondo_crema,
+                        _a_fondo_crema
+                    )
+                  HoverFill: |-
+                    =RGBA(
+                        _rBotonClaro,
+                        _gBotonClaro,
+                        _bBotonClaro,
+                        _aBotonClaro
+                    )
+                  OnSelect: |-
+                    =Set(
+                        _crearAgenda,
+                        true
+                    );
+                    Set(
+                        _nuevaAgenda,
+                        true
+                    );
+                    Set(
+                        _primeraAccion,
+                        0
+                    );
+                    Set(
+                        _actividadSeleccionada,
+                        Blank()
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: ="Crear Actividad"
+                  Visible: =_seguimientoVista
+                  Width: =336
+                  X: =102
+                  Y: =140
+            - Button_desab_filter_fechAct_leadCreado:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(85, 69, 49, 1)
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(85, 69, 49, 1)
+                  DisabledFill: =Color.Transparent
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  Height: =71
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |-
+                    =Set(
+                        _crearAgenda,
+                        true
+                    );
+                    Set(
+                        _actividadSeleccionada,
+                        Blank()
+                    );
+                    Set(
+                        _nuevaAgenda,
+                        true
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: =
+                  Visible: =_seguimientoVista
+                  Width: =374
+                  X: =505
+                  Y: =142
+            - Select_edit_fechActv_leadCreado:
+                Control: Classic/DatePicker@2.6.0
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  Color: =RGBA(85, 69, 49, 1)
+                  DefaultDate: '=Blank() '
+                  Fill: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =46
+                  IconBackground: =Color.Transparent
+                  IconFill: =RGBA(85, 69, 49, 1)
+                  OnChange: |-
+                    =If(
+                        !_limpiandoFiltroFecha && !IsBlank(Self.SelectedDate),
+                        Set(
+                            _fechaFiltroActividades,
+                            Self.SelectedDate
+                        )
+                    )
+                  Size: =22
+                  Visible: =_seguimientoVista
+                  Width: =330
+                  X: =529
+                  Y: =154
+            - TextInp_view_ciudad_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =477
+                  Y: =318
+            - TextInp_view_segmento_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =477
+                  Y: =385
+            - TextInp_view_subsegmento_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =478
+                  Y: =448
+            - Button_creatLead_creaLeads:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: "=// VALIDACIONES COMPLETAS DEL FORMULARIO\nIf(\n    IsBlank(TextInp_editView_nitClient_creaLeads.Text),\n    Notify(\n        \"El campo NIT debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    \n    IsBlank(TextInp_razon_social_creaLeads.Text),\n    Notify(\n        \"El campo Razón Social debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(_itemSeleccionadoLeadCiudad),\n    Notify(\n        \"El campo Ciudad debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(_itemSeleccionadoLeadSegmento),\n    Notify(\n        \"El campo Segmento debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(_itemSeleccionadoLeadSubSegmento),\n    Notify(\n        \"El campo Subsegmento debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(TextInp_editView_nombreCont_creaLeads.Text),\n    Notify(\n        \"El campo Nombre Contacto debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(TextInp_editView_apellidosCont_creaLeads.Text),\n    Notify(\n        \"El campo Apellidos Contacto debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(TextInp_editView_cargoCont_creaLeads.Text),\n    Notify(\n        \"El campo Cargo Contacto debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(TextInp_editView_emailCont_creaLeads.Text),\n    Notify(\n        \"El campo Email Contacto debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n    IsBlank(_interesSeleccionadoLead),\n    Notify(\n        \"El campo Interés Lead debe estar diligenciado\",\n        NotificationType.Error,\n        6000\n    ),\n\n    \n\n    Set(\n        _crearAgenda,\n        true\n    );\n    Set(\n        _nuevaAgenda,\n        true\n    );\n    Set(\n        _primeraAccion,\n        1\n    );\n    Set(\n        _actividadSeleccionada,\n        Blank()\n    )\n)"
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="Crear Lead"
+                  Visible: =_datosVista && !_crearAgenda && _leadCreado = false
+                  Width: =206
+                  X: =861
+                  Y: =786
+            - Select_edit_ciudades_creaLeads:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoLead.ciudad]
+                  DisplayFields: =["Ciudad0"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =46
+                  HoverBorderColor: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  Items: =colCiudades
+                  OnChange: |-
+                    =If(
+                        _seleccion,
+                        Set(
+                            _itemSeleccionadoLeadCiudad,
+                            Self.Selected.Ciudad
+                        ),
+                        Set(
+                            _seleccion,
+                            false
+                        )
+                    )
+                  OnSelect: |-
+                    =Set(
+                        _seleccion,
+                        true
+                    )
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Ciudad0"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =877
+                  X: =480
+                  Y: =320
+            - Select_edit_segmento_creaLeads:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoLead.segmento]
+                  DisplayFields: =["id_segmento_concat"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =46
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  IsSearchable: =false
+                  Items: |-
+                    =SortByColumns(
+                        colSegmento,
+                        "id_segmento",
+                        SortOrder.Ascending
+                    )
+                    //tab_segmentos.id_segmento_concat
+                  OnChange: |-
+                    =// Guardar registro completo para uso posterior
+                    If(
+                        !IsBlank(Self.Selected),
+                        Set(
+                            _itemSeleccionadoLeadSegmento,
+                            Self.Selected.segmento),
+                        Set(
+                            _itemSeleccionadoLeadSegmento,
+                            Blank()
+                        ),
+                        Set(
+                            _idSegmentoConcat,
+                            Self.Selected.id_segmento_concat),
+                        Set(
+                            _idSegmentoConcat,
+                            Blank()
+                        )
+                    );
+                    // Limpiar subsegmento al cambiar segmento
+                    Reset(Select_edit_subsegmento_creaLeads);
+                    Set(
+                        _itemSeleccionadoLeadSubSegmento,
+                        Blank()
+                    )
+                  OnSelect: =Set(_seleccion,true)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["id_segmento_concat"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =877
+                  X: =488
+                  Y: =386
+            - Select_edit_subsegmento_creaLeads:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoLead.subsegmento]
+                  DisplayFields: =["sub_segmento"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =46
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  IsSearchable: =false
+                  Items: =Filter(colSubSegmento, id_segmento_relacionado.Value = Select_edit_segmento_creaLeads.Selected.id_segmento_concat)
+                  OnChange: |+
+                    =// Guardar registro completo para uso posterior
+                    If(
+                        !IsBlank(Self.Selected),
+                        Set(
+                            _itemSeleccionadoLeadSubSegmento,
+                            Self.Selected.sub_segmento),
+                        Set(
+                            _itemSeleccionadoLeadSubSegmento,
+                            Blank()
+                        )
+                    )
+                  OnSelect: =Set(_seleccion,true)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["sub_segmento"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =877
+                  X: =488
+                  Y: =453
+            - Label_canal_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Canal:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =127
+                  Y: =156
+            - TextInp_view_canalCom_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Default: |-
+                    =If(
+                        !IsBlank(_canalComercial),
+                        _canalComercial.canal_relacionado.Value,
+                        "No Asignado"
+                    )
+                    //_canalComercial.canal
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =478
+                  Y: =148
+            - TextInp_view_idNess_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Format: =TextFormat.Number
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  OnChange: |
+                    =Set(
+                        _spinner,
+                        true
+                    );
+                    // hacer patch para crear el lead 
+                    Set(
+                        _itemSeleccionadoLead,
+                        Last(
+                            Filter(
+                                tab_leads,
+                                id_nesp-corp_nit = Value(Self.Text)
+                            )
+                        )
+                    );
+                    Set(
+                        _itemSeleccionadoLeadCiudad,
+                        _itemSeleccionadoLead.ciudad
+                    );
+                    Set(
+                        _itemSeleccionadoLeadSegmento,
+                        _itemSeleccionadoLead.segmento
+                    );
+                    Set(
+                        _itemSeleccionadoLeadSubSegmento,
+                        _itemSeleccionadoLead.subsegmento
+                    );
+                    Set(
+                        _requiereDocumentos,
+                        If(
+                            IsBlank(_itemSeleccionadoLead),
+                            1,
+                            0
+                        )
+                    );
+                    Set(
+                        _spinner,
+                        false
+                    );
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && _leadCreado && IsBlank(_cuentaCreada) && _cuentaCreada.estado_interes.Value = "Cliente"
+                  Width: =900
+                  X: =477
+                  Y: =213
+            - TextInp_razon_social_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoLead.razon_social_prospecto
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =477
+                  Y: =268
+            - TextInp_editView_nombreCont_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoLead.nombre_contacto
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =478
+                  Y: =512
+            - TextInp_editView_apellidosCont_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoLead.apellidos_contacto
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =478
+                  Y: =557
+            - TextInp_editView_cargoCont_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoLead.cargo
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =478
+                  Y: =606
+            - TextInp_editView_emailCont_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoLead.email
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =478
+                  Y: =656
+            - Label_idNespre_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="ID nesp-corp:"
+                  Visible: =_datosVista && _leadCreado && IsBlank(_cuentaCreada) && _cuentaCreada.estado_interes.Value = "Cliente"
+                  Width: =350
+                  X: =127
+                  Y: =213
+            - Label_rs_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Razón social:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =127
+                  Y: =268
+            - Label_ciudad_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  Size: =20
+                  Text: ="Ciudad:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =127
+                  Y: =318
+            - Label_segm_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =33
+                  Size: =20
+                  Text: ="Segmento:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =127
+                  Y: =385
+            - Label_subseg_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =35
+                  Size: =20
+                  Text: ="Subsegmento:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =128
+                  Y: =456
+            - Label_nomCont_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Nombres Contacto:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =128
+                  Y: =506
+            - Label_apellCont_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Apellidos Contacto:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =128
+                  Y: =556
+            - Label_cargCont_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =33
+                  Size: =20
+                  Text: ="Cargo Contacto:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =128
+                  Y: =606
+            - Label_emaCont_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Email Contacto:"
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =128
+                  Y: =656
+            - Container_list_seguAct_leadCreado:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =560
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: =_seguimientoVista
+                  Width: =1300
+                  X: =102
+                  Y: =248
+                Children:
+                  - TextCanvas_viewTitu_actReal_leadCreado:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        FontColor: =RGBA(85, 69, 49, 1)
+                        Height: =54
+                        Size: =25
+                        Text: ="Acciones a realizar"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Visible: =_seguimientoVista
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =426
+                        X: =24
+                        Y: =20
+                  - TextCanvas_viewTitu_estSegu_leadCreado:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        FontColor: =RGBA(85, 69, 49, 1)
+                        Height: =54
+                        Size: =25
+                        Text: ="Estado de seguimiento"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Visible: =_seguimientoVista
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =426
+                        X: =858
+                        Y: =20
+                  - TextCanvas_viewTitu_fechSegu_leadCreado:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        FontColor: =RGBA(85, 69, 49, 1)
+                        Height: =54
+                        Size: =25
+                        Text: ="Fecha de seguimiento"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Visible: =_seguimientoVista
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =426
+                        X: =438
+                        Y: =20
+                  - Rectangle_lineSeparat_titlesListActv_leadCreado:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(218, 195, 177, 0.5)
+                        Height: =2
+                        Width: =1250
+                        X: =20
+                        Y: =80
+                  - Gallery_list_seguAct_leadCreado:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =465
+                        Items: |-
+                          =Filter(
+                              tab_seguimiento_porCuenta,
+                              Cuenta.Id = _itemSeleccionadoLead.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
+                          )
+                        OnSelect: =
+                        TemplateSize: =66
+                        Visible: =_seguimientoVista
+                        Width: =1270
+                        X: =20
+                        Y: =95
+                      Children:
+                        - Button_view_list_ActSelect_leadSelec:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -55%)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: |-
+                                =RGBA(
+                                    _r_fondo_claro,
+                                    _g_fondo_claro,
+                                    _b_fondo_claro,
+                                    _a_fondo_claro
+                                )
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              DisplayMode: =DisplayMode.View
+                              Fill: =RGBA(207, 182, 157, 0.2)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              HoverBorderColor: |-
+                                =ColorFade(
+                                    Self.BorderColor,
+                                    20%
+                                )
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =Self.Fill
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Size: =18
+                              Text: =
+                              Width: =1250
+                        - Label_list_actReal_leadSelec:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              OnSelect: =Select(Parent)
+                              Size: =18
+                              Text: =ThisItem.Anotaciones
+                              Width: =425
+                        - Label_list_fechSeguAct_leadSelec:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              OnSelect: =Select(Parent)
+                              Size: =18
+                              Text: =ThisItem.FechaSeguimiento
+                              Width: =296
+                              X: =480
+                        - Label_list_estSeguAct_leadSelec:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: |-
+                                =If(
+                                    ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                                    RGBA(184, 0, 0, 1),        // Rojo para VENCIDAS (fecha pasada + pendiente)
+                                    If(
+                                        ThisItem.EstadoSeguimiento.Value= "Completada",
+                                        RGBA(50, 129, 45, 1),   // Verde para Completada
+                                        RGBA(128, 0, 128, 1)    // Morado para Pendiente
+                                    )
+                                )
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              OnSelect: =Select(Parent)
+                              Size: =18
+                              Text: =ThisItem.EstadoSeguimiento.Value
+                              Width: =200
+                              X: =977
+                        - Button_edit_list_actSelec_leadSelec:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.Transparent
+                              Color: =Color.Transparent
+                              DisabledBorderColor: =Color.Transparent
+                              DisabledColor: =Color.Transparent
+                              DisabledFill: =Color.Transparent
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =66
+                              HoverBorderColor: =Color.Transparent
+                              HoverColor: =Color.Transparent
+                              HoverFill: =Color.Transparent
+                              OnSelect: |-
+                                =Set(
+                                    _crearAgenda,
+                                    true
+                                );
+                                Set(
+                                    _actividadSeleccionada,
+                                    ThisItem
+                                );
+                                Set(
+                                    _nuevaAgenda,
+                                    false
+                                )
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Width: =1260
+                        - Button_Change_StatusActv_leadCreado:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.White
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: =Color.White
+                              DisabledBorderColor: =Color.White
+                              DisabledColor: =Color.White
+                              DisabledFill: |-
+                                =If(
+                                    ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                                    RGBA(184, 0, 0, 1),        // Rojo para VENCIDAS (fecha pasada + pendiente)
+                                    If(
+                                        ThisItem.EstadoSeguimiento.Value= "Completada",
+                                        RGBA(50, 129, 45, 1),   // Verde para Completada
+                                        RGBA(128, 0, 128, 1)    // Morado para Pendiente
+                                    )
+                                )
+                              DisplayMode: =DisplayMode.Disabled
+                              Fill: =RGBA(184, 0, 0, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                              HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              OnSelect: =
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                              PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                              RadiusBottomLeft: =100
+                              RadiusBottomRight: =100
+                              RadiusTopLeft: =100
+                              RadiusTopRight: =100
+                              Size: =5
+                              Text: =
+                              Width: =20
+                              X: =943
+                              Y: =17
+                  - Label_message_ActRelFech_LeadCreado:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Lato Black'
+                        Height: =54
+                        Size: =18
+                        Text: ="No hay actividades relacionadas a la fecha seleccionada"
+                        Visible: |-
+                          =!IsBlank(_fechaFiltroActividades) && CountRows(
+                              Filter(
+                                  tab_seguimiento_porCuenta,
+                                  Cuenta.Id = _itemSeleccionadoLead.ID && DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades))
+                              )
+                          ) = 0
+                        Width: =700
+                        X: =295
+                        Y: =95
+            - Rectangle_body_form_defActv_creaLead:
+                Control: Rectangle@2.3.0
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  Height: =850
+                  Visible: =_crearAgenda
+                  Width: =1510
+            - Label_act_primAct_creaLead:
+                Control: Label@2.5.1
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Actividad a realizar"
+                  Visible: =_crearAgenda
+                  Width: =350
+                  X: =43
+                  Y: =131
+            - Label_obs_primAct_creaLead:
+                Control: Label@2.5.1
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =40
+                  Size: =20
+                  Text: ="Observaciones"
+                  Visible: =_crearAgenda
+                  Width: =350
+                  X: =43
+                  Y: =418
+            - Button_cancelPrimAct_creaLead:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: |-
+                    =RGBA(
+                        _rBotonClaro,
+                        _gBotonClaro,
+                        _bBotonClaro,
+                        _aBotonClaro
+                    )
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |
+                    =Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _primeraAccion,
+                        Blank()
+                    );
+                    //Resetea los campos cuando se devuelve a la vista de creacion Lead
+                    Reset(TextInp_edit_actReali_creaLead);
+                    Reset(Select_edit_fechaAct_creaLead);
+                    Reset(TextInp_editView_obsvAct_creaLead);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="CANCELAR"
+                  Visible: '=_crearAgenda '
+                  Width: =150
+                  X: =591
+                  Y: =700
+            - Button_save_lisActv_creaLead:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |-
+                    =If(
+                        IsBlank(TextInp_edit_actReali_creaLead.Text),
+                        Notify(
+                            "El campo de acciones debe estar diligenciado",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                        IsBlank(Select_edit_fechaAct_creaLead.SelectedDate),
+                        Notify(
+                            "Debe seleccionar una fecha de seguimiento",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                                // Si pasa las validaciones, ejecutar el Patch correspondiente
+                        If(
+                            _nuevaAgenda,
+                                    // CREAR NUEVA ACTIVIDAD
+                            Patch(
+                                tab_seguimiento_porCuenta,
+                                Defaults(tab_seguimiento_porCuenta),
+                                {
+                                    Anotaciones: TextInp_edit_actReali_creaLead.Text,
+                                    Observaciones: TextInp_editView_obsvAct_creaLead.Text,
+                                    Cuenta: {
+                                        Id: _itemSeleccionadoLead.ID,
+                                        Value: _itemSeleccionadoLead.RazonSocial
+                                    },
+                                    FechaSeguimiento: Select_edit_fechaAct_creaLead.SelectedDate,
+                                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                                    ComercialResponsable: {
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                        Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                        Department: "",
+                                        DisplayName: _infoUsuarioLoggeado.FullName,
+                                        Email: _infoUsuarioLoggeado.Email,
+                                        JobTitle: "",
+                                        Picture: ""
+                                    },
+                                    EstadoSeguimiento: {Value: "Pendiente"},
+                                    RequiereAccion: true
+                                }
+                            );
+                            Notify(
+                                "✓ Actividad creada exitosamente",
+                                NotificationType.Success,
+                                6000
+                            );
+                            Set(
+                                _crearAgenda,
+                                false
+                            );
+                            Reset(TextInp_edit_actReali_creaLead);
+                            Reset(TextInp_editView_obsvAct_creaLead);
+                            Reset(Select_edit_fechaAct_creaLead),
+                                    // ACTUALIZAR ACTIVIDAD EXISTENTE
+                            Patch(
+                                tab_seguimiento_porCuenta,
+                                LookUp(
+                                    tab_seguimiento_porCuenta,
+                                    ID = _actividadSeleccionada.ID
+                                ),
+                                {
+                                    Anotaciones: TextInp_edit_actReali_creaLead.Text,
+                                    Observaciones: TextInp_editView_obsvAct_creaLead.Text,
+                                    Cuenta: {
+                                        Id: _itemSeleccionadoLead.ID,
+                                        Value: _itemSeleccionadoLead.RazonSocial
+                                    },
+                                    FechaSeguimiento: Select_edit_fechaAct_creaLead.SelectedDate,
+                                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                                    ComercialResponsable: {
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                        Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                        Department: "",
+                                        DisplayName: _infoUsuarioLoggeado.FullName,
+                                        Email: _infoUsuarioLoggeado.Email,
+                                        JobTitle: "",
+                                        Picture: ""
+                                    },
+                                    EstadoSeguimiento: {Value: "Pendiente"},
+                                    RequiereAccion: true
+                                }
+                            );
+                            Set(
+                                _actividadSeleccionada,
+                                Blank()
+                            );
+                            Notify(
+                                "✓ Actividad actualizada exitosamente",
+                                NotificationType.Success,
+                                6000
+                            );
+                            Set(
+                                _crearAgenda,
+                                false
+                            );
+                            Reset(TextInp_edit_actReali_creaLead);
+                            Reset(TextInp_editView_obsvAct_creaLead);
+                            Reset(Select_edit_fechaAct_creaLead)
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: |-
+                    =If(
+                          IsBlank(_actividadSeleccionada),
+                          "GUARDAR",
+                          "ACTUALIZAR"  
+                      )
+                  Visible: |-
+                    =If(
+                        IsBlank(_actividadSeleccionada),
+                        _crearAgenda,
+                        _crearAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida"
+                    )
+                  Width: =150
+                  X: =772
+                  Y: =700
+            - TextInput_viewBack_modComer_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.Disabled
+                  Font: =Font.'Open Sans'
+                  Height: =86
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_oportunidadVista
+                  Width: =838
+                  X: =565
+                  Y: =154
+            - TextInput_edit_detalOporCom_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoLead.ID).Detalle
+                  DelayOutput: =true
+                  Font: =Font.'Open Sans'
+                  Height: =223
+                  HintText: ="Describa el detalle de la oportunidad comercial identificada"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  Mode: =TextMode.MultiLine
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_oportunidadVista
+                  Width: =838
+                  X: =564
+                  Y: =256
+            - TextInput_edit_constMarc_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoLead.ID).Construccion_marca
+                  DelayOutput: =true
+                  Font: =Font.'Open Sans'
+                  Height: =182
+                  HintText: ="Describa las oportunidades de construcción de marca"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  Mode: =TextMode.MultiLine
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_oportunidadVista
+                  Width: =838
+                  X: =565
+                  Y: =493
+            - Label_modComer_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Modelo comercial"
+                  Visible: =_oportunidadVista
+                  Width: =350
+                  X: =71
+                  Y: =155
+            - Label_detalOporCom_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =37
+                  Size: =20
+                  Text: ="Detalle oportunidad comercial:"
+                  Visible: =_oportunidadVista
+                  Width: =420
+                  X: =72
+                  Y: =262
+            - Label_oporConstMarc_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =37
+                  Size: =20
+                  Text: ="Oportunidad construcción de marca:"
+                  Visible: =_oportunidadVista
+                  Width: =494
+                  X: =72
+                  Y: =499
+            - Label_estad_leadCreado_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =40
+                  Size: =20
+                  Text: ="Estado Lead:"
+                  Visible: =_leadCreado && _datosVista
+                  Width: =184
+                  X: =816
+                  Y: =712
+            - Label_consumMinMenMaq_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =40
+                  Size: =20
+                  Text: ="Consumo mínimo mensual:"
+                  Visible: =_maquinasVista
+                  Width: =380
+                  X: =734
+                  Y: =107
+            - Label_mesColocaMaq_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =69
+                  Size: =20
+                  Text: ="Mes de colocación estimado:"
+                  Visible: =_maquinasVista
+                  Width: =258
+                  X: =71
+                  Y: =187
+            - Label_maquinaName_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =40
+                  Size: =20
+                  Text: ="Máquina:"
+                  Visible: =_maquinasVista
+                  Width: =150
+                  X: =71
+                  Y: =107
+            - TextInp_viewBack_nameMaq_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_maquinasVista
+                  Width: =450
+                  X: =240
+                  Y: =111
+            - TextInp_viewBack_mesColMaq_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionado.estatus_cuenta
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_maquinasVista
+                  Width: =400
+                  X: =348
+                  Y: =182
+            - TextInp_edit_consMinMenMaq_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =Text(_maquinaSeleccionada.ConsumoMinimoSugerido)
+                  DelayOutput: =true
+                  Font: =Font.'Open Sans'
+                  Height: =37
+                  HintText: ="Ingrese consumo mín mensual"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =15
+                  Tooltip: =
+                  Visible: =_maquinasVista
+                  Width: =315
+                  X: =1127
+                  Y: =111
+            - TextInp_view_back_estad_leadCread_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionado.estatus_cuenta
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =47
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_leadCreado && _datosVista
+                  Width: =362
+                  X: =1017
+                  Y: =707
+            - Button_edit_save_oport_leadCreado:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |-
+                    =// Validaciones
+                    If(
+                        IsBlank(_tipoOportunidadSeleccionada),
+                        Notify(
+                            "Debe seleccionar un tipo de oportunidad",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                        IsBlank(TextInput_edit_detalOporCom_leadCreado.Text),
+                        Notify(
+                            "El campo de detalle de oportunidad es obligatorio",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                                // Si pasa las validaciones, crear o actualizar el registro
+                        Set(
+                            _spinner,
+                            true
+                        );
+                        If(
+                            IsBlank(
+                                LookUp(
+                                    tab_oportunidades_cuenta,
+                                    Cuenta.Id = _itemSeleccionadoLead.ID
+                                )
+                            ),
+                                    // CREAR NUEVA OPORTUNIDAD
+                            Patch(
+                                tab_oportunidades_cuenta,
+                                Defaults(tab_oportunidades_cuenta),
+                                {
+                                    Cuenta: {
+                                        Id: _itemSeleccionadoLead.ID,
+                                        Value: _itemSeleccionadoLead.RazonSocial
+                                    },
+                                    TipoOportunidad: {
+                                        Id: _tipoOportunidadSeleccionada.ID,
+                                        Value: _tipoOportunidadSeleccionada.oportunidad
+                                    },
+                                    Detalle: TextInput_edit_detalOporCom_leadCreado.Text,
+                                    Construccion_marca: TextInput_edit_constMarc_leadCreado.Text,
+                                    EstadoCuentaAlCrear: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                                    FechaIdentificacion: Now(),
+                                    ComercialIdentifica: {
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                        Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                        Department: "",
+                                        DisplayName: _infoUsuarioLoggeado.FullName,
+                                        Email: _infoUsuarioLoggeado.Email,
+                                        JobTitle: "",
+                                        Picture: ""
+                                    }
+                                }
+                            );
+                            Notify(
+                                "✓ Oportunidad registrada exitosamente",
+                                NotificationType.Success,
+                                6000
+                            ),
+                                    // ACTUALIZAR OPORTUNIDAD EXISTENTE
+                            Patch(
+                                tab_oportunidades_cuenta,
+                                LookUp(
+                                    tab_oportunidades_cuenta,
+                                    Cuenta.Id = _itemSeleccionadoLead.ID
+                                ),
+                                {
+                                    TipoOportunidad: {
+                                        Id: _tipoOportunidadSeleccionada.ID,
+                                        Value: _tipoOportunidadSeleccionada.oportunidad
+                                    },
+                                    Detalle: TextInput_edit_detalOporCom_leadCreado.Text,
+                                    Construccion_marca: TextInput_edit_constMarc_leadCreado.Text
+                                }
+                            );
+                            Notify(
+                                "✓ Oportunidad actualizada exitosamente",
+                                NotificationType.Success,
+                                6000
+                            )
+                        );
+                        // Actualizar colección de oportunidades
+                    ClearCollect(
+                            colOportunidadesCuenta,
+                            Filter(
+                                tab_oportunidades_cuenta,
+                                ComercialIdentifica.Email = _correoLoggeado || ComercialIdentifica.Email = _correoLoggeadoNormalizado || (_rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6)
+                            )
+                        );
+                        // Resetear campos
+                    Reset(TextInput_edit_detalOporCom_leadCreado);
+                        Reset(TextInput_edit_constMarc_leadCreado);
+                        Reset(Select_edit_oportunidad_leadCreado);
+                        Set(
+                            _tipoOportunidadSeleccionada,
+                            Blank()
+                        );
+                        Set(
+                            _spinner,
+                            false
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: |-
+                    =If(
+                        IsBlank(
+                            LookUp(
+                                tab_oportunidades_cuenta,
+                                Cuenta.Id = _itemSeleccionadoLead.ID
+                            )
+                        ),
+                        "GUARDAR",
+                        "ACTUALIZAR"
+                    )
+                  Visible: =_oportunidadVista
+                  Width: =300
+                  X: =606
+                  Y: =736
+            - Button_edit_Add_asignMaqu_leadCrado:
+                Control: Classic/Button@2.2.0
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: |-
+                    =ColorFade(
+                        Self.BorderColor,
+                        20%
+                    )
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |-
+                    =// Activar spinner
+                    Set(
+                        _spinner,
+                        true
+                    );
+                    // Validaciones
+                    If(
+                        IsBlank(_tipoMaquinaSeleccionada),
+                        Notify(
+                            "Debe seleccionar el tipo de máquina",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                        IsBlank(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                        Notify(
+                            "Debe ingresar el consumo mínimo",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                        IsBlank(_mesColocacionMaquinaSeleccionada),
+                        Notify(
+                            "Debe seleccionar el mes de colocación",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                                // Si pasa validaciones: CREAR O ACTUALIZAR
+                        If(
+                            IsBlank(_maquinaSeleccionada),
+                                    // ====== CREAR NUEVA MÁQUINA ======
+                            Set(
+                                _maquinaCreada,
+                                Patch(
+                                    tab_maquinas_porCuenta,
+                                    Defaults(tab_maquinas_porCuenta),
+                                    {
+                                        Cuenta: {
+                                            Id: _itemSeleccionadoLead.ID,
+                                            Value: _itemSeleccionadoLead.RazonSocial
+                                        },
+                                        TipoMaquina: {
+                                            Id: _tipoMaquinaSeleccionada.ID,
+                                            Value: _tipoMaquinaSeleccionada.nombre_maquina
+                                        },
+                                        EstadoMaquina: {
+                                            Id: 1,
+                                            Value: "0 - Sin Serial"
+                                        },
+                                        EstadoCuentaAlSolicitar: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                                        Status_maquina: {Value: "Inactiva"},
+                                        FechaSolicitud: Now(),
+                                        ComercialSolicitante: {
+                                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                            Department: "",
+                                            DisplayName: _infoUsuarioLoggeado.FullName,
+                                            Email: _infoUsuarioLoggeado.Email,
+                                            JobTitle: "",
+                                            Picture: ""
+                                        },
+                                        ConsumoMinimoSugerido: Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                        MesColocacionEstimado: {Value: _mesColocacionMaquinaSeleccionada},
+                                        TieneCondicionesEspeciales: If(
+                                            IsBlank(_tieneCondicioEspecialesMaquinaSelecionada),
+                                            false,
+                                            _tieneCondicioEspecialesMaquinaSelecionada = 1
+                                        ),
+                                        DescripcionCondiciones: If(
+                                            IsBlank(TextInp_edit_obsvMaqu_leadCreado.Text),
+                                            "No tiene condiciones especiales",
+                                            TextInp_edit_obsvMaqu_leadCreado.Text
+                                        ),
+                                        AprobadoBackOffice: false,
+                                        AprobadoSupply: false
+                                    }
+                                )
+                            );
+                            // Crear registro histórico de la máquina creada
+                    Patch(
+                                tab_hist_cambioEstd_maqu,
+                                Defaults(tab_hist_cambioEstd_maqu),
+                                {
+                                    Maquina: {
+                                        Id: _maquinaCreada.ID,
+                                        Value: _tipoMaquinaSeleccionada.nombre_maquina
+                                    },
+                                    Cuenta: _itemSeleccionadoLead.RazonSocial,
+                                    MaquinaAnterior: _tipoMaquinaSeleccionada.nombre_maquina,
+                                    FechaRegistroMaquina: Now(),
+                                    ConsumoInicial: Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                    StatusMaquina: {Value: "Inactiva"},
+                                    EstadoAnterior: {
+                                        Id: 1,
+                                        Value: "0 - Sin Serial"
+                                    },
+                                    EstadoNuevo: Blank(),
+                                    FechaCambio: Blank(),
+                                    UsuarioResponsable: {
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                        Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                        Department: "",
+                                        DisplayName: _infoUsuarioLoggeado.FullName,
+                                        Email: _infoUsuarioLoggeado.Email,
+                                        JobTitle: "",
+                                        Picture: ""
+                                    }
+                                    //Comentario: "Máquina solicitada - Creación inicial"
+                                }
+                            );
+                            Notify(
+                                "✓ Máquina agregada exitosamente",
+                                NotificationType.Success,
+                                6000
+                            ),
+                                    // ====== ACTUALIZAR MÁQUINA EXISTENTE ======
+                            Patch(
+                                tab_maquinas_porCuenta,
+                                LookUp(
+                                    tab_maquinas_porCuenta,
+                                    ID = _maquinaSeleccionada.ID
+                                ),
+                                {
+                                    TipoMaquina: {
+                                        Id: _tipoMaquinaSeleccionada.ID,
+                                        Value: _tipoMaquinaSeleccionada.nombre_maquina
+                                    },
+                                    ConsumoMinimoSugerido: Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                    MesColocacionEstimado: {Value: _mesColocacionMaquinaSeleccionada},
+                                    TieneCondicionesEspeciales: If(
+                                        IsBlank(_tieneCondicioEspecialesMaquinaSelecionada),
+                                        false,
+                                        _tieneCondicioEspecialesMaquinaSelecionada = 1
+                                    ),
+                                    DescripcionCondiciones: If(
+                                        IsBlank(TextInp_edit_obsvMaqu_leadCreado.Text),
+                                        "No tiene condiciones especiales",
+                                        TextInp_edit_obsvMaqu_leadCreado.Text
+                                    )
+                                }
+                            );
+                            // Registrar cambio en histórico SOLO para los campos que cambiaron
+                    If(
+                                _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID || _maquinaSeleccionada.ConsumoMinimoSugerido <> Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                Patch(
+                                    tab_hist_cambioEstd_maqu,
+                                    LookUp(
+                                        tab_hist_cambioEstd_maqu,
+                                        Maquina.Id = _maquinaSeleccionada.ID
+                                    ),
+                                    {
+                                        MaquinaNueva: If(
+                                            _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID,
+                                            _tipoMaquinaSeleccionada.nombre_maquina,
+                                            Blank()
+                                        ),
+                                        ConsumoNuevo: If(
+                                            _maquinaSeleccionada.ConsumoMinimoSugerido <> Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                            Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                            Blank()
+                                        ),
+                                        FechaCambio: Now(),
+                                        UsuarioResponsable: {
+                                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                            Department: "",
+                                            DisplayName: _infoUsuarioLoggeado.FullName,
+                                            Email: _infoUsuarioLoggeado.Email,
+                                            JobTitle: "",
+                                            Picture: ""
+                                        },
+                                        Comentario: If(
+                                            _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID && _maquinaSeleccionada.ConsumoMinimoSugerido <> Value(TextInp_edit_consMinMenMaq_leadCreado.Text),
+                                            "Máquina actualizada - Tipo: " & _tipoMaquinaSeleccionada.nombre_maquina & " - Consumo: " & Text(Value(TextInp_edit_consMinMenMaq_leadCreado.Text)),
+                                            _maquinaSeleccionada.TipoMaquina.Id <> _tipoMaquinaSeleccionada.ID,
+                                            "Máquina actualizada - Tipo: " & _tipoMaquinaSeleccionada.nombre_maquina,
+                                            "Máquina actualizada - Consumo: " & Text(Value(TextInp_edit_consMinMenMaq_leadCreado.Text))
+                                        )
+                                    }
+                                )
+                            );
+                            Notify(
+                                "✓ Máquina actualizada exitosamente",
+                                NotificationType.Success,
+                                6000
+                            )
+                        );
+                        // Actualizar colección de máquinas
+                    ClearCollect(
+                            colMaquinas,
+                            Filter(
+                                tab_maquinas_porCuenta,
+                                Cuenta.Id = _itemSeleccionadoLead.ID && Status_maquina.Value <> "Eliminada"
+                            )
+                        );
+                        // Resetear componentes
+                    Reset(Select_edit_namMaqu_leadCreado);
+                        Reset(TextInp_edit_consMinMenMaq_leadCreado);
+                        Reset(Select_edit_mesColocMaq_leadCreado);
+                        Reset(Select_edit_condEspMaq_leadCreado);
+                        Reset(TextInp_edit_obsvMaqu_leadCreado);
+                        Set(
+                            _maquinaSeleccionada,
+                            Blank()
+                        );
+                        Set(
+                            _tipoMaquinaSeleccionada,
+                            Blank()
+                        );
+                        Set(
+                            _mesColocacionMaquinaSeleccionada,
+                            Blank()
+                        );
+                        Set(
+                            _tieneCondicioEspecialesMaquinaSelecionada,
+                            Blank()
+                        )
+                    );
+                    Set(
+                        _spinner,
+                        false
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: |-
+                    =If(
+                        IsBlank(_maquinaSeleccionada),
+                        "AGREGAR",
+                        "ACTUALIZAR"
+                    )
+                  Visible: =_maquinasVista
+                  Width: =180
+                  X: =1262
+                  Y: =379
+            - TextInp_view_fechaAct_creaLead:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =57
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  Mode: =TextMode.MultiLine
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_crearAgenda
+                  Width: =1384
+                  X: =43
+                  Y: =346
+            - Button_edit_Upd_leadCread_creaLeads:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |-
+                    =Set(_spinner, true);
+                    Set(_estadoAnterior, _itemSeleccionadoLead.EstadoCuenta.Value);
+                    Patch(
+                        tab_cuentas,
+                        LookUp(tab_cuentas, ID = _itemSeleccionadoLead.ID),
+                        {
+                            NIT: TextInp_editView_nitClient_creaLeads.Text,
+                            RazonSocial: TextInp_razon_social_creaLeads.Text,
+                            EstadoCuenta: {Value: _estadoSeleccionadoLead},
+                            EstadoNegociacion: If(
+                                _estadoSeleccionadoLead = "Lead",
+                                {Id: 1, Value: "Lead"},
+                                _estadoSeleccionadoLead = "Prospecto",
+                                {Id: 2, Value: "Prospecto"},
+                                _itemSeleccionadoLead.EstadoNegociacion
+                            ),
+                            FechaPasoAProspecto: If(
+                                _estadoSeleccionadoLead = "Lead",
+                                Blank(),
+                                _estadoSeleccionadoLead = "Prospecto",
+                                Today(),
+                                _itemSeleccionadoLead.fecha_paso_a_prospecto
+                            ),
+                            Ciudad: If(
+                                !IsBlank(Select_edit_ciudades_creaLeads.Selected),
+                                {
+                                    Id: Select_edit_ciudades_creaLeads.Selected.ID,
+                                    Value: Select_edit_ciudades_creaLeads.Selected.Ciudad0
+                                },
+                                _itemSeleccionadoLead.Ciudad
+                            ),
+                            Segmento: If(
+                                !IsBlank(Select_edit_segmento_creaLeads.Selected),
+                                {
+                                    Id: Select_edit_segmento_creaLeads.Selected.ID,
+                                    Value: Select_edit_segmento_creaLeads.Selected.segmento
+                                },
+                                _itemSeleccionadoLead.Segmento
+                            ),
+                            Subsegmento: If(
+                                !IsBlank(Select_edit_subsegmento_creaLeads.Selected),
+                                {
+                                    Id: Select_edit_subsegmento_creaLeads.Selected.ID,
+                                    Value: Select_edit_subsegmento_creaLeads.Selected.sub_segmento
+                                },
+                                _itemSeleccionadoLead.Subsegmento
+                            ),
+                            NombreContacto: TextInp_editView_nombreCont_creaLeads.Text,
+                            ApellidosContacto: TextInp_editView_apellidosCont_creaLeads.Text,
+                            CargoContacto: TextInp_editView_cargoCont_creaLeads.Text,
+                            EmailContacto: TextInp_editView_emailCont_creaLeads.Text,
+                            estado_interes: If(
+                                !IsBlank(_interesSeleccionadoLead),
+                                {Value: _interesSeleccionadoLead},
+                                _itemSeleccionadoLead.estado_interes
+                            ),
+                            Ultima_actualizacion_cuenta: Now()
+                        }
+                    );
+                    If(
+                        _estadoAnterior <> _estadoSeleccionadoLead,
+                        Patch(
+                            tab_hist_cambioEstd_cuenta,
+                            Defaults(tab_hist_cambioEstd_cuenta),
+                            {
+                                Cuenta: {
+                                    Id: _itemSeleccionadoLead.ID,
+                                    Value: _itemSeleccionadoLead.RazonSocial
+                                },
+                                EstadoAnterior: {Value: _estadoAnterior},
+                                EstadoNuevo: {Value: _estadoSeleccionadoLead},
+                                FechaCambio: Now(),
+                                UsuarioResponsable: {
+                                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                    Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                    Department: "",
+                                    DisplayName: _infoUsuarioLoggeado.FullName,
+                                    Email: _infoUsuarioLoggeado.Email,
+                                    JobTitle: "",
+                                    Picture: ""
+                                }
+                            }
+                        )
+                    );
+                    ClearCollect(
+                        colLeads,
+                        Filter(tab_cuentas, ComercialAsignado.Email = _correoLoggeado)
+                    );
+                    Set(_itemSeleccionadoLead, LookUp(colLeads, ID = _itemSeleccionadoLead.ID));
+                    Set(_leadCreado, true);
+                    Set(_spinner, false);
+                    Notify("✓ Información actualizada exitosamente", NotificationType.Success, 6000)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="ACTUALIZAR"
+                  Visible: =_leadCreado && _datosVista
+                  Width: =200
+                  X: =777
+                  Y: =779
+            - Select_edit_mesColocMaq_leadCreado:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: |-
+                    =RGBA(
+                        _r_boton_claro_nw,
+                        _g_boton_claro_nw,
+                        _b_boton_claro_nw,
+                        _a_boton_claro_nw
+                    )
+                  ChevronHoverBackground: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: |-
+                    =If(
+                        !IsBlank(_maquinaSeleccionada),
+                        [LookUp(
+                            Choices(tab_maquinas_porCuenta.MesColocacionEstimado),
+                            Value = _maquinaSeleccionada.MesColocacionEstimado.Value
+                        )],
+                        Blank()
+                    )
+                  DisplayFields: =["Value"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =43
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: ="Seleccione mes de colocación"
+                  IsSearchable: =false
+                  Items: =Choices(tab_maquinas_porCuenta.MesColocacionEstimado)
+                  OnChange: |-
+                    =Set(
+                        _mesColocacionMaquinaSeleccionada,
+                        Self.Selected.Value
+                    )
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_maquinasVista
+                  Width: =399
+                  X: =351
+                  Y: =187
+            - Select_edit_estad_leadCread_creaLeads:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: |-
+                    =RGBA(
+                        _r_boton_claro_nw,
+                        _g_boton_claro_nw,
+                        _b_boton_claro_nw,
+                        _a_boton_claro_nw
+                    )
+                  ChevronHoverBackground: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoLead.EstadoCuenta]
+                  DisplayFields: =["Value"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =41
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  IsSearchable: =false
+                  Items: =Choices(tab_cuentas.EstadoCuenta)
+                  OnChange: =Set(_estadoSeleccionadoLead, Self.Selected.Value)
+                  OnSelect: =Set(_seleccion,true)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_leadCreado && _datosVista
+                  Width: =350
+                  X: =1028
+                  Y: =713
+            - Container_maquinasAsign_leadCreado:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =347
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: =_maquinasVista
+                  Width: =1360
+                  X: =82
+                  Y: =445
+                Children:
+                  - TextCanvas_title_nameMaqu_leadCreado:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        FontColor: =RGBA(85, 69, 49, 1)
+                        Height: =54
+                        Size: =25
+                        Text: ="Máquina"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =426
+                        X: =24
+                        Y: =20
+                  - TextCanvas_title_mesColoc_leadCreado:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        FontColor: =RGBA(85, 69, 49, 1)
+                        Height: =54
+                        Size: =25
+                        Text: ="Mes de colocación"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =426
+                        X: =858
+                        Y: =20
+                  - TextCanvas_title_consumMinMenMaq_leadCreado:
+                      Control: Text@0.0.51
+                      Properties:
+                        Align: ='TextCanvas.Align'.Center
+                        FontColor: =RGBA(85, 69, 49, 1)
+                        Height: =54
+                        Size: =25
+                        Text: ="Consumo mínimo mensual"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =426
+                        X: =438
+                        Y: =20
+                  - Rectangle_lineSeparated_titles_listMaq:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(218, 195, 177, 0.5)
+                        Height: =2
+                        Width: =1250
+                        X: =20
+                        Y: =80
+                  - Gallery_listMaquinsAsign_leadCreado:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =252
+                        Items: |-
+                          =Filter(
+                              colMaquinas,
+                              Cuenta.Id = _itemSeleccionadoLead.ID && (Status_maquina.Value = "Activa" || Status_maquina.Value = "Inactiva")
+                          )
+                        OnSelect: =
+                        TemplateSize: =66
+                        Width: =1270
+                        X: =20
+                        Y: =95
+                      Children:
+                        - Button_viewBack_maquCreadas_leadCreado:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =ColorFade(Self.Fill, -55%)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: |-
+                                =RGBA(
+                                    _r_fondo_claro,
+                                    _g_fondo_claro,
+                                    _b_fondo_claro,
+                                    _a_fondo_claro
+                                )
+                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                              DisplayMode: =DisplayMode.View
+                              Fill: =RGBA(207, 182, 157, 0.2)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(255, 255, 255, 1)
+                              HoverFill: =Self.Fill
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Size: =18
+                              Text: =
+                              Width: =1250
+                              X: =3
+                        - Label_namMaq_maquCreadas_leadCreado:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              OnSelect: =Select(Parent)
+                              Size: =18
+                              Text: =ThisItem.TipoMaquina.Value
+                              Width: =425
+                        - Label_consMinMen_maquCreadas_leadCreado:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              OnSelect: =Select(Parent)
+                              Size: =18
+                              Text: =ThisItem.ConsumoMinimoSugerido
+                              Width: =296
+                              X: =480
+                        - Label_mesColoc_maquCreadas_leadCreado:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =54
+                              OnSelect: =Select(Parent)
+                              Size: =18
+                              Text: =ThisItem.MesColocacionEstimado.Value
+                              Width: =393
+                              X: =851
+                        - Icon_trash_list_maquCreadas_leadCreado:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(0, 0, 0, 1)
+                              Height: =46
+                              Icon: =Icon.Trash
+                              OnSelect: |-
+                                =// Capturar el item antes de cualquier operación
+                                Set(
+                                    _itemAEliminar,
+                                    ThisItem
+                                );
+                                // Validar que se haya seleccionado la máquina y que haya motivo de eliminación
+                                If(
+                                    IsBlank(_maquinaSeleccionada) || _maquinaSeleccionada.ID <> _itemAEliminar.ID,
+                                                        // Si no está seleccionada la máquina correcta, mostrar mensaje y limpiar campo
+                                    Notify(
+                                        "⚠ Primero debe seleccionar la máquina haciendo clic en la fila",
+                                        NotificationType.Warning,
+                                        6000
+                                    );
+                                    Set(
+                                        _motivoEliminacionIngresado,
+                                        false
+                                    );
+                                    Reset(TextInp_edit_obsvMaqu_leadCreado),
+                                    !_motivoEliminacionIngresado || IsBlank(TextInp_edit_obsvMaqu_leadCreado.Text) || TextInp_edit_obsvMaqu_leadCreado.Text = _maquinaSeleccionada.DescripcionCondiciones,
+                                                        // Si no se ha ingresado un motivo nuevo de eliminación, limpiar campo y mostrar mensaje
+                                    Reset(TextInp_edit_obsvMaqu_leadCreado);
+                                    Set(
+                                        _motivoEliminacionIngresado,
+                                        false
+                                    );
+                                    Notify(
+                                        "⚠ Debe ingresar el 'Motivo de Eliminación' en el campo 'Observaciones de máquina'. El campo ha sido limpiado para que ingrese el motivo.",
+                                        NotificationType.Warning,
+                                        6000
+                                    ),
+                                                        // Si pasa las validaciones, proceder con la eliminación
+                                // Cambiar estado a Eliminada en tab_maquinas_porCuenta usando LookUp
+                                    Patch(
+                                        tab_maquinas_porCuenta,
+                                        LookUp(
+                                            tab_maquinas_porCuenta,
+                                            ID = _itemAEliminar.ID
+                                        ),
+                                        {
+                                            Status_maquina: {Value: "Eliminada"},
+                                            DescripcionCondiciones: "ELIMINADA - Motivo: " & TextInp_edit_obsvMaqu_leadCreado.Text
+                                        }
+                                    );
+                                    // Actualizar el registro existente en histórico (NO crear nuevo)
+                                Patch(
+                                        tab_hist_cambioEstd_maqu,
+                                        LookUp(
+                                            tab_hist_cambioEstd_maqu,
+                                            Maquina.Id = _itemAEliminar.ID
+                                        ),
+                                        {
+                                            StatusMaquina: {Value: "Eliminada"},
+                                            FechaCambio: Now(),
+                                            UsuarioResponsable: {
+                                                '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                                Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                                Department: "",
+                                                DisplayName: _infoUsuarioLoggeado.FullName,
+                                                Email: _infoUsuarioLoggeado.Email,
+                                                JobTitle: "",
+                                                Picture: ""
+                                            },
+                                            Comentario: "Máquina eliminada - Motivo: " & TextInp_edit_obsvMaqu_leadCreado.Text
+                                        }
+                                    );
+                                    // Remover solo el item eliminado de la colección (NO recargar todo)
+                                RemoveIf(
+                                        colMaquinas,
+                                        ID = _itemAEliminar.ID
+                                    );
+                                    // Limpiar selección y resetear campo de observaciones
+                                Set(
+                                        _maquinaSeleccionada,
+                                        Blank()
+                                    );
+                                    Set(
+                                        _motivoEliminacionIngresado,
+                                        false
+                                    );
+                                    Reset(TextInp_edit_obsvMaqu_leadCreado);
+                                    Notify(
+                                        "✓ Máquina eliminada exitosamente",
+                                        NotificationType.Success,
+                                        6000
+                                    )
+                                )
+                              Width: =40
+                              X: =1196
+                        - Button_edit_list_maquSelec_leadCreado:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.Transparent
+                              Color: =Color.Transparent
+                              DisabledBorderColor: =Color.Transparent
+                              DisabledColor: =Color.Transparent
+                              DisabledFill: =Color.Transparent
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =66
+                              HoverBorderColor: =Color.Transparent
+                              HoverColor: =Color.Transparent
+                              HoverFill: =Color.Transparent
+                              OnSelect: |-
+                                =Set(
+                                    _maquinaSeleccionada,
+                                    ThisItem
+                                );
+                                Set(
+                                    _tipoMaquinaSeleccionada,
+                                    LookUp(
+                                        colNombreMaquinas,
+                                        ID = ThisItem.TipoMaquina.Id
+                                    )
+                                );
+                                Set(
+                                    _mesColocacionMaquinaSeleccionada,
+                                    ThisItem.MesColocacionEstimado.Value
+                                );
+                                Set(
+                                    _tieneCondicioEspecialesMaquinaSelecionada,
+                                    If(
+                                        ThisItem.TieneCondicionesEspeciales,
+                                        1,
+                                        0
+                                    )
+                                )
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Width: =1196
+            - Label_condEspcMaq_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =42
+                  Size: =20
+                  Text: ="Condiciones especiales:"
+                  Visible: =_maquinasVista
+                  Width: =337
+                  X: =790
+                  Y: =185
+            - TextInp_viewBack_condEspMaq_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionado.estatus_cuenta
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =55
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_maquinasVista
+                  Width: =315
+                  X: =1127
+                  Y: =180
+            - Select_edit_condEspMaq_leadCreado:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: |-
+                    =RGBA(
+                        _r_boton_claro_nw,
+                        _g_boton_claro_nw,
+                        _b_boton_claro_nw,
+                        _a_boton_claro_nw
+                    )
+                  ChevronHoverBackground: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: |-
+                    =If(
+                        !IsBlank(_maquinaSeleccionada),
+                        [If(
+                            _maquinaSeleccionada.TieneCondicionesEspeciales = true,
+                            "Sí",
+                            "No"
+                        )],
+                        Blank()
+                    )
+                  DisplayFields: =["Value"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =47
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  IsSearchable: =false
+                  Items: =["Sí","No"]
+                  OnChange: |-
+                    =Set(
+                        _tieneCondicioEspecialesMaquinaSelecionada,
+                        If(
+                            Self.Selected.Value = "Sí",
+                            1,
+                            Self.Selected.Value = "No",
+                            0
+                        )
+                    )
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_maquinasVista
+                  Width: =315
+                  X: =1129
+                  Y: =185
+            - Label_obsvMaqu_leadCreado:
+                Control: Label@2.5.1
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =79
+                  Size: =20
+                  Text: ="Observaciones de máquina:"
+                  Visible: =_maquinasVista
+                  Width: =207
+                  X: =71
+                  Y: =273
+            - TextInp_edit_obsvMaqu_leadCreado:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_maquinaSeleccionada.DescripcionCondiciones
+                  DelayOutput: =true
+                  Font: =Font.'Open Sans'
+                  Height: =142
+                  HintText: ="Ingrese observaciones, comentarios o condiciones especiales de la máquina"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  Mode: =TextMode.MultiLine
+                  OnChange: |-
+                    =// Marcar que el usuario ha ingresado un motivo de eliminación
+                    If(
+                        !IsBlank(Self.Text) && Self.Text <> _maquinaSeleccionada.DescripcionCondiciones,
+                        Set(
+                            _motivoEliminacionIngresado,
+                            true
+                        )
+                    )
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_maquinasVista
+                  Width: =943
+                  X: =278
+                  Y: =277
+            - Button_edit_Finalizar_ActSelec:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |-
+                    =If(
+                        IsBlank(TextInp_edit_actReali_creaLead.Text),
+                        Notify(
+                            "El campo de acciones debe estar diligenciado",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                        IsBlank(Select_edit_fechaAct_creaLead.SelectedDate),
+                        Notify(
+                            "Debe seleccionar una fecha de seguimiento",
+                            NotificationType.Warning,
+                            6000
+                        ),
+                        Patch(
+                            tab_seguimiento_porCuenta,
+                            LookUp(
+                                tab_seguimiento_porCuenta,
+                                ID = _actividadSeleccionada.ID
+                            ),
+                            {
+                                Anotaciones: TextInp_edit_actReali_creaLead.Text,
+                                Observaciones: TextInp_editView_obsvAct_creaLead.Text,
+                                Cuenta: {
+                                    Id: _itemSeleccionadoLead.ID,
+                                    Value: _itemSeleccionadoLead.RazonSocial
+                                },
+                                FechaSeguimiento: Select_edit_fechaAct_creaLead.SelectedDate,
+                                EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                                ComercialResponsable: {
+                                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                    Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                                    Department: "",
+                                    DisplayName: _infoUsuarioLoggeado.FullName,
+                                    Email: _infoUsuarioLoggeado.Email,
+                                    JobTitle: "",
+                                    Picture: ""
+                                },
+                                EstadoSeguimiento: {Value: "Completada"},
+                                RequiereAccion: false
+                            }
+                        );
+                        Set(
+                            _crearAgenda,
+                            false
+                        );
+                        Reset(TextInp_edit_actReali_creaLead);
+                        Reset(TextInp_editView_obsvAct_creaLead);
+                        Reset(Select_edit_fechaAct_creaLead);
+                        Set(
+                            _actividadSeleccionada,
+                            Blank()
+                        );
+                        Notify(
+                            "✓ Actividad finalizada exitosamente",
+                            NotificationType.Success,
+                            6000
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="FINALIZAR TAREA"
+                  Visible: =_crearAgenda && !_nuevaAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"
+                  Width: =246
+                  X: =1181
+                  Y: =116
+            - Label_fech_primAct_creaLead:
+                Control: Label@2.5.1
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Fecha"
+                  Visible: =_crearAgenda
+                  Width: =350
+                  X: =43
+                  Y: =295
+            - TextInp_edit_actReali_creaLead:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_actividadSeleccionada.Anotaciones
+                  DelayOutput: =true
+                  DisplayMode: |-
+                    =If(
+                        IsBlank(_actividadSeleccionada),
+                        DisplayMode.Edit,
+                        _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                  Font: =Font.'Open Sans'
+                  Height: =85
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  Mode: =TextMode.MultiLine
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_crearAgenda
+                  Width: =1384
+                  X: =45
+                  Y: =188
+            - Select_edit_fechaAct_creaLead:
+                Control: Classic/DatePicker@2.6.0
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  Color: =RGBA(85, 69, 49, 1)
+                  DefaultDate: =_actividadSeleccionada.FechaSeguimiento
+                  DisplayMode: |-
+                    =If(
+                        IsBlank(_actividadSeleccionada),
+                        DisplayMode.Edit,
+                        _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                  Fill: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  Height: =44
+                  IconBackground: =Color.Transparent
+                  IconFill: =RGBA(85, 69, 49, 1)
+                  InputTextPlaceholder: =
+                  OnChange: |-
+                    =// Solo validar si hay una fecha seleccionada (no es Blank)
+                    If(
+                        !IsBlank(Self.SelectedDate),
+                        If(
+                            _primeraAccion = 1 || _nuevaAgenda || (!IsBlank(_actividadSeleccionada) && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"),
+                            // Solo validar fechas para nueva agenda o primera acción
+                            If(
+                                Select_edit_fechaAct_creaLead.SelectedDate < Today(),
+                                Notify(
+                                    "⚠ Fecha no válida: Solo se permiten fechas desde hoy (" & Text(
+                                        Today(),
+                                        "dd/mm/yyyy"
+                                    ) & ") en adelante.",
+                                    NotificationType.Error,
+                                    6000
+                                ) && Reset(Self) && Set(
+                                    _fechaActivaSseleccionada,
+                                    Blank()
+                                ),
+                                Set(
+                                    _fechaActivaSseleccionada,
+                                    Self.SelectedDate
+                                )
+                            ),
+                        // Si no es primera acción ni nueva agenda, asignar directamente
+                            Set(
+                                _fechaActivaSseleccionada,
+                                Self.SelectedDate
+                            )
+                        ),
+                    // Si la fecha está en blanco (reset), limpiar la variable
+                        Set(
+                            _fechaActivaSseleccionada,
+                            Blank()
+                        )
+                    )
+                  Size: =16
+                  Visible: |-
+                    =
+
+                    _crearAgenda
+                  Width: =1346
+                  X: =58
+                  Y: =353
+            - TextInp_editView_obsvAct_creaLead:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Default: =_actividadSeleccionada.Observaciones
+                  DelayOutput: =true
+                  DisplayMode: |-
+                    =If(
+                        IsBlank(_actividadSeleccionada),
+                        DisplayMode.Edit,
+                        _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Lighter
+                  Height: =175
+                  HintText: ="Indicar mas información de la actividad a realizar (Opcional)"
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  Mode: =TextMode.MultiLine
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =15
+                  RadiusBottomRight: =15
+                  RadiusTopLeft: =15
+                  RadiusTopRight: =15
+                  Size: =16
+                  Tooltip: =
+                  Visible: |-
+                    =
+
+                    _crearAgenda
+                  Width: =1384
+                  X: =43
+                  Y: =479
+            - Button_edit_Cancel_asignMaqu_leadCrado:
+                Control: Classic/Button@2.2.0
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: =Set(_maquinaSeleccionada,Blank())
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="CANCELAR"
+                  Visible: =!IsBlank(_maquinaSeleccionada) && _maquinasVista
+                  Width: =180
+                  X: =1262
+                  Y: =322
+            - Select_edit_oportunidad_leadCreado:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCont5_Form_Oportun_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: |-
+                    =RGBA(
+                        _r_boton_claro_nw,
+                        _g_boton_claro_nw,
+                        _b_boton_claro_nw,
+                        _a_boton_claro_nw
+                    )
+                  ChevronHoverBackground: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: |-
+                    =If(
+                        !IsBlank(
+                            LookUp(
+                                tab_oportunidades_cuenta,
+                                Cuenta.Id = _itemSeleccionadoLead.ID
+                            )
+                        ),
+                        [
+                            LookUp(
+                                colOportunidad,
+                                ID = LookUp(
+                                    tab_oportunidades_cuenta,
+                                    Cuenta.Id = _itemSeleccionadoLead.ID
+                                ).TipoOportunidad.Id
+                            )
+                        ],
+                        []
+                    )
+                  DisplayFields: =["oportunidad"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =62
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  Items: =colOportunidad
+                  OnChange: |-
+                    =Set(
+                        _tipoOportunidadSeleccionada,
+                        Self.Selected
+                    )
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["oportunidad"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_oportunidadVista
+                  Width: =799
+                  X: =580
+                  Y: =164
+            - TextInp_view_fech_leadCread_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Default: =_itemSeleccionadoLead.FechaCreacionLead
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =30
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =14
+                  Tooltip: =
+                  Visible: |-
+                    =If(
+                        _leadCreado,
+                        true && _datosVista,
+                        false
+                    )
+                  Width: =267
+                  X: =491
+                  Y: =94
+            - Label_fech_leadCread_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Fecha creación de Lead:"
+                  Visible: |-
+                    =If(_leadCreado,
+
+                    true && _datosVista,
+                    false)
+                  Width: =350
+                  X: =141
+                  Y: =96
+            - Container_Banner_RazSoc_leadCreado:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Group: GroupCont3_viewAutomatica_Datos_LeadCreado
+                Properties:
+                  BorderStyle: =BorderStyle.None
+                  DropShadow: =DropShadow.Semibold
+                  Height: =50
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: |-
+                    =If(_leadCreado,
+
+                    true,
+                    false)
+                  Width: =1250
+                  X: =140
+                  Y: =30
+                Children:
+                  - Image_rounded_rectangle_coffeDark:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =50
+                        Image: ='Rounded rectangle'
+                        ImagePosition: =ImagePosition.Fill
+                        Width: =1250
+                  - Button_view_back_RS_leadCreado_creaLeads:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderThickness: =1
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =Color.Transparent
+                        Font: =Font.Lato
+                        FontWeight: =FontWeight.Normal
+                        Height: =50
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(0, 0, 0, 1)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: =
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Color.Black
+                        PressedFill: =ColorFade(Self.Color, 1)
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Size: =22
+                        Text: =_itemSeleccionadoLead.RazonSocial
+                        Width: =1250
+            - Button_edit_save_FirstAct_leadCreado:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |
+                    =// CREAR LEAD + PRIMERA AGENDA (Actividad) SIMULTÁNEAMENTE (PATRÓN ORIGINAL)
+                    // Hacer visible spiner para carga 
+                    Set(
+                        _spinner,
+                        true
+                    );
+                    // 1. VALIDACIONES DE CAMPOS DE ACTIVIDAD
+                    If(
+                        _nuevaAgenda,
+                        If(
+                            IsBlank(TextInp_edit_actReali_creaLead.Text),
+                            Notify(
+                                "El campo de acciones debe estar diligenciado",
+                                NotificationType.Warning,
+                                6000
+                            ),
+                            IsBlank(Select_edit_fechaAct_creaLead.SelectedDate),
+                            Notify(
+                                "Debe seleccionar una fecha de seguimiento",
+                                NotificationType.Warning,
+                                6000
+                            ),
+                            // 2. CREAR CUENTA EN tab_cuentas (NUEVO MODELO RELACIONAL)
+                            Set(
+                                _itemSeleccionadoLead,
+                                Patch(
+                                    tab_cuentas,
+                                    Defaults(tab_cuentas),
+                                    {
+                                        NIT: TextInp_editView_nitClient_creaLeads.Text,
+                                        RazonSocial: TextInp_razon_social_creaLeads.Text,
+                                        EstadoCuenta: {Value: "Lead"},
+                                        FechaCreacionLead: Now(),
+                                        Ciudad: {
+                                            Id: Select_edit_ciudades_creaLeads.Selected.ID,
+                                            Value: Select_edit_ciudades_creaLeads.Selected.Ciudad0
+                                        },
+                                        Segmento: {
+                                            Id: Select_edit_segmento_creaLeads.Selected.ID,
+                                            Value: Select_edit_segmento_creaLeads.Selected.segmento
+                                        },
+                                        Subsegmento: {
+                                            Id: Select_edit_subsegmento_creaLeads.Selected.ID,
+                                            Value: Select_edit_subsegmento_creaLeads.Selected.sub_segmento
+                                        },
+                                        EstadoNegociacion: {
+                                            Id: 1,
+                                            Value: "Lead"
+                                        },
+                                        Canal: {
+                                            Id: _canalComercial.canal_relacionado.Id,
+                                            Value: TextInp_view_canalCom_creaLeads.Text
+                                        },
+                                        ComercialAsignado: {
+                                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                            Claims: "i:0#.f|membership|" & _infoUsuarioLoggeado.Email,
+                                            Department: "",
+                                            DisplayName: _infoUsuarioLoggeado.FullName,
+                                            Email: _infoUsuarioLoggeado.Email,
+                                            JobTitle: "",
+                                            Picture: ""
+                                        },
+                                        NombreContacto: TextInp_editView_nombreCont_creaLeads.Text,
+                                        ApellidosContacto: TextInp_editView_apellidosCont_creaLeads.Text,
+                                        CargoContacto: TextInp_editView_cargoCont_creaLeads.Text,
+                                        EmailContacto: TextInp_editView_emailCont_creaLeads.Text,
+                                        estado_interes: {Value: _interesSeleccionadoLead},
+                                        RequiereCredito: false,
+                                        RequiereDocumentos: false,
+                                        CarpetaCreada: false,
+                                        DocumentosAprobadosBackOffice: false,
+                                        DocumentosAprobadosFinanzas: false,
+                                        Status_cuenta: {Value: "Inactivo"}
+                                    }
+                                )
+                            );
+                            // 3. INICIALIZACION Y DECLARACION DE VARIABLES PARA USO POSTERIOR
+                    Set(
+                                _cuentaCreada,
+                                _itemSeleccionadoLead
+                            );
+                            //variable relacionada a los datos del lead creado
+                    // variable lead creado
+                    Set(
+                                _leadCreado,
+                                true
+                            );
+                            //guardar estado de lead
+                    Set(
+                                _estadoSeleccionadoLead,
+                                "Lead"
+                            );
+                            // 4. CREAR PRIMERA ACTIVIDAD EN tab_seguimiento_porCuenta
+                    Patch(
+                                tab_seguimiento_porCuenta,
+                                Defaults(tab_seguimiento_porCuenta),
+                                {
+                                    Anotaciones: TextInp_edit_actReali_creaLead.Text,
+                                    Observaciones: TextInp_editView_obsvAct_creaLead.Text,
+                                    Cuenta: {
+                                        Id: _itemSeleccionadoLead.ID,
+                                        Value: _itemSeleccionadoLead.RazonSocial
+                                    },
+                                    FechaSeguimiento: Select_edit_fechaAct_creaLead.SelectedDate,
+                                    EstadoCuentaEnSeguimiento: {Value: "Lead"},
+                                    ComercialResponsable: {
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                        Claims: "i:0#.f|membership|" & _infoUsuarioLoggeado.Email,
+                                        Department: "",
+                                        DisplayName: _infoUsuarioLoggeado.FullName,
+                                        Email: _infoUsuarioLoggeado.Email,
+                                        JobTitle: "",
+                                        Picture: ""
+                                    },
+                                    EstadoSeguimiento: {Value: "Pendiente"},
+                                    RequiereAccion: true
+                                }
+                            );
+                            // 5. REGISTRO DE LEAD CREADO EN HISTÓRICO tab_hist_cambioEstd_cuenta
+                    Patch(
+                                tab_hist_cambioEstd_cuenta,
+                                Defaults(tab_hist_cambioEstd_cuenta),
+                                {
+                                    Cuenta: {
+                                        Id: _itemSeleccionadoLead.ID,
+                                        Value: _itemSeleccionadoLead.RazonSocial
+                                    },
+                                    EstadoAnterior: {Value: "Lead"},
+                                    EstadoNuevo: {Value: Blank()},
+                                    UsuarioResponsable: {
+                                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                                        Claims: "i:0#.f|membership|" & _infoUsuarioLoggeado.Email,
+                                        Department: "",
+                                        DisplayName: _infoUsuarioLoggeado.FullName,
+                                        Email: _infoUsuarioLoggeado.Email,
+                                        JobTitle: "",
+                                        Picture: ""
+                                    }
+                                }
+                            );
+                            //coleccion leads creados
+                    ClearCollect(
+                                colLeads,
+                                Filter(
+                                    tab_cuentas,
+                                    ComercialAsignado.Email = _correoLoggeado
+                                )
+                            );
+                            // 6. RESET FORMULARIO DE ACTIVIDAD
+                    Set(
+                                _crearAgenda,
+                                false
+                            );
+                            Reset(TextInp_edit_actReali_creaLead);
+                            Reset(TextInp_editView_obsvAct_creaLead);
+                            Reset(Select_edit_fechaAct_creaLead);
+                            Set(
+                                _primeraAccion,
+                                0
+                            );
+                            Set(
+                                _actividadSeleccionada,
+                                Blank()
+                            );
+                            Set(
+                                _spinner,
+                                false
+                            );
+                            Notify(
+                                "✓ Lead y actividad creados exitosamente",
+                                NotificationType.Success,
+                                6000
+                            )
+                        )
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="GUARDAR"
+                  Visible: =_primeraAccion = 1
+                  Width: =150
+                  X: =772
+                  Y: =702
+            - TextCanvas_edit_Explain_primAct_creaLead:
+                Control: Text@0.0.51
+                Group: GroupCont2_Form_Prim_Actividad_LeadEnCrea
+                Properties:
+                  FontColor: =RGBA(184, 0, 0, 1)
+                  Size: =20
+                  Text: ="Es necesario crear una agenda para finalizar la creación del lead; de lo contrario, no se podrá completar el proceso."
+                  Visible: =_primeraAccion = 1
+                  Width: =1070
+                  X: =226
+                  Y: =779
+            - Select_edit_namMaqu_leadCreado:
+                Control: Classic/ComboBox@2.4.0
+                Group: GroupCon6_Form_Maquinas_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: |-
+                    =RGBA(
+                        _r_boton_claro_nw,
+                        _g_boton_claro_nw,
+                        _b_boton_claro_nw,
+                        _a_boton_claro_nw
+                    )
+                  ChevronHoverBackground: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: |-
+                    =[
+                        If(
+                            !IsBlank(_maquinaSeleccionada),
+                            LookUp(
+                                colNombreMaquinas,
+                                ID = _maquinaSeleccionada.TipoMaquina.Id
+                            )
+                        )
+                    ]
+                  DisplayFields: =["nombre_maquina"]
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: |-
+                    =RGBA(
+                        _r_fondo_claro,
+                        _g_fondo_claro,
+                        _b_fondo_claro,
+                        _a_fondo_claro
+                    )
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: ="Seleccione tipo de máquina"
+                  IsSearchable: =false
+                  Items: =colNombreMaquinas
+                  OnChange: |-
+                    =Set(
+                        _tipoMaquinaSeleccionada,
+                        Self.Selected
+                    )
+                    /*If(
+                        _seleccion;
+                        Set(
+                            _nombreMaquinaSeleccionada;
+                            Self.Selected.nombre_maquina
+                        );
+                        Set(
+                            _seleccion;
+                            false
+                        )
+                    )*/
+                  OnSelect: =Set(_seleccion,true)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["nombre_maquina"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =14
+                  Visible: =_maquinasVista
+                  Width: =450
+                  X: =239
+                  Y: =116
+            - Label_nitCliente_creaLeads:
+                Control: Label@2.5.1
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: |-
+                    ="NIT: "
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =350
+                  X: =130
+                  Y: =215
+            - TextInp_editView_nitClient_creaLeads:
+                Control: Classic/TextInput@2.3.2
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Format: =TextFormat.Number
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  OnChange: |
+                    =Set(
+                        _spinner,
+                        true
+                    );
+                    // hacer patch para crear el lead 
+                    Set(
+                        _itemSeleccionadoLead,
+                        Last(
+                            Filter(
+                                tab_leads,
+                                id_nesp-corp_nit = Value(Self.Text)
+                            )
+                        )
+                    );
+                    Set(
+                        _itemSeleccionadoLeadCiudad,
+                        _itemSeleccionadoLead.ciudad
+                    );
+                    Set(
+                        _itemSeleccionadoLeadSegmento,
+                        _itemSeleccionadoLead.segmento
+                    );
+                    Set(
+                        _itemSeleccionadoLeadSubSegmento,
+                        _itemSeleccionadoLead.subsegmento
+                    );
+                    Set(
+                        _requiereDocumentos,
+                        If(
+                            IsBlank(_itemSeleccionadoLead),
+                            1,
+                            0
+                        )
+                    );
+                    Set(
+                        _spinner,
+                        false
+                    );
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista && !_crearAgenda
+                  Width: =900
+                  X: =477
+                  Y: =215
+            - Button_cancelCreat_creaLeads:
+                Control: Classic/Button@2.2.0
+                Group: GroupCont1_Form_Creacion_Lead
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(186, 156, 137, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |-
+                    =// Volver a la pantalla de leads sin guardar cambios
+                    Navigate('4_pantalla_leads_desktop');
+                    // Limpiar formulario
+                    Reset(TextInp_editView_nitClient_creaLeads);
+                    Reset(TextInp_razon_social_creaLeads);
+                    Reset(Select_edit_ciudades_creaLeads);
+                    Reset(Select_edit_segmento_creaLeads);
+                    Reset(Select_edit_subsegmento_creaLeads);
+                    Reset(TextInp_editView_nombreCont_creaLeads);
+                    Reset(TextInp_editView_apellidosCont_creaLeads);
+                    Reset(TextInp_editView_cargoCont_creaLeads);
+                    Reset(TextInp_editView_emailCont_creaLeads);
+                    Reset(Select_edit_estadoInters_creaLeads);
+                    // Limpiar variables
+                    Set(
+                        _itemSeleccionadoLeadCiudad,
+                        Blank()
+                    );
+                    Set(
+                        _itemSeleccionadoLeadSegmento,
+                        Blank()
+                    );
+                    Set(
+                        _itemSeleccionadoLeadSubSegmento,
+                        Blank()
+                    );
+                    Set(
+                        _interesSeleccionadoLead,
+                        Blank()
+                    );
+                    Set(
+                        _leadCreado,
+                        false
+                    );
+                    Set(
+                        _cuentaCreada,
+                        Blank()
+                    );
+                    Notify(
+                        "Operación cancelada",
+                        NotificationType.Warning,
+                        3000
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="Cancelar Acción"
+                  Visible: =_datosVista && !_crearAgenda && _leadCreado = false
+                  Width: =206
+                  X: =553
+                  Y: =786
+            - Icon_Reset_filtros_act_leadCreado:
+                Control: Classic/Icon@2.5.0
+                Group: GroupCont4_List_SeguimientoAct_LeadCreado
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(110, 93, 71, 1)
+                  Height: =42
+                  Icon: =Icon.Erase
+                  OnSelect: |-
+                    =Set(
+                        _limpiandoFiltroFecha,
+                        true
+                    );
+                    Reset(Select_edit_fechActv_leadCreado);
+                    Set(
+                        _fechaFiltroActividades,
+                        Blank()
+                    );
+                    Set(
+                        _limpiandoFiltroFecha,
+                        false
+                    )
+                  Tooltip: ="Limpiar filtro de fecha"
+                  Visible: =_seguimientoVista && !IsBlank(_fechaFiltroActividades) && !_crearAgenda
+                  Width: =45
+                  X: =891
+                  Y: =161
+      - Nav_bar_creaLeads:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Group: Group1_Body_NavBar_Header
+          Properties:
+            BorderColor: =RGBA(218, 195, 177, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(218, 195, 177, 1)
+            Height: =935
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =334
+            X: =23
+            Y: =125
+          Children:
+            - Gallery_nav_bar_creaLeads:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =814
+                  Items: =col_navegacion_menu
+                  ShowScrollbar: =false
+                  TemplateSize: =78
+                  Width: =303
+                  X: =27
+                  Y: =26
+                Children:
+                  - Container_selection_mods_creaLeads:
+                      Control: GroupContainer@1.3.0
+                      Variant: ManualLayout
+                      Properties:
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =If(ThisItem.ID = _idSeleccionadoPantalla, DropShadow.Semibold, DropShadow.None)
+                        Height: =70
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =283
+                        X: =8
+                      Children:
+                        - Rectangle_undergr_mods_creaLeads:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              Height: =70
+                              OnSelect: =
+                              Visible: =ThisItem.ID = _idSeleccionadoPantalla
+                              Width: =283
+                  - Button_mods_creaLeads:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Align: =Align.Left
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledColor: =Color.Transparent
+                        Fill: =Color.Transparent
+                        Font: =Font.'Open Sans'
+                        Height: =71
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: |
+                          =Set(_idSeleccionadoPantalla,ThisItem.ID);
+
+                          Navigate(ThisItem.pantalla)
+                        PaddingLeft: =60
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Size: =20
+                        Text: =ThisItem.nombre
+                        Width: =283
+                        X: =8
+                  - Image_icon_mods_creaLeads:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =35
+                        Image: =ThisItem.img
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =35
+                        X: =22
+                        Y: =18
+                  - Rectangle_mods_creaLeads:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        Height: =71
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =283
+                        X: =8
+      - body_load_creaLeads:
+          Control: Rectangle@2.3.0
+          Group: Spinner_load_creaLeads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(243, 239, 230, 0.8)
+            Height: =1070
+            Visible: =_spinner
+            Width: =1920
+      - gif_load_creaLeads:
+          Control: Image@2.2.3
+          Group: Spinner_load_creaLeads
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =432
+            Image: ='Gif nesspreso'
+            Visible: =_spinner
+            Width: =960
+            X: =480
+            Y: =316

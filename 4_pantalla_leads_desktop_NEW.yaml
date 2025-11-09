@@ -154,10 +154,9 @@ Screens:
                         BorderStyle: =BorderStyle.None
                         Height: =514
                         Items: |-
-                          =SortByColumns(
-                          If(
-                              IsBlank(_filter);
-                              // Si no hay filtro activo; ordenar por ID descendente (más reciente primero)
+                          =If(
+                              IsBlank(_tipoOrden);
+                              // Si no hay ordenamiento activo; ordenar por ID descendente (más reciente primero)
                               SortByColumns(
                                   If(
                                       _rolUsuarioLoggeado = 6;
@@ -178,26 +177,73 @@ Screens:
                                   "ID";
                                   Descending
                               );
-                              // Si hay filtro activo; usar el ordenamiento dinámico
-                              If(
-                                  _rolUsuarioLoggeado = 6;
-                                  Filter(
-                                      tab_cuentas;
-                                      EstadoCuenta.Value = "Lead";
-                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
-                                      IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                              // Ordenamiento dinámico según tipo
+                              Switch(
+                                  _tipoOrden;
+                                  1; // RazonSocial
+                                  SortByColumns(
+                                      If(
+                                          _rolUsuarioLoggeado = 6;
+                                          Filter(
+                                              tab_cuentas;
+                                              EstadoCuenta.Value = "Lead";
+                                              IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                              IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                          );
+                                          Filter(
+                                              tab_cuentas;
+                                              EstadoCuenta.Value = "Lead";
+                                              IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                              IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                              ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
+                                          )
+                                      );
+                                      "RazonSocial";
+                                      _order
                                   );
-                                  Filter(
-                                      tab_cuentas;
-                                      EstadoCuenta.Value = "Lead";
-                                      IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
-                                      IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
-                                      ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
+                                  2; // ID (para Actividad y Fecha)
+                                  SortByColumns(
+                                      If(
+                                          _rolUsuarioLoggeado = 6;
+                                          Filter(
+                                              tab_cuentas;
+                                              EstadoCuenta.Value = "Lead";
+                                              IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                              IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                          );
+                                          Filter(
+                                              tab_cuentas;
+                                              EstadoCuenta.Value = "Lead";
+                                              IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                              IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                              ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
+                                          )
+                                      );
+                                      "ID";
+                                      _order
+                                  );
+                                  // Default: ordenar por ID descendente
+                                  SortByColumns(
+                                      If(
+                                          _rolUsuarioLoggeado = 6;
+                                          Filter(
+                                              tab_cuentas;
+                                              EstadoCuenta.Value = "Lead";
+                                              IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                              IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                          );
+                                          Filter(
+                                              tab_cuentas;
+                                              EstadoCuenta.Value = "Lead";
+                                              IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial;
+                                              IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value;
+                                              ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
+                                          )
+                                      );
+                                      "ID";
+                                      Descending
                                   )
                               )
-                          );
-                          _filter;
-                          _order
                           )
                         OnSelect: =
                         TabIndex: =0
@@ -381,16 +427,16 @@ Screens:
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSegmento,
-                                    _itemSeleccionadoLead.Segmento
+                                    _itemSeleccionadoLead.segmento
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSubSegmento,
-                                    _itemSeleccionadoLead.Subsegmento
+                                    _itemSeleccionadoLead.subsegmento
                                 );
-                                // Set(
-                                //     _itemSeleccionadoLeadModeloComercial;
-                                //     _itemSeleccionadoLead.ModeloComercial
-                                // );
+                                Set(
+                                    _itemSeleccionadoLeadModeloComercial;
+                                    _itemSeleccionadoLead.op_modelo_comercial
+                                );
                                 Set(
                                     _estadoSeleccionadoLead,
                                     _itemSeleccionadoLead.EstadoCuenta.Value
@@ -516,9 +562,9 @@ Screens:
                         Icon: =Icon.ArrowUp
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "RazonSocial"
-                          );
+                              _tipoOrden;
+                              1
+                          );;
                           Set(
                               _order;
                               Ascending
@@ -536,9 +582,9 @@ Screens:
                         Icon: =Icon.ArrowDown
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "RazonSocial"
-                          );
+                              _tipoOrden;
+                              1
+                          );;
                           Set(
                               _order;
                               Descending
@@ -556,9 +602,9 @@ Screens:
                         Icon: =Icon.ArrowUp
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "ID"
-                          );
+                              _tipoOrden;
+                              2
+                          );;
                           Set(
                               _order;
                               Ascending
@@ -576,9 +622,9 @@ Screens:
                         Icon: =Icon.ArrowDown
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "ID"
-                          );
+                              _tipoOrden;
+                              2
+                          );;
                           Set(
                               _order;
                               Descending
@@ -596,9 +642,9 @@ Screens:
                         Icon: =Icon.ArrowUp
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "ID"
-                          );
+                              _tipoOrden;
+                              2
+                          );;
                           Set(
                               _order;
                               Ascending
@@ -616,9 +662,9 @@ Screens:
                         Icon: =Icon.ArrowDown
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "ID"
-                          );
+                              _tipoOrden;
+                              2
+                          );;
                           Set(
                               _order;
                               Descending
@@ -636,9 +682,9 @@ Screens:
                         Icon: =Icon.ArrowUp
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "estado_interes.Value"
-                          );
+                              _tipoOrden;
+                              3
+                          );;
                           Set(
                               _order;
                               Ascending
@@ -656,9 +702,9 @@ Screens:
                         Icon: =Icon.ArrowDown
                         OnSelect: |-
                           =Set(
-                              _filter;
-                              "estado_interes.Value"
-                          );
+                              _tipoOrden;
+                              3
+                          );;
                           Set(
                               _order;
                               Descending

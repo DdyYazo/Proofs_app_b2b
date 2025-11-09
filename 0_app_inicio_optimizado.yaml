@@ -38,9 +38,9 @@ Set(
         )
     )
 );;
-// Normalización de dominio para usuarios con @nestle.com y @nesp-corp.com
+// Normalización de dominio para usuarios con @n est-corp.com y @nesp-corp.com
 If(
-    _dominioUsuario = "nestle.com";
+    _dominioUsuario = "n est-corp.com";
     Set(
         _correoLoggeadoNormalizado;
         Left(
