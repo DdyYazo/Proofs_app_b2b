@@ -41,7 +41,7 @@ Screens:
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             Height: =80
-            Image: =nesp-corp
+            Image: =nespresso
             Width: =500
             X: =811
             Y: =10
@@ -1264,6 +1264,7 @@ Screens:
                             Ultima_actualizacion_cuenta: Now()
                         }
                     );
+                    //Alimentar historica
                     If(
                         _estadoAnterior <> _estadoSeleccionadoLead,
                         Patch(
@@ -1276,7 +1277,7 @@ Screens:
                                 },
                                 EstadoAnterior: {Value: _estadoAnterior},
                                 EstadoNuevo: {Value: _estadoSeleccionadoLead},
-                                FechaCambio: Now(),
+                                FechaCambioProspecto: Now(),
                                 UsuarioResponsable: {
                                     '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
                                     Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
@@ -1289,7 +1290,7 @@ Screens:
                             }
                         );
                         // Actualizar estado en tab_seguimiento_porCuenta
-                        ForAll(
+                    ForAll(
                             Filter(
                                 tab_seguimiento_porCuenta,
                                 Cuenta.Id = _itemSeleccionadoLead.ID
@@ -1301,7 +1302,7 @@ Screens:
                             )
                         );
                         // Actualizar estado en tab_oportunidades_cuenta
-                        ForAll(
+                    ForAll(
                             Filter(
                                 tab_oportunidades_cuenta,
                                 Cuenta.Id = _itemSeleccionadoLead.ID
@@ -1313,7 +1314,7 @@ Screens:
                             )
                         );
                         // Actualizar estado en tab_maquinas_porCuenta
-                        ForAll(
+                    ForAll(
                             Filter(
                                 tab_maquinas_porCuenta,
                                 Cuenta.Id = _itemSeleccionadoLead.ID
@@ -1324,10 +1325,13 @@ Screens:
                                 {EstadoActualCuenta: {Value: _estadoSeleccionadoLead}}
                             )
                         );
-                        // Si el nuevo estado es Prospecto, navegar a pantalla de prospectos
-                        If(
+                        // Si el nuevo estado es Prospecto; navegar a pantalla de prospectos
+                    If(
                             _estadoSeleccionadoLead = "Prospecto",
-                            Navigate('5_pantalla_prospectos_desktop', ScreenTransition.Fade)
+                            Navigate(
+                                '5_pantalla_prospectos_desktop',
+                                ScreenTransition.Fade
+                            )
                         )
                     );
                     Set(

@@ -56,7 +56,7 @@ Screens:
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             Height: =80
-            Image: =nesp-corp
+            Image: =nespresso
             Width: =500
             X: =811
             Y: =10
@@ -534,7 +534,7 @@ Screens:
                                     IsBlank(
                                         LookUp(
                                             tab_cliente,
-                                            id_nesp-corp = _itemSeleccionadoProspecto1.id_nesp-corp_nit
+                                            id_nespresso = _itemSeleccionadoProspecto1.id_nespresso_nit
                                         )
                                     )
                                 );
@@ -553,7 +553,7 @@ Screens:
                                     colMaquinas,
                                     Filter(
                                         tab_maquinas_por_cliente,
-                                        fk_id_cliente_nesp-corp = _itemSeleccionadoProspecto1.ID
+                                        fk_id_cliente_nespresso = _itemSeleccionadoProspecto1.ID
                                     )
                                 );
                                 //Coleccion para seguimiento comercial muestra 
