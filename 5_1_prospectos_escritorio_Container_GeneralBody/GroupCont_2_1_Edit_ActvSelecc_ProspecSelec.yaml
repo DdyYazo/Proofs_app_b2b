@@ -12,7 +12,13 @@
       HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
-      OnSelect: =Set(_crearAgenda,false)
+      OnSelect: |-
+        =Set(_crearAgenda, false);
+        Set(_actividadSeleccionada, Blank());
+        // Resetear los campos cuando se cancela
+        Reset(TextInp_edit_ActReali_verProspec);
+        Reset(Select_edit_fechaAct_verProspec);
+        Reset(TextInp_editView_obsvAct_verProspec)
       PressedBorderColor: =Self.Fill
       PressedColor: =Self.Fill
       PressedFill: =Self.Color
@@ -40,7 +46,76 @@
       HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
-      OnSelect: "=// crear agenda para el lead\r\n\r\n\r\n\r\n\r\nIf(_nuevaAgenda, \r\n// validacion vacio\r\nIf(\r\n    IsBlank(TextInp_edit_ActReali_verProspec.Text),\r\n    Notify(\r\n        \"El campo de acciones debe estar diligenciado\",\r\n        NotificationType.Warning,\r\n        6000\r\n    ),\r\n    IsBlank(Select_edit_fechaAct_verProspec.SelectedDate),\r\n    Notify(\r\n        \"Debe seleccionar una fecha de seguimiento\",\r\n        NotificationType.Warning,\r\n        6000\r\n    ),\r\n    Patch(\r\n        tab_seguimiento,\r\n        Defaults(tab_seguimiento),\r\n        {\r\n            anotaciones: TextInp_edit_ActReali_verProspec.Text,\r\n            observaciones: TextInp_editView_obsvAct_verProspec.Text,\r\n            fk_id_lead: _itemSeleccionadoProspecto1.ID,\r\n            fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,\r\n            nombre_comercial:_itemSeleccionadoProspecto1.razon_social_prospecto,\r\n            correo_responsable:_correoLoggeado,\r\n            estado_seguimiento:1,\r\n            fk_tipo_cliente:2\r\n        }\r\n    );\r\n\r\n    // reset componentes false modal\r\n    Set(_crearAgenda,false);\r\n\r\n    Reset(TextInp_edit_ActReali_verProspec);\r\n    Reset(TextInp_editView_obsvAct_verProspec);\r\n    Reset(Select_edit_fechaAct_verProspec);\r\n\r\n    //Coleccion para seguimiento comercial muestra \r\nClearCollect(\r\n    colSeguimiento,\r\n    Filter(\r\n        tab_seguimiento,\r\n        fk_id_lead = _itemSeleccionadoProspecto1.ID\r\n    )\r\n);\r\n),\r\n\r\n// editar tarea\r\n\r\nIf(\r\n    IsBlank(TextInp_edit_ActReali_verProspec.Text),\r\n    Notify(\r\n        \"El campo de acciones debe estar diligenciado\",\r\n        NotificationType.Warning,\r\n        6000\r\n    ),\r\n    IsBlank(Select_edit_fechaAct_verProspec.SelectedDate),\r\n    Notify(\r\n        \"Debe seleccionar una fecha de seguimiento\",\r\n        NotificationType.Warning,\r\n        6000\r\n    ),\r\n    Patch(\r\n        tab_seguimiento,\r\n        LookUp(tab_seguimiento, ID = _actividadSeleccionada.ID),\r\n        {\r\n            anotaciones: TextInp_edit_ActReali_verProspec.Text,\r\n            observaciones: TextInp_editView_obsvAct_verProspec.Text,\r\n            fk_id_lead: _itemSeleccionadoProspecto1.ID,\r\n            fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,\r\n            nombre_comercial:_itemSeleccionadoProspecto1.razon_social_prospecto,\r\n            correo_responsable:_correoLoggeado,\r\n            estado_seguimiento:1,\r\n            fk_tipo_cliente:2\r\n            \r\n        }\r\n    );\r\n\r\n    // reset componentes false modal\r\n    Set(_crearAgenda,false);\r\n\r\n    Reset(TextInp_edit_ActReali_verProspec);\r\n    Reset(TextInp_editView_obsvAct_verProspec);\r\n    Reset(Select_edit_fechaAct_verProspec);\r\n    Set(_actividadSeleccionada,Blank());\r\n\r\n    //Coleccion para seguimiento comercial muestra \r\nClearCollect(\r\n    colSeguimiento,\r\n    Filter(\r\n        tab_seguimiento,\r\n        fk_id_lead = _itemSeleccionadoProspecto1.ID\r\n    )\r\n);\r\n))"
+      OnSelect: |-
+        =// Validaciones de campos requeridos
+        If(
+            IsBlank(TextInp_edit_ActReali_verProspec.Text),
+            Notify(
+                "El campo de actividad a realizar debe estar diligenciado",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(Select_edit_fechaAct_verProspec.SelectedDate),
+            Notify(
+                "Debe seleccionar una fecha de seguimiento",
+                NotificationType.Warning,
+                6000
+            ),
+            // Si pasa las validaciones, ejecutar el Patch correspondiente
+            If(
+                _nuevaAgenda,
+                // CREAR NUEVA ACTIVIDAD
+                Patch(
+                    tab_seguimiento,
+                    Defaults(tab_seguimiento),
+                    {
+                        anotaciones: TextInp_edit_ActReali_verProspec.Text,
+                        observaciones: TextInp_editView_obsvAct_verProspec.Text,
+                        fk_id_lead: _itemSeleccionadoProspecto1.ID,
+                        fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
+                        nombre_comercial: _itemSeleccionadoProspecto1.razon_social_prospecto,
+                        correo_responsable: _correoLoggeado,
+                        estado_seguimiento: 1,
+                        fk_tipo_cliente: 2
+                    }
+                );
+                Notify(
+                    "✓ Actividad creada exitosamente",
+                    NotificationType.Success,
+                    6000
+                );
+                Set(_crearAgenda, false);
+                Reset(TextInp_edit_ActReali_verProspec);
+                Reset(TextInp_editView_obsvAct_verProspec);
+                Reset(Select_edit_fechaAct_verProspec),
+
+                // ACTUALIZAR ACTIVIDAD EXISTENTE
+                Patch(
+                    tab_seguimiento,
+                    LookUp(tab_seguimiento, ID = _actividadSeleccionada.ID),
+                    {
+                        anotaciones: TextInp_edit_ActReali_verProspec.Text,
+                        observaciones: TextInp_editView_obsvAct_verProspec.Text,
+                        fk_id_lead: _itemSeleccionadoProspecto1.ID,
+                        fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
+                        nombre_comercial: _itemSeleccionadoProspecto1.razon_social_prospecto,
+                        correo_responsable: _correoLoggeado,
+                        estado_seguimiento: 1,
+                        fk_tipo_cliente: 2
+                    }
+                );
+                Set(_actividadSeleccionada, Blank());
+                Notify(
+                    "✓ Actividad actualizada exitosamente",
+                    NotificationType.Success,
+                    6000
+                );
+                Set(_crearAgenda, false);
+                Reset(TextInp_edit_ActReali_verProspec);
+                Reset(TextInp_editView_obsvAct_verProspec);
+                Reset(Select_edit_fechaAct_verProspec)
+            )
+        )
       PressedBorderColor: =Self.Fill
       PressedColor: =Self.Fill
       PressedFill: =Self.Color
@@ -86,28 +161,47 @@
       HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
-      OnSelect: |+
-        =    Patch(
+      OnSelect: |-
+        =// Validaciones de campos requeridos antes de finalizar
+        If(
+            IsBlank(TextInp_edit_ActReali_verProspec.Text),
+            Notify(
+                "El campo de actividad a realizar debe estar diligenciado",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(Select_edit_fechaAct_verProspec.SelectedDate),
+            Notify(
+                "Debe seleccionar una fecha de seguimiento",
+                NotificationType.Warning,
+                6000
+            ),
+            // Si pasa las validaciones, marcar como completada
+            Patch(
                 tab_seguimiento,
                 LookUp(tab_seguimiento, ID = _actividadSeleccionada.ID),
                 {
-                    anotaciones: TextInp_edit_actReali_creaLead.Text,
+                    anotaciones: TextInp_edit_ActReali_verProspec.Text,
                     observaciones: TextInp_editView_obsvAct_verProspec.Text,
                     fk_id_lead: _itemSeleccionadoProspecto1.ID,
                     fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                    nombre_comercial:_itemSeleccionadoProspecto1.razon_social_prospecto,
-                    correo_responsable:_infoUsuarioLoggeado.Email,
-                    estado_seguimiento:2
+                    nombre_comercial: _itemSeleccionadoProspecto1.razon_social_prospecto,
+                    correo_responsable: _correoLoggeado,
+                    estado_seguimiento: 2,
+                    fk_tipo_cliente: 2
                 }
             );
-
-            // reset componentes false modal
-            Set(_crearAgenda,false);
-
-            Reset(TextInp_edit_actReali_creaLead);
+            Set(_crearAgenda, false);
+            Reset(TextInp_edit_ActReali_verProspec);
             Reset(TextInp_editView_obsvAct_verProspec);
             Reset(Select_edit_fechaAct_verProspec);
-            Set(_actividadSeleccionada,Blank())
+            Set(_actividadSeleccionada, Blank());
+            Notify(
+                "✓ Actividad finalizada exitosamente",
+                NotificationType.Success,
+                6000
+            )
+        )
 
       PressedBorderColor: =Self.Fill
       PressedColor: =Self.Fill

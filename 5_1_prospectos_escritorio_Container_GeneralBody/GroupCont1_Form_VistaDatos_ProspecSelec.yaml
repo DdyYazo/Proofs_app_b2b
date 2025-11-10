@@ -593,29 +593,32 @@
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
       OnSelect: |+
-        =// hacer patch para crear el lead 
+        =// Actualizar prospecto seleccionado
 
-
-        Set(_itemSeleccionadoProspecto1,
         Patch(
             tab_leads,
-            LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),
+            LookUp(tab_leads, ID = _itemSeleccionadoProspecto1.ID),
             {
                 nombre_comercial_prospecto: TextInp_enable_canalCom_verProspec.Text,
-                id_nesp-corp_nit: Value(TextInp_editView_nitClient_verProspec.Text),
+                id_nesp_corp_nit: Value(TextInp_editView_nitClient_verProspec.Text),
                 razon_social_prospecto: TextInp_edit_razonSocial_verProspec.Text,
-                ciudad: _ciudadSeleccionada,
-                segmento:_itemSeleccionadoProspectoSegmento,
-                subsegmento:_itemSeleccionadoProspectoSubSegmento,
+                ciudad: If(!IsBlank(_ciudadSeleccionada), _ciudadSeleccionada, _itemSeleccionadoProspecto1.ciudad),
+                segmento: If(!IsBlank(_itemSeleccionadoProspectoSegmento), _itemSeleccionadoProspectoSegmento, _itemSeleccionadoProspecto1.segmento),
+                subsegmento: If(!IsBlank(_itemSeleccionadoProspectoSubSegmento), _itemSeleccionadoProspectoSubSegmento, _itemSeleccionadoProspecto1.subsegmento),
                 nombre_contacto: TextInp_edit_nombreContac_verProspec.Text,
                 apellidos_contacto: TextInp_edit_apelliContac_verProspec.Text,
                 cargo: TextInp_edit_cargoContac_verProspec.Text,
-                email: 'TextInp_edit_emailContac_verProspec:'.Text,
-                ultima_actualizacion:Today()
+                email: TextInp_edit_emailContac_verProspec.Text,
+                ultima_actualizacion: Now()
             }
-        ));
+        );
 
-        //coleccion leads creados
+        // Actualizar variable local con datos actualizados
+        Set(_itemSeleccionadoProspecto1,
+            LookUp(tab_leads, ID = _itemSeleccionadoProspecto1.ID)
+        );
+
+        // Actualizar colección de prospectos
         ClearCollect(
             colLeads,
             Filter(
@@ -624,7 +627,7 @@
             )
         );
 
-        Notify("Información actualizada",NotificationType.Success,6000)
+        Notify("✓ Información actualizada exitosamente", NotificationType.Success, 6000)
 
 
       PressedBorderColor: =Self.Fill

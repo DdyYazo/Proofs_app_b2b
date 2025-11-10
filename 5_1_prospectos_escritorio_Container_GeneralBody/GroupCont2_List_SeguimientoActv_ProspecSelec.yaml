@@ -71,11 +71,12 @@
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             Height: =465
-            Items: =Filter(tab_seguimiento, fk_id_lead = _itemSeleccionadoProspecto1.ID)
-            OnSelect: |-
-              =Set(_itemSeleccionado,ThisItem);
-              Set(_consulta,true);
-              Navigate('4_1_creacion_lead_escritorio')
+            Items: |-
+              =Filter(
+                  tab_seguimiento,
+                  fk_id_lead = _itemSeleccionadoProspecto1.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(fecha_seguimiento)) = DateValue(Text(_fechaFiltroActividades)))
+              )
+            OnSelect: =
             TemplateSize: =66
             Visible: =_seguimientoVista
             Width: =1270
@@ -151,7 +152,7 @@
                   DisabledColor: =Color.White
                   DisabledFill: |-
                     =If(
-                        ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                        ThisItem.fecha_seguimiento < Today() And ThisItem.estado_seguimiento = 1,
                         RGBA(
                             184,
                             0,
@@ -159,7 +160,7 @@
                             1
                         ),// Rojo para VENCIDAS
                         If(
-                            ThisItem.EstadoSeguimiento.Value = "Completada",
+                            ThisItem.estado_seguimiento = 2,
                             RGBA(
                                 50,
                                 129,
@@ -209,9 +210,9 @@
                   HoverColor: =Color.Transparent
                   HoverFill: =Color.Transparent
                   OnSelect: |-
-                    =Set(_crearAgenda,true);
-                    Set(_actividadSeleccionada,ThisItem);
-                    Set(_nuevaAgenda,false)
+                    =Set(_crearAgenda, true);
+                    Set(_actividadSeleccionada, ThisItem);
+                    Set(_nuevaAgenda, false)
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -230,8 +231,8 @@
             Visible: |-
               =!IsBlank(_fechaFiltroActividades) && CountRows(
                   Filter(
-                      tab_seguimiento_porCuenta,
-                      Cuenta.Id = _itemSeleccionadoLead.ID && DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades))
+                      tab_seguimiento,
+                      fk_id_lead = _itemSeleccionadoProspecto1.ID && DateValue(Text(fecha_seguimiento)) = DateValue(Text(_fechaFiltroActividades))
                   )
               ) = 0
             Width: =700
@@ -252,9 +253,9 @@
       HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
       HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
       OnSelect: |-
-        =Set(_crearAgenda,true);
-        Set(_actividadSeleccionada,Blank());
-        Set(_nuevaAgenda,true)
+        =Set(_crearAgenda, true);
+        Set(_nuevaAgenda, true);
+        Set(_actividadSeleccionada, Blank())
       PressedBorderColor: =Self.Fill
       PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
       PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
@@ -264,7 +265,7 @@
       RadiusTopRight: =20
       Size: =22
       Text: ="Crear Actividad"
-      Visible: =_seguimientoVista
+      Visible: =_seguimientoVista && !_crearAgenda
       Width: =336
       X: =147
       Y: =182
@@ -285,9 +286,9 @@
       HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
       HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
       OnSelect: |-
-        =Set(_crearAgenda,true);
-        Set(_actividadSeleccionada,Blank());
-        Set(_nuevaAgenda,true)
+        =Set(_crearAgenda, true);
+        Set(_nuevaAgenda, true);
+        Set(_actividadSeleccionada, Blank())
       PressedBorderColor: =Self.Fill
       PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
       PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
@@ -297,7 +298,7 @@
       RadiusTopRight: =20
       Size: =22
       Text: =
-      Visible: =_seguimientoVista
+      Visible: =_seguimientoVista && !_crearAgenda
       Width: =336
       X: =550
       Y: =184
@@ -315,8 +316,16 @@
       Height: =46
       IconBackground: =Color.Transparent
       IconFill: =RGBA(85, 69, 49, 1)
+      OnChange: |-
+        =If(
+            !_limpiandoFiltroFecha && !IsBlank(Self.SelectedDate),
+            Set(
+                _fechaFiltroActividades,
+                Self.SelectedDate
+            )
+        )
       Size: =22
-      Visible: =_seguimientoVista
+      Visible: =_seguimientoVista && !_crearAgenda
       Width: =283
       X: =574
       Y: =196
@@ -333,7 +342,7 @@
             _limpiandoFiltroFecha,
             true
         );
-        Reset(Select_edit_fechActv_verLead);
+        Reset(Select_edit_fechActv_verProspec);
         Set(
             _fechaFiltroActividades,
             Blank()
