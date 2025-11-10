@@ -2511,6 +2511,47 @@ Screens:
                                     Picture: ""
                                 }
                             }
+                        );
+                        // Actualizar estado en tab_seguimiento_porCuenta
+                        ForAll(
+                            Filter(
+                                tab_seguimiento_porCuenta,
+                                Cuenta.Id = _itemSeleccionadoLead.ID
+                            ),
+                            Patch(
+                                tab_seguimiento_porCuenta,
+                                ThisRecord,
+                                {EstadoCuentaEnSeguimiento: {Value: _estadoSeleccionadoLead}}
+                            )
+                        );
+                        // Actualizar estado en tab_oportunidades_cuenta
+                        ForAll(
+                            Filter(
+                                tab_oportunidades_cuenta,
+                                Cuenta.Id = _itemSeleccionadoLead.ID
+                            ),
+                            Patch(
+                                tab_oportunidades_cuenta,
+                                ThisRecord,
+                                {EstadoActualCuenta: {Value: _estadoSeleccionadoLead}}
+                            )
+                        );
+                        // Actualizar estado en tab_maquinas_porCuenta
+                        ForAll(
+                            Filter(
+                                tab_maquinas_porCuenta,
+                                Cuenta.Id = _itemSeleccionadoLead.ID
+                            ),
+                            Patch(
+                                tab_maquinas_porCuenta,
+                                ThisRecord,
+                                {EstadoActualCuenta: {Value: _estadoSeleccionadoLead}}
+                            )
+                        );
+                        // Si el nuevo estado es Prospecto, navegar a pantalla de prospectos
+                        If(
+                            _estadoSeleccionadoLead = "Prospecto",
+                            Navigate('5_pantalla_prospectos_desktop', ScreenTransition.Fade)
                         )
                     );
                     ClearCollect(
