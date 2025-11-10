@@ -360,7 +360,7 @@ Screens:
                         Items: |-
                           =If(
                               IsBlank(_tipoOrden),
-                                                                                  // Si no hay ordenamiento activo; ordenar por ID descendente (más reciente primero)
+                                                                                  // Si no hay ordenamiento activo; ordenar por FechaPasoAProspecto descendente (más reciente primero)
                               SortByColumns(
                                   If(
                                       _rolUsuarioLoggeado = 6,
@@ -378,7 +378,7 @@ Screens:
                                           ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                       )
                                   ),
-                                  "ID",
+                                  "FechaPasoAProspecto",
                                   SortOrder.Descending
                               ),
                                                                                   // Ordenamiento dinámico según tipo
@@ -405,7 +405,7 @@ Screens:
                                       "RazonSocial",
                                       _order
                                   ),
-                                  2,// ID (para Actividad y Fecha)
+                                  2,// FechaPasoAProspecto (para Actividad y Fecha)
                                   SortByColumns(
                                       If(
                                           _rolUsuarioLoggeado = 6,
@@ -423,10 +423,10 @@ Screens:
                                               ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                           )
                                       ),
-                                      "ID",
+                                      "FechaPasoAProspecto",
                                       _order
                                   ),
-                                                                                      // Default: ordenar por ID descendente
+                                                                                      // Default: ordenar por FechaPasoAProspecto descendente
                                   SortByColumns(
                                       If(
                                           _rolUsuarioLoggeado = 6,
@@ -444,7 +444,7 @@ Screens:
                                               ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                           )
                                       ),
-                                      "ID",
+                                      "FechaPasoAProspecto",
                                       SortOrder.Descending
                                   )
                               )
