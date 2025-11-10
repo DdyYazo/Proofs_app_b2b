@@ -1,0 +1,612 @@
+- TextInp_view_fechCrea_prospecSelec_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Default: =_itemSeleccionadoProspecto1.fecha_creacion_lead
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =30
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      LineHeight: |+
+        =
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =14
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =267
+      X: =519
+      Y: =168
+- Label_fechCrea_prospecSelec_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      LineHeight: |+
+        =
+      Size: =20
+      Text: ="Fecha creación de Prospecto:"
+      Visible: =_datosVista
+      Width: =387
+      X: =133
+      Y: =171
+- Label_idNespresso_prospecSelec_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="ID Nespresso:"
+      Visible: =_datosVista
+      Width: =350
+      X: =134
+      Y: =264
+- TextInp_edit_idNespresso_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.id_nespresso_nit
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =484
+      Y: =264
+- Label_canal_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Canal:"
+      Visible: =_datosVista
+      Width: =350
+      X: =134
+      Y: =314
+- TextInp_edit_nombreComercial_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.nombre_comercial_prospecto
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =484
+      Y: =314
+- Label_rs_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Razón social:"
+      Visible: =_datosVista
+      Width: =350
+      X: =134
+      Y: =364
+- TextInp_edit_razonSocial_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.razon_social_prospecto
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =484
+      Y: =364
+- Label_ciudad_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Ciudad:"
+      Visible: =_datosVista
+      Width: =350
+      X: =134
+      Y: =420
+- TextInp_view_ciudad_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =59
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =485
+      Y: =413
+- Select_edit_ciudades_verProspec:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.ciudad]
+      DisplayFields: =["Value"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =46
+      HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: =
+      Items: =["Bogota","Medellin","Cali","Barranquilla"]
+      OnChange: =Set(_ciudadSeleccionada,Self.Selected.Value)
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["Value"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =16
+      Visible: =_datosVista
+      Width: =877
+      X: =494
+      Y: =420
+- Label_segm_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =33
+      Size: =20
+      Text: ="Segmento:"
+      Visible: =_datosVista
+      Width: =350
+      X: =134
+      Y: =483
+- TextInp_view_segmento_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =53
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =482
+      Y: =484
+- Select_edit_segmento_verProspec:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.segmento]
+      DisplayFields: =["Value"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =46
+      HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: =
+      Items: =["Restaurantes & Clubes","Hoteles & Pastelerias","Oficinas"]
+      OnChange: =Set(_itemSeleccionadoProspectoSegmento,Self.Selected.Value);
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["Value"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =16
+      Visible: =_datosVista
+      Width: =877
+      X: =495
+      Y: =487
+- Label_subsegm_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Subsegmento:"
+      Visible: =_datosVista
+      Width: =350
+      X: =133
+      Y: =546
+- TextInp_view_subsegmento_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =53
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =484
+      Y: =550
+- Select_edit_subsegmento_verProspec:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.subsegmento]
+      DisplayFields: =["Value"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =46
+      HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: =
+      Items: |+
+        =["Restaurante Fine Dining",
+        "Restaurante Premium",
+        "Restaurante Otros",
+        "Club Social",
+        "Hotel",
+        "Cafeteria / Pasteleria",
+        "Miscelaneos",
+        "Oficinas",
+        "Retail / Tienda"]
+      OnChange: =Set(_itemSeleccionadoProspectoSubSegmento,Self.Selected.Value);
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["Value"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =16
+      Visible: =_datosVista
+      Width: =877
+      X: =495
+      Y: =552
+- Label_nomContac_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Nombres Prospecto:"
+      Visible: =_datosVista
+      Width: =350
+      X: =133
+      Y: =616
+- TextInp_edit_nombreContac_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.nombre_contacto
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =483
+      Y: =616
+- Label_apellContac_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Apellidos Prospecto:"
+      Visible: =_datosVista
+      Width: =350
+      X: =133
+      Y: =666
+- TextInp_edit_apelliContac_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.apellidos_contacto
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =483
+      Y: =666
+- Label_cargContac_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =33
+      Size: =20
+      Text: ="Cargo Prospecto:"
+      Visible: =_datosVista
+      Width: =350
+      X: =133
+      Y: =716
+- TextInp_edit_cargoContac_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.cargo
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =483
+      Y: =716
+- Label_emailContac_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Email Prospecto:"
+      Visible: =_datosVista
+      Width: =350
+      X: =133
+      Y: =766
+- TextInp_edit_emailContac_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_itemSeleccionadoProspecto1.email
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =35
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_datosVista
+      Width: =900
+      X: =483
+      Y: =766
+- Button_edit_upd_prospecSelec_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont1_Form_VistaDatos_ProspecSelec
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =RGBA(186, 156, 137, 1)
+      Font: =Font.'Open Sans'
+      Height: =40
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: |+
+        =// hacer patch para crear el lead
+
+
+        Set(_itemSeleccionadoProspecto1,
+        Patch(
+            tab_leads,
+            LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),
+            {
+                nombre_comercial_prospecto: TextInp_edit_nombreComercial_verProspec.Text,
+                id_nespresso_nit: Value(TextInp_edit_idNespresso_verProspec.Text),
+                razon_social_prospecto: TextInp_edit_razonSocial_verProspec.Text,
+                ciudad: _ciudadSeleccionada,
+                segmento:_itemSeleccionadoProspectoSegmento,
+                subsegmento:_itemSeleccionadoProspectoSubSegmento,
+                nombre_contacto: TextInp_edit_nombreContac_verProspec.Text,
+                apellidos_contacto: TextInp_edit_apelliContac_verProspec.Text,
+                cargo: TextInp_edit_cargoContac_verProspec.Text,
+                email: TextInp_edit_emailContac_verProspec.Text,
+                ultima_actualizacion:Today()
+            }
+        ));
+
+        //coleccion leads creados
+        ClearCollect(
+            colLeads,
+            Filter(
+                tab_leads,
+                correo_comercial_creador = _correoLoggeado
+            )
+        );
+
+        Notify("Información actualizada",NotificationType.Success,6000)
+
+
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: ="ACTUALIZAR"
+      Visible: =_datosVista
+      Width: =206
+      X: =818
+      Y: =850
