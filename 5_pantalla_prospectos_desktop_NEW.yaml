@@ -360,7 +360,7 @@ Screens:
                         Items: |-
                           =If(
                               IsBlank(_tipoOrden),
-                                                                                  // Si no hay ordenamiento activo; ordenar por FechaPasoAProspecto descendente (más reciente primero)
+                                                                                                            // Si no hay ordenamiento activo; ordenar por FechaPasoAProspecto descendente (más reciente primero)
                               SortByColumns(
                                   If(
                                       _rolUsuarioLoggeado = 6,
@@ -368,20 +368,20 @@ Screens:
                                           tab_cuentas,
                                           EstadoCuenta.Value = "Prospecto",
                                           IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial
-                                                                                              //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
+                                                                                                                        //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
                                       ),
                                       Filter(
                                           tab_cuentas,
                                           EstadoCuenta.Value = "Prospecto",
                                           IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial,
-                                                                                              //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
+                                                                                                                        //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
                                           ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                       )
                                   ),
                                   "FechaPasoAProspecto",
                                   SortOrder.Descending
                               ),
-                                                                                  // Ordenamiento dinámico según tipo
+                                                                                                            // Ordenamiento dinámico según tipo
                               Switch(
                                   _tipoOrden,
                                   1,// RazonSocial
@@ -392,13 +392,13 @@ Screens:
                                               tab_cuentas,
                                               EstadoCuenta.Value = "Prospecto",
                                               IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial
-                                                                                                  //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
+                                                                                                                            //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
                                           ),
                                           Filter(
                                               tab_cuentas,
                                               EstadoCuenta.Value = "Prospecto",
                                               IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial,
-                                                                                                  //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
+                                                                                                                            //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
                                               ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                           )
                                       ),
@@ -413,20 +413,20 @@ Screens:
                                               tab_cuentas,
                                               EstadoCuenta.Value = "Prospecto",
                                               IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial
-                                                                                                  //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
+                                                                                                                            //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
                                           ),
                                           Filter(
                                               tab_cuentas,
                                               EstadoCuenta.Value = "Prospecto",
                                               IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial,
-                                                                                                  //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
+                                                                                                                            //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
                                               ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                           )
                                       ),
                                       "FechaPasoAProspecto",
                                       _order
                                   ),
-                                                                                      // Default: ordenar por FechaPasoAProspecto descendente
+                                                                                                                // Default: ordenar por FechaPasoAProspecto descendente
                                   SortByColumns(
                                       If(
                                           _rolUsuarioLoggeado = 6,
@@ -434,13 +434,13 @@ Screens:
                                               tab_cuentas,
                                               EstadoCuenta.Value = "Prospecto",
                                               IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial
-                                                                                                  //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
+                                                                                                                            //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value
                                           ),
                                           Filter(
                                               tab_cuentas,
                                               EstadoCuenta.Value = "Prospecto",
                                               IsBlank(Select_RazSoc_prospect.Selected.Value) || Select_RazSoc_prospect.Selected.Value = RazonSocial,
-                                                                                                  //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
+                                                                                                                            //IsBlank(Select_interes_prospect.Selected.Value) || Select_interes_prospect.Selected.Value = estado_interes.Value;
                                               ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                           )
                                       ),
