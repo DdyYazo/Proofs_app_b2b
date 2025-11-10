@@ -1,0 +1,448 @@
+- Button_edit_newActv_verLead:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont2_List_SeguimientoActv_LeadSelec
+    Properties:
+      BorderColor: =RGBA(85, 69, 49, 1)
+      BorderThickness: =1
+      Color: =RGBA(85, 69, 49, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      Height: =71
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: |-
+        =RGBA(
+            _r_fondo_crema,
+            _g_fondo_crema,
+            _b_fondo_crema,
+            _a_fondo_crema
+        )
+      HoverFill: |-
+        =RGBA(
+            _rBotonClaro,
+            _gBotonClaro,
+            _bBotonClaro,
+            _aBotonClaro
+        )
+      OnSelect: |-
+        =Set(
+            _crearAgenda,
+            true
+        );
+        Set(
+            _nuevaAgenda,
+            true
+        );
+        Set(
+            _primeraAccion,
+            0
+        );
+        Set(
+            _actividadSeleccionada,
+            Blank()
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: |-
+        =RGBA(
+            _r_fondo_crema,
+            _g_fondo_crema,
+            _b_fondo_crema,
+            _a_fondo_crema
+        )
+      PressedFill: |-
+        =RGBA(
+            _r_boton_claro_nw,
+            _g_boton_claro_nw,
+            _b_boton_claro_nw,
+            _a_boton_claro_nw
+        )
+      RadiusBottomLeft: =20
+      RadiusBottomRight: =20
+      RadiusTopLeft: =20
+      RadiusTopRight: =20
+      Size: =22
+      Text: ="Crear Actividad"
+      Visible: =_seguimientoVista && !_crearAgenda
+      Width: =336
+      X: =184
+      Y: =128
+- Button_desab_filter_fechAct_verLead:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont2_List_SeguimientoActv_LeadSelec
+    Properties:
+      BorderColor: =RGBA(85, 69, 49, 1)
+      BorderThickness: =1
+      Color: =RGBA(85, 69, 49, 1)
+      DisabledBorderColor: =RGBA(85, 69, 49, 1)
+      DisabledFill: =Color.Transparent
+      DisplayMode: =DisplayMode.Disabled
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      Height: =71
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: |-
+        =RGBA(
+            _r_fondo_crema,
+            _g_fondo_crema,
+            _b_fondo_crema,
+            _a_fondo_crema
+        )
+      HoverFill: |-
+        =RGBA(
+            _rBotonClaro,
+            _gBotonClaro,
+            _bBotonClaro,
+            _aBotonClaro
+        )
+      OnSelect: |-
+        =Set(
+            _crearAgenda,
+            true
+        );
+        Set(
+            _actividadSeleccionada,
+            Blank()
+        );
+        Set(
+            _nuevaAgenda,
+            true
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: |-
+        =RGBA(
+            _r_fondo_crema,
+            _g_fondo_crema,
+            _b_fondo_crema,
+            _a_fondo_crema
+        )
+      PressedFill: |-
+        =RGBA(
+            _r_boton_claro_nw,
+            _g_boton_claro_nw,
+            _b_boton_claro_nw,
+            _a_boton_claro_nw
+        )
+      RadiusBottomLeft: =20
+      RadiusBottomRight: =20
+      RadiusTopLeft: =20
+      RadiusTopRight: =20
+      Size: =22
+      Text: =
+      Visible: =_seguimientoVista && !_crearAgenda
+      Width: =336
+      X: =587
+      Y: =130
+- Select_edit_fechActv_verLead:
+    Control: Classic/DatePicker@2.6.0
+    Group: GroupCont2_List_SeguimientoActv_LeadSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      Color: =RGBA(85, 69, 49, 1)
+      DefaultDate: =Blank()
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =46
+      IconBackground: =Color.Transparent
+      IconFill: =RGBA(85, 69, 49, 1)
+      InputTextPlaceholder: |-
+        =If(
+            IsBlank(Self.SelectedDate),
+            Text(
+                Date(
+                    2001,
+                    12,
+                    31
+                ),
+                Self.Format,
+                Self.Language
+            )
+        )
+      OnChange: |-
+        =If(
+            !_limpiandoFiltroFecha && !IsBlank(Self.SelectedDate),
+            Set(
+                _fechaFiltroActividades,
+                Self.SelectedDate
+            )
+        )
+      Size: =22
+      Visible: =_seguimientoVista && !_crearAgenda
+      Width: =283
+      X: =611
+      Y: =142
+- Container_list_seguAct_verLead:
+    Control: GroupContainer@1.3.0
+    Variant: ManualLayout
+    Group: GroupCont2_List_SeguimientoActv_LeadSelec
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      Height: =560
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Visible: =_seguimientoVista && !_crearAgenda
+      Width: =1300
+      X: =102
+      Y: =248
+    Children:
+      - TextCanvas_viewTitu_actReal_verLead:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            FontColor: =RGBA(85, 69, 49, 1)
+            Height: =54
+            Size: =25
+            Text: ="Actividades a realizar"
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =_seguimientoVista && !_crearAgenda
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =426
+            X: =24
+            Y: =20
+      - TextCanvas_viewTitu_fechSegu_verLead:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            FontColor: =RGBA(85, 69, 49, 1)
+            Height: =54
+            Size: =25
+            Text: ="Fecha de seguimiento"
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =_seguimientoVista && !_crearAgenda
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =426
+            X: =438
+            Y: =20
+      - TextCanvas_viewTitu_estSegu_verLead:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            FontColor: =RGBA(85, 69, 49, 1)
+            Height: =54
+            Size: =25
+            Text: ="Estado de seguimiento"
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =_seguimientoVista && !_crearAgenda
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =426
+            X: =858
+            Y: =20
+      - Rectangle_lineSeparat_titlesListActv_verLead:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(218, 195, 177, 0.5)
+            Height: =2
+            Width: =1250
+            X: =20
+            Y: =80
+      - Gallery_list_seguAct_verLead:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =465
+            Items: |-
+              =Filter(
+                  tab_seguimiento_porCuenta,
+                  Cuenta.Id = _itemSeleccionadoLead.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
+              )
+            OnSelect: =
+            TemplateSize: =66
+            Visible: =_seguimientoVista
+            Width: =1270
+            X: =20
+            Y: =95
+          Children:
+            - Button_view_list_ActSelect_verLead:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  DisplayMode: =DisplayMode.View
+                  Fill: =RGBA(207, 182, 157, 0.2)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Size: =18
+                  Text: =
+                  Width: =1250
+            - Label_list_actReal_verLead:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.Anotaciones
+                  Width: =425
+            - Label_list_fechSeguAct_verLead:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.FechaSeguimiento
+                  Width: =296
+                  X: =480
+            - Button_Change_StatusActv_verLead:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: |-
+                    =If(
+                        ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                        RGBA(
+                            184,
+                            0,
+                            0,
+                            1
+                        ),// Rojo para VENCIDAS
+                        If(
+                            ThisItem.EstadoSeguimiento.Value = "Completada",
+                            RGBA(
+                                50,
+                                129,
+                                45,
+                                1
+                            ),// Verde para Completada
+                            RGBA(
+                                128,
+                                0,
+                                128,
+                                1
+                            )// Morado para Pendiente
+                        )
+                    )
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =RGBA(184, 0, 0, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =5
+                  Text: =
+                  Width: =20
+                  X: =951
+                  Y: =17
+            - Label_list_estSeguAct_verLead:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: |-
+                    =If(
+                        ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                        RGBA(
+                            184,
+                            0,
+                            0,
+                            1
+                        ),// Rojo para VENCIDAS
+                        If(
+                            ThisItem.EstadoSeguimiento.Value = "Completada",
+                            RGBA(
+                                50,
+                                129,
+                                45,
+                                1
+                            ),// Verde para Completada
+                            RGBA(
+                                128,
+                                0,
+                                128,
+                                1
+                            )// Morado para Pendiente
+                        )
+                    )
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.EstadoSeguimiento.Value
+                  Width: =200
+                  X: =986
+            - Button_edit_list_actSelec_verLead:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.Transparent
+                  Color: =Color.Transparent
+                  DisabledBorderColor: =Color.Transparent
+                  DisabledColor: =Color.Transparent
+                  DisabledFill: =Color.Transparent
+                  Fill: =Color.Transparent
+                  Font: =Font.'Open Sans'
+                  Height: =66
+                  HoverBorderColor: =Color.Transparent
+                  HoverColor: =Color.Transparent
+                  HoverFill: =Color.Transparent
+                  OnSelect: |-
+                    =Set(
+                        _crearAgenda,
+                        true
+                    );
+                    Set(
+                        _actividadSeleccionada,
+                        ThisItem
+                    );
+                    Set(
+                        _nuevaAgenda,
+                        false
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  Width: =1260
+      - Label_message_ActRelFech_LeadCreado_1:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(85, 69, 49, 1)
+            DisplayMode: =DisplayMode.View
+            Font: =Font.'Lato Black'
+            Height: =54
+            Size: =18
+            Text: ="No hay actividades relacionadas a la fecha seleccionada"
+            Visible: |-
+              =!IsBlank(_fechaFiltroActividades) && CountRows(
+                  Filter(
+                      tab_seguimiento_porCuenta,
+                      Cuenta.Id = _itemSeleccionadoLead.ID && DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades))
+                  )
+              ) = 0
+            Width: =700
+            X: =297
+            Y: =96

@@ -345,7 +345,7 @@
                             EmailContacto: TextInp_editView_emailCont_creaLeads.Text,
                             estado_interes: {Value: _interesSeleccionadoLead},
                             RequiereCredito: false,
-                            RequiereDocumentos: false,
+                            RequiereDocumentos: _requiereDocumentos,
                             CarpetaCreada: false,
                             DocumentosAprobadosBackOffice: false,
                             DocumentosAprobadosFinanzas: false,

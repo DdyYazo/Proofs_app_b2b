@@ -1,0 +1,502 @@
+- Rectangle_body_form_ActvSelec_verLead:
+    Control: Rectangle@2.3.0
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Fill: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      Height: =706
+      Visible: =_crearAgenda
+      Width: =1448
+      X: =40
+      Y: =102
+- TextInp_editView_obsvAct_verLead:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Default: =_actividadSeleccionada.Observaciones
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =175
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      Mode: =TextMode.MultiLine
+      OnSelect: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            DisplayMode.Edit,
+            _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+            DisplayMode.Edit,
+            DisplayMode.View
+        )
+      PaddingLeft: =5
+      RadiusBottomLeft: =15
+      RadiusBottomRight: =15
+      RadiusTopLeft: =15
+      RadiusTopRight: =15
+      Size: =16
+      Tooltip: =
+      Visible: =_crearAgenda
+      Width: =1384
+      X: =60
+      Y: =478
+- Label_ObsAct_verLead:
+    Control: Label@2.5.1
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =40
+      Size: =20
+      Text: ="Observaciones"
+      Visible: =_crearAgenda
+      Width: =350
+      X: =60
+      Y: =417
+- Label_ActReali_verLead:
+    Control: Label@2.5.1
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Actividad a realizar"
+      Visible: =_crearAgenda
+      Width: =350
+      X: =60
+      Y: =130
+- Button_edit_cancelUpd_ActSelec_verLead:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: |-
+        =RGBA(
+            _rBotonClaro,
+            _gBotonClaro,
+            _bBotonClaro,
+            _aBotonClaro
+        )
+      Font: =Font.'Open Sans'
+      Height: =50
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: |-
+        =Set(
+                    _crearAgenda,
+                    false
+                );
+                Set(
+                    _primeraAccion,
+                    Blank()
+                );
+                Set(
+                    _actividadSeleccionada,
+                    Blank()
+                );
+                // Resetear los campos cuando se devuelve a la vista de seguimiento
+                Reset(TextInp_edit_ActReali_verLead);
+                Reset(Select_edit_fechaAct_verLead);
+                Reset(TextInp_editView_obsvAct_verLead)
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: ="CANCELAR"
+      Visible: =_crearAgenda
+      Width: =150
+      X: =587
+      Y: =703
+- Button_edit_guardarUpd_ActSelec_verLead:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =RGBA(104, 110, 72, 1)
+      Font: =Font.'Open Sans'
+      Height: =50
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: |-
+        =If(
+            IsBlank(TextInp_edit_ActReali_verLead.Text),
+            Notify(
+                "El campo de acciones debe estar diligenciado",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(Select_edit_fechaAct_verLead.SelectedDate),
+            Notify(
+                "Debe seleccionar una fecha de seguimiento",
+                NotificationType.Warning,
+                6000
+            ),
+                    // Si pasa las validaciones, ejecutar el Patch correspondiente
+            If(
+                _nuevaAgenda,
+                        // CREAR NUEVA ACTIVIDAD
+                Patch(
+                    tab_seguimiento_porCuenta,
+                    Defaults(tab_seguimiento_porCuenta),
+                    {
+                        Anotaciones: TextInp_edit_ActReali_verLead.Text,
+                        Observaciones: TextInp_editView_obsvAct_verLead.Text,
+                        Cuenta: {
+                            Id: _itemSeleccionadoLead.ID,
+                            Value: _itemSeleccionadoLead.RazonSocial
+                        },
+                        FechaSeguimiento: Select_edit_fechaAct_verLead.SelectedDate,
+                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                        ComercialResponsable: {
+                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                            Department: "",
+                            DisplayName: _infoUsuarioLoggeado.FullName,
+                            Email: _infoUsuarioLoggeado.Email,
+                            JobTitle: "",
+                            Picture: ""
+                        },
+                        EstadoSeguimiento: {Value: "Pendiente"},
+                        RequiereAccion: true
+                    }
+                );
+                Notify(
+                    "✓ Actividad creada exitosamente",
+                    NotificationType.Success,
+                    6000
+                );
+                Set(
+                    _crearAgenda,
+                    false
+                );
+                Reset(TextInp_edit_ActReali_verLead);
+                Reset(TextInp_editView_obsvAct_verLead);
+                Reset(Select_edit_fechaAct_verLead),
+
+                        // ACTUALIZAR ACTIVIDAD EXISTENTE
+                Patch(
+                    tab_seguimiento_porCuenta,
+                    LookUp(
+                        tab_seguimiento_porCuenta,
+                        ID = _actividadSeleccionada.ID
+                    ),
+                    {
+                        Anotaciones: TextInp_edit_ActReali_verLead.Text,
+                        Observaciones: TextInp_editView_obsvAct_verLead.Text,
+                        Cuenta: {
+                            Id: _itemSeleccionadoLead.ID,
+                            Value: _itemSeleccionadoLead.RazonSocial
+                        },
+                        FechaSeguimiento: Select_edit_fechaAct_verLead.SelectedDate,
+                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                        ComercialResponsable: {
+                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                            Department: "",
+                            DisplayName: _infoUsuarioLoggeado.FullName,
+                            Email: _infoUsuarioLoggeado.Email,
+                            JobTitle: "",
+                            Picture: ""
+                        },
+                        EstadoSeguimiento: {Value: "Pendiente"},
+                        RequiereAccion: true
+                    }
+                );
+
+                Set(
+                    _actividadSeleccionada,
+                    Blank()
+                );
+                Notify(
+                    "✓ Actividad actualizada exitosamente",
+                    NotificationType.Success,
+                    6000
+                );
+                Set(
+                    _crearAgenda,
+                    false
+                );
+                Reset(TextInp_edit_ActReali_verLead);
+                Reset(TextInp_editView_obsvAct_verLead);
+                Reset(Select_edit_fechaAct_verLead)
+            )
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            "GUARDAR",
+            "ACTUALIZAR"
+        )
+      Visible: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            _crearAgenda,
+            _crearAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida"
+        )
+      Width: =150
+      X: =768
+      Y: =703
+- TextInp_edit_ActReali_verLead:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =_actividadSeleccionada.Anotaciones
+      DelayOutput: =true
+      DisplayMode: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            DisplayMode.Edit,
+            _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+            DisplayMode.Edit,
+            DisplayMode.View
+        )
+      Font: =Font.'Open Sans'
+      Height: =85
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      Mode: =TextMode.MultiLine
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_crearAgenda
+      Width: =1384
+      X: =63
+      Y: =192
+- Label_fechAct_verLead:
+    Control: Label@2.5.1
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Fecha"
+      Visible: =_crearAgenda
+      Width: =350
+      X: =63
+      Y: =301
+- TextInp_view_fechaAct_verLead:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =57
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      Mode: =TextMode.MultiLine
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_crearAgenda
+      Width: =1384
+      X: =63
+      Y: =352
+- Select_edit_fechaAct_verLead:
+    Control: Classic/DatePicker@2.6.0
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      Color: =RGBA(85, 69, 49, 1)
+      DefaultDate: =_actividadSeleccionada.FechaSeguimiento
+      DisplayMode: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            DisplayMode.Edit,
+            _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+            DisplayMode.Edit,
+            DisplayMode.View
+        )
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      Height: =44
+      IconBackground: =Color.Transparent
+      IconFill: =RGBA(85, 69, 49, 1)
+      InputTextPlaceholder: |-
+        =If(
+            IsBlank(Self.SelectedDate),
+            Text(
+                Date(
+                    2001,
+                    12,
+                    31
+                ),
+                Self.Format,
+                Self.Language
+            )
+        )
+      OnChange: |-
+        =// Solo validar si hay una fecha seleccionada (no es Blank)
+        If(
+            !IsBlank(Self.SelectedDate),
+            If(
+                _primeraAccion = 1 || _nuevaAgenda || (!IsBlank(_actividadSeleccionada) && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"),
+                // Solo validar fechas para nueva agenda o primera acción
+                If(
+                    Select_edit_fechaAct_verLead.SelectedDate < Today(),
+                    Notify(
+                        "⚠ Fecha no válida: Solo se permiten fechas desde hoy (" & Text(
+                            Today(),
+                            "dd/mm/yyyy"
+                        ) & ") en adelante.",
+                        NotificationType.Error,
+                        6000
+                    ) && Reset(Self) && Set(
+                        _fechaActivaSseleccionada,
+                        Blank()
+                    ),
+                    Set(
+                        _fechaActivaSseleccionada,
+                        Self.SelectedDate
+                    )
+                ),
+            // Si no es primera acción ni nueva agenda, asignar directamente
+                Set(
+                    _fechaActivaSseleccionada,
+                    Self.SelectedDate
+                )
+            ),
+        // Si la fecha está en blanco (reset), limpiar la variable
+            Set(
+                _fechaActivaSseleccionada,
+                Blank()
+            )
+        )
+      Size: =16
+      Visible: =_crearAgenda
+      Width: =1346
+      X: =82
+      Y: =358
+- Button_edit_Finalizar_ActSelec_verLead:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont_2_1_Edit_ActvSelecc_LeadSelec
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =RGBA(104, 110, 72, 1)
+      Font: =Font.'Open Sans'
+      Height: =50
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: |-
+        =If(
+            IsBlank(TextInp_edit_ActReali_verLead.Text),
+            Notify(
+                "El campo de acciones debe estar diligenciado",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(Select_edit_fechaAct_verLead.SelectedDate),
+            Notify(
+                "Debe seleccionar una fecha de seguimiento",
+                NotificationType.Warning,
+                6000
+            ),
+            Patch(
+                tab_seguimiento_porCuenta,
+                LookUp(
+                    tab_seguimiento_porCuenta,
+                    ID = _actividadSeleccionada.ID
+                ),
+                {
+                    Anotaciones: TextInp_edit_ActReali_verLead.Text,
+                    Observaciones: TextInp_editView_obsvAct_verLead.Text,
+                    Cuenta: {
+                        Id: _itemSeleccionadoLead.ID,
+                        Value: _itemSeleccionadoLead.RazonSocial
+                    },
+                    FechaSeguimiento: Select_edit_fechaAct_verLead.SelectedDate,
+                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoLead.EstadoCuenta.Value},
+                    ComercialResponsable: {
+                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                        Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                        Department: "",
+                        DisplayName: _infoUsuarioLoggeado.FullName,
+                        Email: _infoUsuarioLoggeado.Email,
+                        JobTitle: "",
+                        Picture: ""
+                    },
+                    EstadoSeguimiento: {Value: "Completada"},
+                    RequiereAccion: false
+                }
+            );
+            Set(
+                _crearAgenda,
+                false
+            );
+            Reset(TextInp_edit_ActReali_verLead),
+            Reset(TextInp_editView_obsvAct_verLead),
+            Reset(Select_edit_fechaAct_verLead),
+            Set(
+                _actividadSeleccionada,
+                Blank()
+            );
+            Notify(
+                "✓ Actividad finalizada exitosamente",
+                NotificationType.Success,
+                6000
+            )
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: ="FINALIZAR TAREA"
+      Visible: =_crearAgenda && !_nuevaAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"
+      Width: =246
+      X: =1206
+      Y: =102

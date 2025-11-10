@@ -446,7 +446,7 @@
       Visible: =_maquinasVista
       Width: =1360
       X: =82
-      Y: =445
+      Y: =435
     Children:
       - TextCanvas_title_nameMaqu_leadCreado:
           Control: Text@0.0.51
