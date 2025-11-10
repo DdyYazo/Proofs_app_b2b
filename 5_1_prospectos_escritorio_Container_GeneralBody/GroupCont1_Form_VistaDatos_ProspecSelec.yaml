@@ -45,7 +45,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.RazonSocial
+      Default: =_itemSeleccionadoProspecto1.Canal.Value
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -341,7 +341,7 @@
     Properties:
       BorderColor: =
       BorderStyle: =BorderStyle.None
-      Default: =_itemSeleccionadoProspecto1.FechaCreacionLead
+      Default: =_itemSeleccionadoProspecto1.FechaPasoAProspecto
       DelayOutput: =true
       DisplayMode: =DisplayMode.View
       Font: =Font.'Open Sans'
@@ -441,6 +441,11 @@
       HoverFill: =RGBA(235, 222, 184, 1)
       InputTextPlaceholder: =
       Items: =colCiudades
+      OnChange: |-
+        =Set(
+            _ciudadSeleccionada,
+            Self.Selected.Ciudad
+        )
       PressedColor: =RGBA(255, 255, 255, 1)
       PressedFill: =RGBA(0, 0, 0, 0)
       SearchFields: =["Ciudad0"]
@@ -529,6 +534,33 @@
             "id_segmento",
             SortOrder.Ascending
         )
+      OnChange: |-
+        =// Guardar registro completo para uso posterior
+                If(
+                    !IsBlank(Self.Selected),
+                    Set(
+                        _itemSeleccionadoProspectoSegmento,
+                        Self.Selected.segmento
+                    ),
+                    Set(
+                        _itemSeleccionadoProspectoSegmento,
+                        Blank()
+                    ),
+                    Set(
+                        _idSegmentoConcat,
+                        Self.Selected.id_segmento_concat
+                    ),
+                    Set(
+                        _idSegmentoConcat,
+                        Blank()
+                    )
+                );
+                // Limpiar subsegmento al cambiar segmento
+                Reset(Select_edit_subsegmento_verProspec);
+                Set(
+                    _itemSeleccionadoProspectoSubSegmento,
+                    Blank()
+                )
       PressedColor: =RGBA(255, 255, 255, 1)
       PressedFill: =RGBA(0, 0, 0, 0)
       SearchFields: =["id_segmento_concat"]
@@ -559,7 +591,24 @@
       HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       HoverFill: =RGBA(235, 222, 184, 1)
       InputTextPlaceholder: =
-      Items: =Filter(colSubSegmento, id_segmento_relacionado.Value = Select_edit_segmento_verProspec.Selected.id_segmento_concat)
+      Items: |-
+        =Filter(
+            colSubSegmento,
+            id_segmento_relacionado.Value = Select_edit_segmento_verProspec.Selected.id_segmento_concat
+        )
+      OnChange: |-
+        =// Guardar registro completo para uso posterior
+        If(
+            !IsBlank(Self.Selected),
+            Set(
+                _itemSeleccionadoProspectoSubSegmento,
+                Self.Selected.sub_segmento
+            ),
+            Set(
+                _itemSeleccionadoProspectoSubSegmento,
+                Blank()
+            )
+        )
       PressedColor: =RGBA(255, 255, 255, 1)
       PressedFill: =RGBA(0, 0, 0, 0)
       SearchFields: =["sub_segmento"]
@@ -599,14 +648,6 @@
             {
                 NIT: TextInp_editView_nitClient_verProspec.Text,
                 RazonSocial: TextInp_edit_razonSocial_verProspec.Text,
-                Ciudad: If(
-                    !IsBlank(Select_edit_ciudades_verProspec.Selected),
-                    {
-                        Id: Select_edit_ciudades_verProspec.Selected.ID,
-                        Value: Select_edit_ciudades_verProspec.Selected.Ciudad0
-                    },
-                    _itemSeleccionadoProspecto1.Ciudad
-                ),
                 Segmento: If(
                     !IsBlank(Select_edit_segmento_verProspec.Selected),
                     {
@@ -622,6 +663,14 @@
                         Value: Select_edit_subsegmento_verProspec.Selected.sub_segmento
                     },
                     _itemSeleccionadoProspecto1.Subsegmento
+                ),
+                Ciudad: If(
+                    !IsBlank(Select_edit_ciudades_verProspec.Selected),
+                    {
+                        Id: Select_edit_ciudades_verProspec.Selected.ID,
+                        Value: Select_edit_ciudades_verProspec.Selected.Ciudad0
+                    },
+                    _itemSeleccionadoProspecto1.Ciudad
                 ),
                 NombreContacto: TextInp_edit_nombreContac_verProspec.Text,
                 ApellidosContacto: TextInp_edit_apelliContac_verProspec.Text,
@@ -646,8 +695,6 @@
             NotificationType.Success,
             6000
         )
-
-
       PressedBorderColor: =Self.Fill
       PressedColor: =Self.Fill
       PressedFill: =Self.Color

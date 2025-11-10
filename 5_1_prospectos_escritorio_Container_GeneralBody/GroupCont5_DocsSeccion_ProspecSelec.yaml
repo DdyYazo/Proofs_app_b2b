@@ -1,0 +1,913 @@
+- Container_TipoVinculacion_Client:
+    Control: GroupContainer@1.3.0
+    Variant: ManualLayout
+    Group: GroupCont5_DocsSeccion_ProspecSelec
+    Properties:
+      DropShadow: =DropShadow.Semibold
+      Fill: =RGBA(255, 255, 255, 1)
+      Height: =112
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Visible: =_documentosVista
+      Width: =1358
+      X: =70
+      Y: =108
+    Children:
+      - TextInputCanvas1:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =24
+            Height: =62
+            Value: ="¿El cliente solicita línea de crédito?:"
+            Width: =488
+            X: =51
+            Y: =38
+      - TextInputCanvas1_1:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(189, 49, 51, 0)
+            FontSize: =24
+            Height: =62
+            Value: ="Sí"
+            Width: =50
+            X: =521
+            Y: =38
+      - Radio1:
+          Control: Classic/Radio@2.3.0
+          Properties:
+            BorderColor: =RGBA(207, 182, 157, 1)
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(255, 255, 255, 1)
+            Default: =If(_necesitaCredito =1,true,false)
+            Font: =Font.'Open Sans'
+            Height: =70
+            HoverColor: =Color.White
+            Items: =[1]
+            Items.Value: =Value
+            LineHeight: =1
+            OnSelect: |-
+              =Set(_spinner,true);
+              Set(_necesitaCredito,1);
+              Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cliente_con_credito:_necesitaCredito});
+              Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
+              Reset(Radio1_1);
+              Set(_spinner,false);
+            RadioBackgroundFill: =RGBA(207, 182, 157, 1)
+            RadioBorderColor: =RGBA(207, 182, 157, 1)
+            RadioSelectionFill: =RGBA(255, 255, 255, 1)
+            RadioSize: =40
+            Width: =80
+            X: =571
+            Y: =38
+      - TextInputCanvas1_2:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(189, 49, 51, 0)
+            FontSize: =24
+            Height: =62
+            Value: ="No"
+            Width: =76
+            X: =673
+            Y: =38
+      - Radio1_1:
+          Control: Classic/Radio@2.3.0
+          Properties:
+            BorderColor: =RGBA(207, 182, 157, 1)
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(255, 255, 255, 1)
+            Default: =If(_necesitaCredito =0,true,false)
+            Font: =Font.'Open Sans'
+            Height: =70
+            HoverColor: =Color.White
+            Items: =[1]
+            Items.Value: =Value
+            LineHeight: =1
+            OnSelect: |-
+              =Set(_spinner,true);
+              Set(_necesitaCredito,0);
+              Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cliente_con_credito:_necesitaCredito,
+              cupo_solicitado:0});
+              Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
+              Reset(NumberInput1);
+              Reset(Radio1);
+              Set(_spinner,false);
+            RadioBackgroundFill: =RGBA(207, 182, 157, 1)
+            RadioBorderColor: =RGBA(207, 182, 157, 1)
+            RadioSelectionFill: =RGBA(255, 255, 255, 1)
+            RadioSize: =40
+            Width: =80
+            X: =749
+            Y: =38
+      - TextInputCanvas1_3:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =24
+            Height: =62
+            Value: ="Plazo:"
+            Visible: =_necesitaCredito = 1
+            Width: =100
+            X: =1137
+            Y: =42
+      - DropdownCanvas1:
+          Control: DropDown@0.0.45
+          Properties:
+            DefaultSelectedItems: =[_itemSeleccionadoProspecto1.plazo_credito]
+            Fill: =RGBA(214, 21, 21, 0)
+            FontSize: =22
+            Height: =40
+            Items: =["30","45","60", "90"]
+            OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{plazo_credito:Value(Self.Selected.Value)}))
+            Visible: =_necesitaCredito = 1
+            Width: =100
+            X: =1222
+            Y: =54
+      - TextInputCanvas1_4:
+          Control: TextInput@0.0.54
+          Properties:
+            BasePaletteColor: =RGBA(255, 255, 0, 1)
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =24
+            Height: =62
+            Value: ="Cupo:"
+            Width: =100
+            X: =829
+            Y: =38
+      - NumberInput1:
+          Control: NumberInput@2.9.12
+          Properties:
+            BasePaletteColor: =RGBA(245, 245, 245, 1)
+            BorderColor: =RGBA(214, 221, 224, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            FontSize: =24
+            Height: =52
+            OnChange: |-
+              =Set(_spinner,true);
+              If(!IsBlank(Self.Value),
+              Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cupo_solicitado:Value(Self.Value)}));
+
+              Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
+              Set(_spinner,false);
+            Value: =_itemSeleccionadoProspecto1.cupo_solicitado
+            Width: =208
+            X: =929
+            Y: =48
+- Button_header_rowsTipVin_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont5_DocsSeccion_ProspecSelec
+    Properties:
+      BorderColor: =Color.White
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =1
+      Color: =Color.White
+      DisabledBorderColor: =Color.White
+      DisabledColor: =Color.White
+      DisabledFill: =RGBA(207, 182, 157, 1)
+      DisplayMode: =DisplayMode.Disabled
+      Fill: =RGBA(207, 182, 157, 1)
+      Font: =Font.'Open Sans'
+      Height: =37
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+      OnSelect: =
+      PressedBorderColor: =Self.Fill
+      PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      RadiusBottomLeft: =5
+      RadiusBottomRight: =5
+      RadiusTopLeft: =5
+      RadiusTopRight: =5
+      Size: =16
+      Text: ="TIPO DE VINCULACION DE CLIENTE"
+      Visible: =_documentosVista
+      Width: =1358
+      X: =70
+      Y: =108
+- Container_Gallery1_Documents_Bussines:
+    Control: GroupContainer@1.3.0
+    Variant: ManualLayout
+    Group: GroupCont5_DocsSeccion_ProspecSelec
+    Properties:
+      DropShadow: =DropShadow.Semibold
+      Fill: =RGBA(255, 255, 255, 1)
+      Height: =251
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Visible: =_documentosVista && Or(_necesitaCredito = 1, _necesitaCredito = 0)
+      Width: =1358
+      X: =70
+      Y: =242
+    Children:
+      - Gallery_Con2_docBussines_verProspec:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =206
+            Items: =Filter(colDocumentosCliente,tipo_documento = 1, ID <> 10)
+            TemplateSize: =44
+            Width: =1358
+            Y: =45
+          Children:
+            - TextInputCanvas1_5:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =43
+                  Value: =ThisItem.nombre_documento
+                  Width: =378
+                  X: =31
+            - Rectangle8_43:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(218, 195, 177, 0.5)
+                  Height: =1
+                  Width: =1322
+                  X: =11
+                  Y: =42
+            - Icon5_2:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =25
+                  Icon: =Icon.PaperClip
+                  OnSelect: |-
+                    =
+                    Set(_verDocumentos,false);
+                    Set(_carpetaCreadaProspecto,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID,carpeta_creada));
+                    Set(_adjuntarDocumentos,true);
+                    Set(_idDocumentoCarga,ThisItem.ID);
+                    Set(_itemSeleccionadoDocumentos,ThisItem);
+                    NewForm(Form_guardar_documentos)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Width: =25
+                  X: =548
+                  Y: =10
+            - Icon4:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =13
+                  Icon: =Icon.Add
+                  OnSelect: =Select(Parent)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Width: =16
+                  X: =573
+                  Y: =10
+            - Icon5:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =24
+                  Icon: =Icon.View
+                  OnSelect: |+
+                    =// dependiendo la cantidad de documentos 
+
+                    Set(_documentoSeleccionadoVer,ThisItem);
+
+                    //
+                    ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+
+
+
+                    // validar si el documento ya se creo en al biblioteca 
+
+                    If(CountRows(colDocumentosVerPre)=0,
+
+                    Set(_mensajeAlerta,true),
+
+                    Clear(colDocumentosVer);
+
+                    ForAll(colDocumentosVerPre As Db,
+
+                    Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
+
+                    Set(_numeroDocumentoSeleccionado,1);
+
+                    Set(_visibleVerDocumentoSeleccionado,true));
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Width: =24
+                  X: =764
+                  Y: =9
+            - Button2_31:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: |-
+                    =If(
+                        // estado pendiente
+                        CountRows(
+                            Filter(
+                                colDocumentosProspecto,
+                                fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "1"
+                            )
+                        ) > 0,
+                        RGBA(
+                            239,
+                            194,
+                            14,
+                            64
+                        ),
+                    // estado aprobado
+                        CountRows(
+                            Filter(
+                                colDocumentosProspecto,
+                                fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "2"
+                            )
+                        ) > 0,
+                        RGBA(
+                            50,
+                            129,
+                            45,
+                            100
+                        ),
+                    // estado rechazado
+                        CountRows(
+                            Filter(
+                                colDocumentosProspecto,
+                                fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "3"
+                            )
+                        ) > 0,
+                        RGBA(
+                            219,
+                            15,
+                            15,
+                            64
+                        ),
+                        RGBA(
+                            239,
+                            194,
+                            14,
+                            64
+                        )
+                    )
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =RGBA(50, 129, 45, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =5
+                  Text: =
+                  Visible: =_documentosVista
+                  Width: =20
+                  X: =969
+                  Y: =9
+            - Button2_32:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(185, 5, 6, 1)
+                  Fill: =RGBA(185, 5, 6, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |
+                    =Set(
+                        _documentoSeleccionadoVer,
+                        ThisItem
+                    );
+                    //validar si los documentos ya se crearon en la carpeta
+                    ClearCollect(
+                        colDocumentosVerPre,
+                        Filter(
+                            Documentos,
+                            fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                        )
+                    );
+                    // validar si el documento ya se creo en al biblioteca 
+                    If(
+                        CountRows(colDocumentosVerPre) < ThisItem.cantidad_de_documentos,
+                        Set(
+                            _mensajeAlerta,
+                            true
+                        ),
+                        ClearCollect(
+                            colDocumentosEliminar,
+                            Filter(
+                                Documentos,
+                                fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                            )
+                        );
+                        If(
+                            CountRows(colDocumentosEliminar) > 1,
+                            Set(
+                                _mensajeConfirmacionVarios,
+                                true
+                            ),
+                            Set(
+                                _mensajeConfirmacion,
+                                true
+                            )
+                        )
+                    );
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =8
+                  Text: ="X"
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Width: =20
+                  X: =1220
+                  Y: =13
+      - Button_viewBackgr_headGallerDocsBuss_verProspec:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =1
+            Color: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(207, 182, 157, 0.38)
+            Font: =Font.'Open Sans'
+            Height: =43
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =18
+            Text: =
+            Width: =1358
+            Y: =13
+      - TextInpCanv_title_row_nameFileBuss_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Documento"
+            Width: =254
+            X: =39
+            Y: =20
+      - TextInpCanv_title_row_addFileBuss_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Adjuntar"
+            Width: =127
+            X: =507
+            Y: =20
+      - TextInpCanv_title_row_viewFileBuss_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Ver"
+            Width: =102
+            X: =749
+            Y: =20
+      - TextInpCanv_title_row_statsFileBuss_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Estado"
+            Width: =127
+            X: =941
+            Y: =20
+      - TextInpCanv_title_row_deleteFileBuss_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Borrar"
+            Width: =127
+            X: =1192
+            Y: =20
+- Button_header_galleryDocsBussi_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont5_DocsSeccion_ProspecSelec
+    Properties:
+      BorderColor: =Color.White
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =1
+      Color: =Color.White
+      DisabledBorderColor: =Color.White
+      DisabledColor: =Color.White
+      DisabledFill: =RGBA(207, 182, 157, 1)
+      DisplayMode: =DisplayMode.Disabled
+      Fill: =RGBA(207, 182, 157, 1)
+      Font: =Font.'Open Sans'
+      Height: =33
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+      OnSelect: =
+      PressedBorderColor: =Self.Fill
+      PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      RadiusBottomLeft: =5
+      RadiusBottomRight: =5
+      RadiusTopLeft: =5
+      RadiusTopRight: =5
+      Size: =16
+      Text: ="DOCUMENTOS EMPRESA"
+      Visible: =_documentosVista && Or(_necesitaCredito = 1, _necesitaCredito = 0)
+      Width: =1358
+      X: =71
+      Y: =233
+- Container_Gallery2_Documents_Credit:
+    Control: GroupContainer@1.3.0
+    Variant: ManualLayout
+    Group: GroupCont5_DocsSeccion_ProspecSelec
+    Properties:
+      DropShadow: =DropShadow.Semibold
+      Fill: =RGBA(255, 255, 255, 1)
+      Height: =261
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Visible: =_documentosVista && _necesitaCredito = 1
+      Width: =1358
+      X: =70
+      Y: =505
+    Children:
+      - Button_viewBackgr_headGallerDocs_verProspec:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =1
+            Color: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(207, 182, 157, 0.38)
+            Font: =Font.'Open Sans'
+            Height: =43
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =18
+            Text: =
+            Width: =1358
+            Y: =21
+      - TextInpCanv_title_row_nameFile_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Documento"
+            Width: =254
+            X: =39
+            Y: =27
+      - TextInpCanv_title_row_addFile_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Adjuntar"
+            Width: =127
+            X: =507
+            Y: =27
+      - TextInpCanv_title_row_viewFile_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Ver"
+            Width: =102
+            X: =749
+            Y: =27
+      - TextInpCanv_title_row_statsFile_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Estado"
+            Width: =127
+            X: =941
+            Y: =27
+      - TextInpCanv_title_row_deleteFile_verProspec:
+          Control: TextInput@0.0.54
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Borrar"
+            Width: =127
+            X: =1192
+            Y: =27
+      - Gallery_Con2_docCredito_verProspec:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =200
+            Items: =Filter(colDocumentosCliente,tipo_documento = 2)
+            TemplateSize: =44
+            Width: =1358
+            Y: =54
+          Children:
+            - TextInputCanvas1_10:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =43
+                  Value: =ThisItem.nombre_documento
+                  Width: =378
+                  X: =31
+            - Rectangle8_44:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(218, 195, 177, 0.5)
+                  Height: =1
+                  Width: =1322
+                  X: =11
+                  Y: =42
+            - Icon5_3:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =25
+                  Icon: =Icon.PaperClip
+                  OnSelect: |-
+                    =
+                    Set(_verDocumentos,false);
+                    Set(_carpetaCreadaProspecto,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID,carpeta_creada));
+                    Set(_adjuntarDocumentos,true);
+                    Set(_idDocumentoCarga,ThisItem.ID);
+                    Set(_itemSeleccionadoDocumentos,ThisItem);
+                    NewForm(Form_guardar_documentos)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Width: =25
+                  X: =548
+                  Y: =10
+            - Icon4_1:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =13
+                  Icon: =Icon.Add
+                  OnSelect: =Select(Parent)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Width: =16
+                  X: =573
+                  Y: =10
+            - Icon5_1:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =24
+                  Icon: =Icon.View
+                  OnSelect: |
+                    =// dependiendo la cantidad de documentos 
+                    Set(
+                        _documentoSeleccionadoVer,
+                        ThisItem
+                    );
+                    //
+                    ClearCollect(
+                        colDocumentosVerPre,
+                        Filter(
+                            Documentos,
+                            fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                        )
+                    );
+                    // validar si el documento ya se creo en al biblioteca 
+                    If(
+                        CountRows(colDocumentosVerPre) = 0,
+                        Set(
+                            _mensajeAlerta,
+                            true
+                        ),
+                        Clear(colDocumentosVer);
+                        ForAll(
+                            colDocumentosVerPre As Db,
+                            Collect(
+                                colDocumentosVer,
+                                AddColumns(
+                                    Db,
+                                    id_col,
+                                    CountRows(colDocumentosVer) + 1
+                                )
+                            )
+                        );
+                        Set(
+                            _numeroDocumentoSeleccionado,
+                            1
+                        );
+                        Set(
+                            _visibleVerDocumentoSeleccionado,
+                            true
+                        )
+                    );
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Width: =24
+                  X: =764
+                  Y: =9
+            - Button2_33:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: |+
+                    =
+
+
+
+                    If( 
+                        // estado pendiente
+                        CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "1")) > 0, RGBA(239,194,14,64),
+
+                    // estado aprobado
+                    CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "2")) > 0,RGBA(50,129,45,100),
+
+                    // estado rechazado
+
+                    CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "3")) > 0,RGBA(219,15,15,64),RGBA(239,194,14,64))
+
+
+
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =RGBA(50, 129, 45, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =5
+                  Text: =
+                  Visible: =_documentosVista
+                  Width: =20
+                  X: =969
+                  Y: =9
+            - Button2_34:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(185, 5, 6, 1)
+                  Fill: =RGBA(185, 5, 6, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |
+                    =Set(
+                        _documentoSeleccionadoVer,
+                        ThisItem
+                    );
+                    //validar si los documentos ya se crearon en la carpeta
+                    ClearCollect(
+                        colDocumentosVerPre,
+                        Filter(
+                            Documentos,
+                            fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                        )
+                    );
+                    // validar si el documento ya se creo en al biblioteca 
+                    If(
+                        CountRows(colDocumentosVerPre) < ThisItem.cantidad_de_documentos,
+                        Set(
+                            _mensajeAlerta,
+                            true
+                        ),
+                        ClearCollect(
+                            colDocumentosEliminar,
+                            Filter(
+                                Documentos,
+                                fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                            )
+                        );
+                        If(
+                            CountRows(colDocumentosEliminar) > 1,
+                            Set(
+                                _mensajeConfirmacionVarios,
+                                true
+                            ),
+                            Set(
+                                _mensajeConfirmacion,
+                                true
+                            )
+                        )
+                    );
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =8
+                  Text: ="X"
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Width: =20
+                  X: =1220
+                  Y: =13
+- Button_header_galleryDocsCredit_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont5_DocsSeccion_ProspecSelec
+    Properties:
+      BorderColor: =Color.White
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =1
+      Color: =Color.White
+      DisabledBorderColor: =Color.White
+      DisabledColor: =Color.White
+      DisabledFill: =RGBA(207, 182, 157, 1)
+      DisplayMode: =DisplayMode.Disabled
+      Fill: =RGBA(207, 182, 157, 1)
+      Font: =Font.'Open Sans'
+      Height: =33
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+      OnSelect: =
+      PressedBorderColor: =Self.Fill
+      PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      RadiusBottomLeft: =5
+      RadiusBottomRight: =5
+      RadiusTopLeft: =5
+      RadiusTopRight: =5
+      Size: =16
+      Text: ="DOCUMENTOS LINEA DE CREDITO"
+      Visible: =_documentosVista && _necesitaCredito = 1
+      Width: =1358
+      X: =73
+      Y: =501

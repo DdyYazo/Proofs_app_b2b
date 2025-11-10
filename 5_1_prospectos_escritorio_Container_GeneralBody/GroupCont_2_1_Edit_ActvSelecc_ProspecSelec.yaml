@@ -12,13 +12,7 @@
       HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
-      OnSelect: |-
-        =Set(_crearAgenda, false);
-        Set(_actividadSeleccionada, Blank());
-        // Resetear los campos cuando se cancela
-        Reset(TextInp_edit_ActReali_verProspec);
-        Reset(Select_edit_fechaAct_verProspec);
-        Reset(TextInp_editView_obsvAct_verProspec)
+      OnSelect: =Set(_crearAgenda,false)
       PressedBorderColor: =Self.Fill
       PressedColor: =Self.Fill
       PressedFill: =Self.Color
@@ -47,11 +41,10 @@
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
       OnSelect: |-
-        =// Validaciones de campos requeridos
-        If(
+        =If(
             IsBlank(TextInp_edit_ActReali_verProspec.Text),
             Notify(
-                "El campo de actividad a realizar debe estar diligenciado",
+                "El campo de acciones debe estar diligenciado",
                 NotificationType.Warning,
                 6000
             ),
@@ -61,22 +54,33 @@
                 NotificationType.Warning,
                 6000
             ),
-            // Si pasa las validaciones, ejecutar el Patch correspondiente
+                    // Si pasa las validaciones, ejecutar el Patch correspondiente
             If(
                 _nuevaAgenda,
-                // CREAR NUEVA ACTIVIDAD
+                        // CREAR NUEVA ACTIVIDAD
                 Patch(
-                    tab_seguimiento,
-                    Defaults(tab_seguimiento),
+                    tab_seguimiento_porCuenta,
+                    Defaults(tab_seguimiento_porCuenta),
                     {
-                        anotaciones: TextInp_edit_ActReali_verProspec.Text,
-                        observaciones: TextInp_editView_obsvAct_verProspec.Text,
-                        fk_id_lead: _itemSeleccionadoProspecto1.ID,
-                        fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                        nombre_comercial: _itemSeleccionadoProspecto1.razon_social_prospecto,
-                        correo_responsable: _correoLoggeado,
-                        estado_seguimiento: 1,
-                        fk_tipo_cliente: 2
+                        Anotaciones: TextInp_edit_ActReali_verProspec.Text,
+                        Observaciones: TextInp_editView_obsvAct_verProspec.Text,
+                        Cuenta: {
+                            Id: _itemSeleccionadoProspecto1.ID,
+                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                        },
+                        FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
+                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                        ComercialResponsable: {
+                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                            Department: "",
+                            DisplayName: _infoUsuarioLoggeado.FullName,
+                            Email: _infoUsuarioLoggeado.Email,
+                            JobTitle: "",
+                            Picture: ""
+                        },
+                        EstadoSeguimiento: {Value: "Pendiente"},
+                        RequiereAccion: true
                     }
                 );
                 Notify(
@@ -84,33 +88,57 @@
                     NotificationType.Success,
                     6000
                 );
-                Set(_crearAgenda, false);
+                Set(
+                    _crearAgenda,
+                    false
+                );
                 Reset(TextInp_edit_ActReali_verProspec);
                 Reset(TextInp_editView_obsvAct_verProspec);
                 Reset(Select_edit_fechaAct_verProspec),
 
-                // ACTUALIZAR ACTIVIDAD EXISTENTE
+                        // ACTUALIZAR ACTIVIDAD EXISTENTE
                 Patch(
-                    tab_seguimiento,
-                    LookUp(tab_seguimiento, ID = _actividadSeleccionada.ID),
+                    tab_seguimiento_porCuenta,
+                    LookUp(
+                        tab_seguimiento_porCuenta,
+                        ID = _actividadSeleccionada.ID
+                    ),
                     {
-                        anotaciones: TextInp_edit_ActReali_verProspec.Text,
-                        observaciones: TextInp_editView_obsvAct_verProspec.Text,
-                        fk_id_lead: _itemSeleccionadoProspecto1.ID,
-                        fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                        nombre_comercial: _itemSeleccionadoProspecto1.razon_social_prospecto,
-                        correo_responsable: _correoLoggeado,
-                        estado_seguimiento: 1,
-                        fk_tipo_cliente: 2
+                        Anotaciones: TextInp_edit_ActReali_verProspec.Text,
+                        Observaciones: TextInp_editView_obsvAct_verProspec.Text,
+                        Cuenta: {
+                            Id: _itemSeleccionadoProspecto1.ID,
+                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                        },
+                        FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
+                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                        ComercialResponsable: {
+                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                            Department: "",
+                            DisplayName: _infoUsuarioLoggeado.FullName,
+                            Email: _infoUsuarioLoggeado.Email,
+                            JobTitle: "",
+                            Picture: ""
+                        },
+                        EstadoSeguimiento: {Value: "Pendiente"},
+                        RequiereAccion: true
                     }
                 );
-                Set(_actividadSeleccionada, Blank());
+
+                Set(
+                    _actividadSeleccionada,
+                    Blank()
+                );
                 Notify(
                     "✓ Actividad actualizada exitosamente",
                     NotificationType.Success,
                     6000
                 );
-                Set(_crearAgenda, false);
+                Set(
+                    _crearAgenda,
+                    false
+                );
                 Reset(TextInp_edit_ActReali_verProspec);
                 Reset(TextInp_editView_obsvAct_verProspec);
                 Reset(Select_edit_fechaAct_verProspec)
@@ -124,11 +152,18 @@
       RadiusTopLeft: =30
       RadiusTopRight: =30
       Size: =16
-      Text: ="GUARDAR"
+      Text: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            "GUARDAR",
+            "ACTUALIZAR"
+        )
       Visible: |-
-        =If(IsBlank(_actividadSeleccionada),_crearAgenda,
-
-        _crearAgenda && _actividadSeleccionada.estado_seguimiento = 1)
+        =If(
+            IsBlank(_actividadSeleccionada),
+            _crearAgenda,
+            _crearAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida"
+        )
       Width: =150
       X: =772
       Y: =774
@@ -162,11 +197,10 @@
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
       OnSelect: |-
-        =// Validaciones de campos requeridos antes de finalizar
-        If(
+        =If(
             IsBlank(TextInp_edit_ActReali_verProspec.Text),
             Notify(
-                "El campo de actividad a realizar debe estar diligenciado",
+                "El campo de acciones debe estar diligenciado",
                 NotificationType.Warning,
                 6000
             ),
@@ -176,33 +210,51 @@
                 NotificationType.Warning,
                 6000
             ),
-            // Si pasa las validaciones, marcar como completada
             Patch(
-                tab_seguimiento,
-                LookUp(tab_seguimiento, ID = _actividadSeleccionada.ID),
+                tab_seguimiento_porCuenta,
+                LookUp(
+                    tab_seguimiento_porCuenta,
+                    ID = _actividadSeleccionada.ID
+                ),
                 {
-                    anotaciones: TextInp_edit_ActReali_verProspec.Text,
-                    observaciones: TextInp_editView_obsvAct_verProspec.Text,
-                    fk_id_lead: _itemSeleccionadoProspecto1.ID,
-                    fecha_seguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                    nombre_comercial: _itemSeleccionadoProspecto1.razon_social_prospecto,
-                    correo_responsable: _correoLoggeado,
-                    estado_seguimiento: 2,
-                    fk_tipo_cliente: 2
+                    Anotaciones: TextInp_edit_ActReali_verProspec.Text,
+                    Observaciones: TextInp_editView_obsvAct_verProspec.Text,
+                    Cuenta: {
+                        Id: _itemSeleccionadoProspecto1.ID,
+                        Value: _itemSeleccionadoProspecto1.RazonSocial
+                    },
+                    FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
+                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                    ComercialResponsable: {
+                        '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                        Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                        Department: "",
+                        DisplayName: _infoUsuarioLoggeado.FullName,
+                        Email: _infoUsuarioLoggeado.Email,
+                        JobTitle: "",
+                        Picture: ""
+                    },
+                    EstadoSeguimiento: {Value: "Completada"},
+                    RequiereAccion: false
                 }
             );
-            Set(_crearAgenda, false);
-            Reset(TextInp_edit_ActReali_verProspec);
-            Reset(TextInp_editView_obsvAct_verProspec);
-            Reset(Select_edit_fechaAct_verProspec);
-            Set(_actividadSeleccionada, Blank());
+            Set(
+                _crearAgenda,
+                false
+            );
+            Reset(TextInp_edit_ActReali_verProspec),
+            Reset(TextInp_editView_obsvAct_verProspec),
+            Reset(Select_edit_fechaAct_verProspec),
+            Set(
+                _actividadSeleccionada,
+                Blank()
+            );
             Notify(
                 "✓ Actividad finalizada exitosamente",
                 NotificationType.Success,
                 6000
             )
         )
-
       PressedBorderColor: =Self.Fill
       PressedColor: =Self.Fill
       PressedFill: =Self.Color
@@ -212,7 +264,7 @@
       RadiusTopRight: =30
       Size: =16
       Text: ="FINALIZAR TAREA"
-      Visible: =_crearAgenda && !_nuevaAgenda && _actividadSeleccionada.estado_seguimiento = 1
+      Visible: =_crearAgenda && !_nuevaAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"
       Width: =246
       X: =1209
       Y: =185
@@ -239,7 +291,14 @@
       BorderStyle: =BorderStyle.None
       Default: =_actividadSeleccionada.observaciones
       DelayOutput: =true
-      DisplayMode: =
+      DisplayMode: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            DisplayMode.Edit,
+            _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+            DisplayMode.Edit,
+            DisplayMode.View
+        )
       Font: =Font.'Open Sans'
       Height: =175
       HoverBorderColor: =RGBA(0, 18, 107, 1)
@@ -263,9 +322,16 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_actividadSeleccionada.anotaciones
+      Default: =_actividadSeleccionada.Anotaciones
       DelayOutput: =true
-      DisplayMode: =
+      DisplayMode: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            DisplayMode.Edit,
+            _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+            DisplayMode.Edit,
+            DisplayMode.View
+        )
       Font: =Font.'Open Sans'
       Height: =85
       HoverBorderColor: =RGBA(0, 18, 107, 1)
@@ -331,12 +397,57 @@
       BorderStyle: =BorderStyle.None
       BorderThickness: =0
       Color: =RGBA(85, 69, 49, 1)
-      DefaultDate: =_actividadSeleccionada.fecha_seguimiento
+      DefaultDate: =_actividadSeleccionada.FechaSeguimiento
+      DisplayMode: |-
+        =If(
+            IsBlank(_actividadSeleccionada),
+            DisplayMode.Edit,
+            _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente" || _actividadSeleccionada.EstadoSeguimiento.Value = "Vencida",
+            DisplayMode.Edit,
+            DisplayMode.View
+        )
       Fill: =Color.Transparent
       Font: =Font.'Open Sans'
       Height: =44
       IconBackground: =Color.Transparent
       IconFill: =RGBA(85, 69, 49, 1)
+      OnChange: |-
+        =// Solo validar si hay una fecha seleccionada (no es Blank)
+        If(
+            !IsBlank(Self.SelectedDate),
+            If(
+                _primeraAccion = 1 || _nuevaAgenda || (!IsBlank(_actividadSeleccionada) && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"),
+                // Solo validar fechas para nueva agenda o primera acción
+                If(
+                    Select_edit_fechaAct_verProspec.SelectedDate < Today(),
+                    Notify(
+                        "⚠ Fecha no válida: Solo se permiten fechas desde hoy (" & Text(
+                            Today(),
+                            "dd/mm/yyyy"
+                        ) & ") en adelante.",
+                        NotificationType.Error,
+                        6000
+                    ) && Reset(Self) && Set(
+                        _fechaActivaSseleccionada,
+                        Blank()
+                    ),
+                    Set(
+                        _fechaActivaSseleccionada,
+                        Self.SelectedDate
+                    )
+                ),
+            // Si no es primera acción ni nueva agenda, asignar directamente
+                Set(
+                    _fechaActivaSseleccionada,
+                    Self.SelectedDate
+                )
+            ),
+        // Si la fecha está en blanco (reset), limpiar la variable
+            Set(
+                _fechaActivaSseleccionada,
+                Blank()
+            )
+        )
       Size: =16
       Visible: =_crearAgenda
       Width: =1346

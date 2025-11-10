@@ -1,0 +1,319 @@
+- TextInput_viewBack_modComer_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =
+      DelayOutput: =true
+      DisplayMode: =DisplayMode.View
+      Font: =Font.'Open Sans'
+      Height: =86
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_oportunidadVista
+      Width: =838
+      X: =583
+      Y: =209
+- TextInput_edit_detalOporCom_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspecto1.ID).Detalle
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =223
+      HintText: ="Describa el detalle de la oportunidad comercial identificada"
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      Mode: =TextMode.MultiLine
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_oportunidadVista
+      Width: =838
+      X: =584
+      Y: =308
+- TextInput_edit_constMarc_verProspec:
+    Control: Classic/TextInput@2.3.2
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =
+      BorderStyle: =BorderStyle.None
+      Color: =RGBA(85, 69, 49, 1)
+      Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspecto1.ID).Construccion_marca
+      DelayOutput: =true
+      DisplayMode: =
+      Font: =Font.'Open Sans'
+      Height: =182
+      HintText: ="Describa las oportunidades de construcción de marca"
+      HoverBorderColor: =RGBA(0, 18, 107, 1)
+      HoverFill: =RGBA(214, 221, 224, 1)
+      Mode: =TextMode.MultiLine
+      PaddingLeft: =5
+      RadiusBottomLeft: =10
+      RadiusBottomRight: =10
+      RadiusTopLeft: =10
+      RadiusTopRight: =10
+      Size: =16
+      Tooltip: =
+      Visible: =_oportunidadVista
+      Width: =838
+      X: =585
+      Y: =545
+- Label_modComer_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =30
+      Size: =20
+      Text: ="Modelo comercial"
+      Visible: =_oportunidadVista
+      Width: =350
+      X: =91
+      Y: =207
+- Label_detalOporCom_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =37
+      Size: =20
+      Text: ="Detalle oportunidad comercial:"
+      Visible: =_oportunidadVista
+      Width: =420
+      X: =92
+      Y: =314
+- Label_oporConstMarc_verProspec:
+    Control: Label@2.5.1
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(85, 69, 49, 1)
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =37
+      Size: =20
+      Text: ="Oportunidad construcción de marca:"
+      Visible: =_oportunidadVista
+      Width: =494
+      X: =92
+      Y: =551
+- Button_edit_SaveUpd_oport_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =ColorFade(Self.Fill, -55%)
+      BorderThickness: =0
+      Color: =RGBA(255, 255, 255, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =RGBA(104, 110, 72, 1)
+      Font: =Font.'Open Sans'
+      Height: =50
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(255, 255, 255, 1)
+      HoverFill: =Self.Fill
+      OnSelect: |-
+        =// Validaciones
+        If(
+            IsBlank(_tipoOportunidadSeleccionada),
+            Notify(
+                "Debe seleccionar un tipo de oportunidad",
+                NotificationType.Warning,
+                6000
+            ),
+            IsBlank(TextInput_edit_detalOporCom_verProspec.Text),
+            Notify(
+                "El campo de detalle de oportunidad es obligatorio",
+                NotificationType.Warning,
+                6000
+            ),
+                            // Si pasa las validaciones; crear o actualizar el registro
+            Set(
+                _spinner,
+                true
+            );
+            If(
+                IsBlank(
+                    LookUp(
+                        tab_oportunidades_cuenta,
+                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                    )
+                ),
+                                // CREAR NUEVA OPORTUNIDAD
+                Patch(
+                    tab_oportunidades_cuenta,
+                    Defaults(tab_oportunidades_cuenta),
+                    {
+                        Cuenta: {
+                            Id: _itemSeleccionadoProspecto1.ID,
+                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                        },
+                        TipoOportunidad: {
+                            Id: _tipoOportunidadSeleccionada.ID,
+                            Value: _tipoOportunidadSeleccionada.oportunidad
+                        },
+                        Detalle: TextInput_edit_detalOporCom_verProspec.Text,
+                        Construccion_marca: TextInput_edit_constMarc_verProspec.Text,
+                        EstadoCuentaAlCrear: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                        FechaIdentificacion: Now(),
+                        ComercialIdentifica: {
+                            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                            Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
+                            Department: "",
+                            DisplayName: _infoUsuarioLoggeado.FullName,
+                            Email: _infoUsuarioLoggeado.Email,
+                            JobTitle: "",
+                            Picture: ""
+                        }
+                    }
+                );
+                Notify(
+                    "✓ Oportunidad registrada exitosamente",
+                    NotificationType.Success,
+                    6000
+                ),
+                                // ACTUALIZAR OPORTUNIDAD EXISTENTE
+                Patch(
+                    tab_oportunidades_cuenta,
+                    LookUp(
+                        tab_oportunidades_cuenta,
+                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                    ),
+                    {
+                        TipoOportunidad: {
+                            Id: _tipoOportunidadSeleccionada.ID,
+                            Value: _tipoOportunidadSeleccionada.oportunidad
+                        },
+                        Detalle: TextInput_edit_detalOporCom_verProspec.Text,
+                        Construccion_marca: TextInput_edit_constMarc_verProspec.Text
+                    }
+                );
+                Notify(
+                    "✓ Oportunidad actualizada exitosamente",
+                    NotificationType.Success,
+                    6000
+                )
+            );
+            // Actualizar colección de oportunidades
+        ClearCollect(
+                colOportunidadesCuenta,
+                Filter(
+                    tab_oportunidades_cuenta,
+                    ComercialIdentifica.Email = _correoLoggeado || ComercialIdentifica.Email = _correoLoggeadoNormalizado || (_rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6)
+                )
+            );
+            // Resetear campos
+        Reset(TextInput_edit_detalOporCom_verProspec);
+            Reset(TextInput_edit_constMarc_verProspec);
+            Reset(Select_edit_oportunidad_verProspec);
+            Set(
+                _tipoOportunidadSeleccionada,
+                Blank()
+            );
+            Set(
+                _spinner,
+                false
+            )
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: =Self.Fill
+      PressedFill: =Self.Color
+      RadiusBottomLeft: =30
+      RadiusBottomRight: =30
+      RadiusTopLeft: =30
+      RadiusTopRight: =30
+      Size: =16
+      Text: |-
+        =If(
+            IsBlank(
+                LookUp(
+                    tab_oportunidades_cuenta,
+                    Cuenta.Id = _itemSeleccionadoLead.ID
+                )
+            ),
+            "GUARDAR",
+            "ACTUALIZAR"
+        )
+      Visible: =_oportunidadVista
+      Width: =300
+      X: =626
+      Y: =788
+- Select_edit_oportunidad_verProspec:
+    Control: Classic/ComboBox@2.4.0
+    Group: GroupCont3_Form_Oportun_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      ChevronBackground: =Color.Transparent
+      ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      ChevronHoverFill: =RGBA(255, 255, 255, 1)
+      DefaultSelectedItems: |-
+        =If(
+            !IsBlank(
+                LookUp(
+                    tab_oportunidades_cuenta,
+                    Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                )
+            ),
+            [
+                LookUp(
+                    colOportunidad,
+                    ID = LookUp(
+                        tab_oportunidades_cuenta,
+                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                    ).TipoOportunidad.Id
+                )
+            ],
+            []
+        )
+      DisplayFields: =["oportunidad"]
+      Fill: =Color.White
+      Font: =Font.'Open Sans'
+      Height: =62
+      HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+      HoverFill: =RGBA(235, 222, 184, 1)
+      InputTextPlaceholder: =
+      IsSearchable: =false
+      Items: =colOportunidad
+      OnChange: |-
+        =Set(
+            _tipoOportunidadSeleccionada,
+            Self.Selected
+        )
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 0, 0, 0)
+      SearchFields: =["oportunidad"]
+      SelectMultiple: =false
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(198, 179, 126, 1)
+      Size: =16
+      Visible: =_oportunidadVista
+      Width: =799
+      X: =600
+      Y: =216

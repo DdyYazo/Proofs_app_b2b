@@ -1,205 +1,3 @@
-- Button_edit_newActv_verProspec:
-    Control: Classic/Button@2.2.0
-    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
-    Properties:
-      BorderColor: =RGBA(85, 69, 49, 1)
-      BorderThickness: =1
-      Color: =RGBA(85, 69, 49, 1)
-      DisabledBorderColor: =RGBA(166, 166, 166, 1)
-      Fill: =Color.Transparent
-      Font: =Font.'Open Sans'
-      Height: =71
-      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-      HoverColor: |-
-        =RGBA(
-            _r_fondo_crema,
-            _g_fondo_crema,
-            _b_fondo_crema,
-            _a_fondo_crema
-        )
-      HoverFill: |-
-        =RGBA(
-            _rBotonClaro,
-            _gBotonClaro,
-            _bBotonClaro,
-            _aBotonClaro
-        )
-      OnSelect: |-
-        =Set(
-            _crearAgenda,
-            true
-        );
-        Set(
-            _nuevaAgenda,
-            true
-        );
-        Set(
-            _primeraAccion,
-            0
-        );
-        Set(
-            _actividadSeleccionada,
-            Blank()
-        )
-      PressedBorderColor: =Self.Fill
-      PressedColor: |-
-        =RGBA(
-            _r_fondo_crema,
-            _g_fondo_crema,
-            _b_fondo_crema,
-            _a_fondo_crema
-        )
-      PressedFill: |-
-        =RGBA(
-            _r_boton_claro_nw,
-            _g_boton_claro_nw,
-            _b_boton_claro_nw,
-            _a_boton_claro_nw
-        )
-      RadiusBottomLeft: =20
-      RadiusBottomRight: =20
-      RadiusTopLeft: =20
-      RadiusTopRight: =20
-      Size: =22
-      Text: ="Crear Actividad"
-      Visible: =_seguimientoVista && !_crearAgenda
-      Width: =336
-      X: =184
-      Y: =128
-- Button_desab_filter_fechAct_verProspec:
-    Control: Classic/Button@2.2.0
-    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
-    Properties:
-      BorderColor: =RGBA(85, 69, 49, 1)
-      BorderThickness: =1
-      Color: =RGBA(85, 69, 49, 1)
-      DisabledBorderColor: =RGBA(85, 69, 49, 1)
-      DisabledFill: =Color.Transparent
-      DisplayMode: =DisplayMode.Disabled
-      Fill: =Color.Transparent
-      Font: =Font.'Open Sans'
-      Height: =71
-      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-      HoverColor: |-
-        =RGBA(
-            _r_fondo_crema,
-            _g_fondo_crema,
-            _b_fondo_crema,
-            _a_fondo_crema
-        )
-      HoverFill: |-
-        =RGBA(
-            _rBotonClaro,
-            _gBotonClaro,
-            _bBotonClaro,
-            _aBotonClaro
-        )
-      OnSelect: |-
-        =Set(
-            _crearAgenda,
-            true
-        );
-        Set(
-            _actividadSeleccionada,
-            Blank()
-        );
-        Set(
-            _nuevaAgenda,
-            true
-        )
-      PressedBorderColor: =Self.Fill
-      PressedColor: |-
-        =RGBA(
-            _r_fondo_crema,
-            _g_fondo_crema,
-            _b_fondo_crema,
-            _a_fondo_crema
-        )
-      PressedFill: |-
-        =RGBA(
-            _r_boton_claro_nw,
-            _g_boton_claro_nw,
-            _b_boton_claro_nw,
-            _a_boton_claro_nw
-        )
-      RadiusBottomLeft: =20
-      RadiusBottomRight: =20
-      RadiusTopLeft: =20
-      RadiusTopRight: =20
-      Size: =22
-      Text: =
-      Visible: =_seguimientoVista && !_crearAgenda
-      Width: =336
-      X: =587
-      Y: =130
-- Select_edit_fechActv_verProspec:
-    Control: Classic/DatePicker@2.6.0
-    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
-    Properties:
-      BorderColor: =RGBA(0, 18, 107, 1)
-      BorderStyle: =BorderStyle.None
-      BorderThickness: =0
-      Color: =RGBA(85, 69, 49, 1)
-      DefaultDate: =Blank()
-      Fill: =Color.Transparent
-      Font: =Font.'Open Sans'
-      FontWeight: =FontWeight.Semibold
-      Height: =46
-      IconBackground: =Color.Transparent
-      IconFill: =RGBA(85, 69, 49, 1)
-      InputTextPlaceholder: |-
-        =If(
-            IsBlank(Self.SelectedDate),
-            Text(
-                Date(
-                    2001,
-                    12,
-                    31
-                ),
-                Self.Format,
-                Self.Language
-            )
-        )
-      OnChange: |-
-        =If(
-            !_limpiandoFiltroFecha && !IsBlank(Self.SelectedDate),
-            Set(
-                _fechaFiltroActividades,
-                Self.SelectedDate
-            )
-        )
-      Size: =22
-      Visible: =_seguimientoVista && !_crearAgenda
-      Width: =283
-      X: =611
-      Y: =142
-- Icon_Reset_filtroFecha_act_verProspec:
-    Control: Classic/Icon@2.5.0
-    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
-    Properties:
-      BorderColor: =RGBA(0, 18, 107, 1)
-      Color: =RGBA(110, 93, 71, 1)
-      Height: =42
-      Icon: =Icon.Erase
-      OnSelect: |-
-        =Set(
-            _limpiandoFiltroFecha,
-            true
-        );
-        Reset(Select_edit_fechActv_verProspec);
-        Set(
-            _fechaFiltroActividades,
-            Blank()
-        );
-        Set(
-            _limpiandoFiltroFecha,
-            false
-        )
-      Tooltip: ="Limpiar filtro de fecha"
-      Visible: =_seguimientoVista && !IsBlank(_fechaFiltroActividades) && !_crearAgenda
-      Width: =45
-      X: =918
-      Y: =142
 - Container_list_seguAct_verProspec:
     Control: GroupContainer@1.3.0
     Variant: ManualLayout
@@ -211,10 +9,10 @@
       RadiusBottomRight: =30
       RadiusTopLeft: =30
       RadiusTopRight: =30
-      Visible: =_seguimientoVista && !_crearAgenda
+      Visible: =_seguimientoVista
       Width: =1300
       X: =102
-      Y: =248
+      Y: =330
     Children:
       - TextCanvas_viewTitu_actReal_verProspec:
           Control: Text@0.0.51
@@ -223,9 +21,9 @@
             FontColor: =RGBA(85, 69, 49, 1)
             Height: =54
             Size: =25
-            Text: ="Actividades a realizar"
+            Text: ="Actividad a realizar"
             VerticalAlign: =VerticalAlign.Middle
-            Visible: =_seguimientoVista && !_crearAgenda
+            Visible: =_seguimientoVista
             Weight: ='TextCanvas.Weight'.Semibold
             Width: =426
             X: =24
@@ -239,7 +37,7 @@
             Size: =25
             Text: ="Fecha de seguimiento"
             VerticalAlign: =VerticalAlign.Middle
-            Visible: =_seguimientoVista && !_crearAgenda
+            Visible: =_seguimientoVista
             Weight: ='TextCanvas.Weight'.Semibold
             Width: =426
             X: =438
@@ -253,7 +51,7 @@
             Size: =25
             Text: ="Estado de seguimiento"
             VerticalAlign: =VerticalAlign.Middle
-            Visible: =_seguimientoVista && !_crearAgenda
+            Visible: =_seguimientoVista
             Weight: ='TextCanvas.Weight'.Semibold
             Width: =426
             X: =858
@@ -278,7 +76,10 @@
                   tab_seguimiento_porCuenta,
                   Cuenta.Id = _itemSeleccionadoProspecto1.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
               )
-            OnSelect: =
+            OnSelect: |-
+              =Set(_itemSeleccionado,ThisItem);
+              Set(_consulta,true);
+              Navigate('4_1_creacion_lead_escritorio')
             TemplateSize: =66
             Visible: =_seguimientoVista
             Width: =1270
@@ -331,18 +132,54 @@
                   Text: =ThisItem.FechaSeguimiento
                   Width: =296
                   X: =480
+            - Label_list_estSeguAct_verProspec:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: |-
+                    =If(
+                        ThisItem.FechaSeguimiento <= Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                        RGBA(
+                            184,
+                            0,
+                            0,
+                            1
+                        ),// Rojo para VENCIDAS
+                        If(
+                            ThisItem.EstadoSeguimiento.Value = "Completada",
+                            RGBA(
+                                50,
+                                129,
+                                45,
+                                1
+                            ),// Verde para Completada
+                            RGBA(
+                                128,
+                                0,
+                                128,
+                                1
+                            )// Morado para Pendiente
+                        )
+                    )
+                  Font: =Font.'Open Sans'
+                  Height: =54
+                  OnSelect: =Select(Parent)
+                  Size: =18
+                  Text: =ThisItem.EstadoSeguimiento.Value
+                  Width: =206
+                  X: =1003
             - Button_Change_StatusActv_verProspec:
                 Control: Classic/Button@2.2.0
                 Properties:
                   BorderColor: =Color.White
                   BorderStyle: =BorderStyle.None
                   BorderThickness: =1
-                  Color: =Color.White
+                  Color: =
                   DisabledBorderColor: =Color.White
                   DisabledColor: =Color.White
                   DisabledFill: |-
                     =If(
-                        ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
+                        ThisItem.FechaSeguimiento <= Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
                         RGBA(
                             184,
                             0,
@@ -383,44 +220,8 @@
                   Size: =5
                   Text: =
                   Width: =20
-                  X: =951
+                  X: =971
                   Y: =17
-            - Label_list_estSeguAct_verProspec:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Color: |-
-                    =If(
-                        ThisItem.FechaSeguimiento < Today() And ThisItem.EstadoSeguimiento.Value = "Vencida",
-                        RGBA(
-                            184,
-                            0,
-                            0,
-                            1
-                        ),// Rojo para VENCIDAS
-                        If(
-                            ThisItem.EstadoSeguimiento.Value = "Completada",
-                            RGBA(
-                                50,
-                                129,
-                                45,
-                                1
-                            ),// Verde para Completada
-                            RGBA(
-                                128,
-                                0,
-                                128,
-                                1
-                            )// Morado para Pendiente
-                        )
-                    )
-                  Font: =Font.'Open Sans'
-                  Height: =54
-                  OnSelect: =Select(Parent)
-                  Size: =18
-                  Text: =ThisItem.EstadoSeguimiento.Value
-                  Width: =200
-                  X: =986
             - Button_edit_list_actSelec_verProspec:
                 Control: Classic/Button@2.2.0
                 Properties:
@@ -436,18 +237,9 @@
                   HoverColor: =Color.Transparent
                   HoverFill: =Color.Transparent
                   OnSelect: |-
-                    =Set(
-                        _crearAgenda,
-                        true
-                    );
-                    Set(
-                        _actividadSeleccionada,
-                        ThisItem
-                    );
-                    Set(
-                        _nuevaAgenda,
-                        false
-                    )
+                    =Set(_crearAgenda,true);
+                    Set(_actividadSeleccionada,ThisItem);
+                    Set(_nuevaAgenda,false)
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -473,3 +265,148 @@
             Width: =700
             X: =297
             Y: =96
+- Button_edit_newActv_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(85, 69, 49, 1)
+      BorderThickness: =1
+      Color: =RGBA(85, 69, 49, 1)
+      DisabledBorderColor: =RGBA(166, 166, 166, 1)
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      Height: =71
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+      OnSelect: |-
+        =Set(
+            _crearAgenda,
+            true
+        );
+        Set(
+            _nuevaAgenda,
+            true
+        );
+        Set(
+            _primeraAccion,
+            0
+        );
+        Set(
+            _actividadSeleccionada,
+            Blank()
+        )
+      PressedBorderColor: =Self.Fill
+      PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      RadiusBottomLeft: =20
+      RadiusBottomRight: =20
+      RadiusTopLeft: =20
+      RadiusTopRight: =20
+      Size: =22
+      Text: ="Crear Actividad"
+      Visible: =_seguimientoVista
+      Width: =336
+      X: =147
+      Y: =182
+- Button_desab_filter_fechAct_verProspec:
+    Control: Classic/Button@2.2.0
+    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(85, 69, 49, 1)
+      BorderThickness: =1
+      Color: =RGBA(85, 69, 49, 1)
+      DisabledBorderColor: =RGBA(85, 69, 49, 1)
+      DisabledFill: =Color.Transparent
+      DisplayMode: =DisplayMode.Disabled
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      Height: =71
+      HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+      HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+      OnSelect: |-
+        =Set(_crearAgenda,true);
+        Set(_actividadSeleccionada,Blank());
+        Set(_nuevaAgenda,true)
+      PressedBorderColor: =Self.Fill
+      PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+      RadiusBottomLeft: =20
+      RadiusBottomRight: =20
+      RadiusTopLeft: =20
+      RadiusTopRight: =20
+      Size: =22
+      Text: =
+      Visible: =_seguimientoVista
+      Width: =336
+      X: =550
+      Y: =184
+- Select_edit_fechActv_verProspec:
+    Control: Classic/DatePicker@2.6.0
+    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      BorderStyle: =BorderStyle.None
+      BorderThickness: =0
+      Color: =RGBA(85, 69, 49, 1)
+      DefaultDate: =Blank()
+      Fill: =Color.Transparent
+      Font: =Font.'Open Sans'
+      FontWeight: =FontWeight.Semibold
+      Height: =46
+      IconBackground: =Color.Transparent
+      IconFill: =RGBA(85, 69, 49, 1)
+      InputTextPlaceholder: |-
+        =If(
+            IsBlank(Self.SelectedDate),
+            Text(
+                Date(
+                    2001,
+                    12,
+                    31
+                ),
+                Self.Format,
+                Self.Language
+            )
+        )
+      OnChange: |-
+        =If(
+            !_limpiandoFiltroFecha && !IsBlank(Self.SelectedDate),
+            Set(
+                _fechaFiltroActividades,
+                Self.SelectedDate
+            )
+        )
+      Size: =22
+      Visible: =_seguimientoVista
+      Width: =283
+      X: =574
+      Y: =196
+- Icon_Reset_filtroFecha_act_verProspec:
+    Control: Classic/Icon@2.5.0
+    Group: GroupCont2_List_SeguimientoActv_ProspecSelec
+    Properties:
+      BorderColor: =RGBA(0, 18, 107, 1)
+      Color: =RGBA(110, 93, 71, 1)
+      Height: =42
+      Icon: =Icon.Erase
+      OnSelect: |-
+        =Set(
+            _limpiandoFiltroFecha,
+            true
+        );
+        Reset(Select_edit_fechActv_verProspec);
+        Set(
+            _fechaFiltroActividades,
+            Blank()
+        );
+        Set(
+            _limpiandoFiltroFecha,
+            false
+        )
+      Tooltip: ="Limpiar filtro de fecha"
+      Visible: =_seguimientoVista && !IsBlank(_fechaFiltroActividades) && !_crearAgenda
+      Width: =45
+      X: =899
+      Y: =196
