@@ -45,7 +45,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.nombre_comercial_prospecto
+      Default: =_itemSeleccionadoProspecto1.RazonSocial
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -85,7 +85,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.razon_social_prospecto
+      Default: =_itemSeleccionadoProspecto1.RazonSocial
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -197,7 +197,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.nombre_contacto
+      Default: =_itemSeleccionadoProspecto1.NombreContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -237,7 +237,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.apellidos_contacto
+      Default: =_itemSeleccionadoProspecto1.ApellidosContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -277,7 +277,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.cargo
+      Default: =_itemSeleccionadoProspecto1.CargoContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -317,7 +317,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.email
+      Default: =_itemSeleccionadoProspecto1.EmailContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -341,7 +341,7 @@
     Properties:
       BorderColor: =
       BorderStyle: =BorderStyle.None
-      Default: =_itemSeleccionadoProspecto1.fecha_creacion_lead
+      Default: =_itemSeleccionadoProspecto1.FechaCreacionLead
       DelayOutput: =true
       DisplayMode: =DisplayMode.View
       Font: =Font.'Open Sans'
@@ -384,7 +384,7 @@
     Properties:
       BorderColor: =
       BorderStyle: =BorderStyle.None
-      Default: =_itemSeleccionadoProspecto1.ultima_actualizacion
+      Default: =_itemSeleccionadoProspecto1.Ultima_actualizacion_cuenta
       DelayOutput: =true
       DisplayMode: =DisplayMode.View
       Font: =Font.'Open Sans'
@@ -432,19 +432,18 @@
       ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
       ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       ChevronHoverFill: =RGBA(255, 255, 255, 1)
-      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.ciudad]
-      DisplayFields: =["Value"]
+      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Ciudad]
+      DisplayFields: =["Ciudad0"]
       Fill: =Color.White
       Font: =Font.'Open Sans'
       Height: =46
       HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       HoverFill: =RGBA(235, 222, 184, 1)
       InputTextPlaceholder: =
-      Items: =["Bogota","Medellin","Cali","Barranquilla"]
-      OnChange: =Set(_ciudadSeleccionada,Self.Selected.Value)
+      Items: =colCiudades
       PressedColor: =RGBA(255, 255, 255, 1)
       PressedFill: =RGBA(0, 0, 0, 0)
-      SearchFields: =["Value"]
+      SearchFields: =["Ciudad0"]
       SelectMultiple: =false
       SelectionColor: =RGBA(255, 255, 255, 1)
       SelectionFill: =RGBA(198, 179, 126, 1)
@@ -516,19 +515,23 @@
       ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
       ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       ChevronHoverFill: =RGBA(255, 255, 255, 1)
-      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.segmento]
-      DisplayFields: =["Value"]
+      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Segmento]
+      DisplayFields: =["id_segmento_concat"]
       Fill: =Color.White
       Font: =Font.'Open Sans'
       Height: =46
       HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       HoverFill: =RGBA(235, 222, 184, 1)
       InputTextPlaceholder: =
-      Items: =["Restaurantes & Clubes","Hoteles & Pastelerias","Oficinas"]
-      OnChange: =Set(_itemSeleccionadoProspectoSegmento,Self.Selected.Value);
+      Items: |-
+        =SortByColumns(
+            colSegmento,
+            "id_segmento",
+            SortOrder.Ascending
+        )
       PressedColor: =RGBA(255, 255, 255, 1)
       PressedFill: =RGBA(0, 0, 0, 0)
-      SearchFields: =["Value"]
+      SearchFields: =["id_segmento_concat"]
       SelectMultiple: =false
       SelectionColor: =RGBA(255, 255, 255, 1)
       SelectionFill: =RGBA(198, 179, 126, 1)
@@ -548,28 +551,18 @@
       ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
       ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       ChevronHoverFill: =RGBA(255, 255, 255, 1)
-      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.subsegmento]
-      DisplayFields: =["Value"]
+      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Subsegmento]
+      DisplayFields: =["sub_segmento"]
       Fill: =Color.White
       Font: =Font.'Open Sans'
       Height: =46
       HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       HoverFill: =RGBA(235, 222, 184, 1)
       InputTextPlaceholder: =
-      Items: |+
-        =["Restaurante Fine Dining",
-        "Restaurante Premium",
-        "Restaurante Otros",
-        "Club Social",
-        "Hotel",
-        "Cafeteria / Pasteleria",
-        "Miscelaneos",
-        "Oficinas",
-        "Retail / Tienda"]
-      OnChange: =Set(_itemSeleccionadoProspectoSubSegmento,Self.Selected.Value);
+      Items: =Filter(colSubSegmento, id_segmento_relacionado.Value = Select_edit_segmento_verProspec.Selected.id_segmento_concat)
       PressedColor: =RGBA(255, 255, 255, 1)
       PressedFill: =RGBA(0, 0, 0, 0)
-      SearchFields: =["Value"]
+      SearchFields: =["sub_segmento"]
       SelectMultiple: =false
       SelectionColor: =RGBA(255, 255, 255, 1)
       SelectionFill: =RGBA(198, 179, 126, 1)
@@ -592,42 +585,67 @@
       HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
       HoverColor: =RGBA(255, 255, 255, 1)
       HoverFill: =Self.Fill
-      OnSelect: |+
-        =// Actualizar prospecto seleccionado
-
+      OnSelect: |-
+        =Set(
+            _spinner,
+            true
+        );
         Patch(
-            tab_leads,
-            LookUp(tab_leads, ID = _itemSeleccionadoProspecto1.ID),
+            tab_cuentas,
+            LookUp(
+                tab_cuentas,
+                ID = _itemSeleccionadoProspecto1.ID
+            ),
             {
-                nombre_comercial_prospecto: TextInp_enable_canalCom_verProspec.Text,
-                id_nesp_corp_nit: Value(TextInp_editView_nitClient_verProspec.Text),
-                razon_social_prospecto: TextInp_edit_razonSocial_verProspec.Text,
-                ciudad: If(!IsBlank(_ciudadSeleccionada), _ciudadSeleccionada, _itemSeleccionadoProspecto1.ciudad),
-                segmento: If(!IsBlank(_itemSeleccionadoProspectoSegmento), _itemSeleccionadoProspectoSegmento, _itemSeleccionadoProspecto1.segmento),
-                subsegmento: If(!IsBlank(_itemSeleccionadoProspectoSubSegmento), _itemSeleccionadoProspectoSubSegmento, _itemSeleccionadoProspecto1.subsegmento),
-                nombre_contacto: TextInp_edit_nombreContac_verProspec.Text,
-                apellidos_contacto: TextInp_edit_apelliContac_verProspec.Text,
-                cargo: TextInp_edit_cargoContac_verProspec.Text,
-                email: TextInp_edit_emailContac_verProspec.Text,
-                ultima_actualizacion: Now()
+                NIT: TextInp_editView_nitClient_verProspec.Text,
+                RazonSocial: TextInp_edit_razonSocial_verProspec.Text,
+                Ciudad: If(
+                    !IsBlank(Select_edit_ciudades_verProspec.Selected),
+                    {
+                        Id: Select_edit_ciudades_verProspec.Selected.ID,
+                        Value: Select_edit_ciudades_verProspec.Selected.Ciudad0
+                    },
+                    _itemSeleccionadoProspecto1.Ciudad
+                ),
+                Segmento: If(
+                    !IsBlank(Select_edit_segmento_verProspec.Selected),
+                    {
+                        Id: Select_edit_segmento_verProspec.Selected.ID,
+                        Value: Select_edit_segmento_verProspec.Selected.segmento
+                    },
+                    _itemSeleccionadoProspecto1.Segmento
+                ),
+                Subsegmento: If(
+                    !IsBlank(Select_edit_subsegmento_verProspec.Selected),
+                    {
+                        Id: Select_edit_subsegmento_verProspec.Selected.ID,
+                        Value: Select_edit_subsegmento_verProspec.Selected.sub_segmento
+                    },
+                    _itemSeleccionadoProspecto1.Subsegmento
+                ),
+                NombreContacto: TextInp_edit_nombreContac_verProspec.Text,
+                ApellidosContacto: TextInp_edit_apelliContac_verProspec.Text,
+                CargoContacto: TextInp_edit_cargoContac_verProspec.Text,
+                EmailContacto: 'TextInp_edit_emailContac_verProspec:'.Text,
+                Ultima_actualizacion_cuenta: Now()
             }
         );
-
-        // Actualizar variable local con datos actualizados
-        Set(_itemSeleccionadoProspecto1,
-            LookUp(tab_leads, ID = _itemSeleccionadoProspecto1.ID)
-        );
-
-        // Actualizar colección de prospectos
-        ClearCollect(
-            colLeads,
-            Filter(
-                tab_leads,
-                correo_comercial_creador = _correoLoggeado
+        Set(
+            _itemSeleccionadoProspecto1,
+            LookUp(
+                tab_cuentas,
+                ID = _itemSeleccionadoProspecto1.ID
             )
         );
-
-        Notify("✓ Información actualizada exitosamente", NotificationType.Success, 6000)
+        Set(
+            _spinner,
+            false
+        );
+        Notify(
+            "✓ Información actualizada exitosamente",
+            NotificationType.Success,
+            6000
+        )
 
 
       PressedBorderColor: =Self.Fill
