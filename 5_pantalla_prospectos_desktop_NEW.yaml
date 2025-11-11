@@ -451,7 +451,7 @@ Screens:
                           )
                         OnSelect: |-
                           =Set(
-                              _itemSeleccionadoProspecto1,
+                              _itemSeleccionadoProspect,
                               ThisItem
                           );
                           Set(

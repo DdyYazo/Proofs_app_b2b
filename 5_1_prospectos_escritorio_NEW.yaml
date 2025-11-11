@@ -1017,7 +1017,7 @@ Screens:
                         RadiusTopLeft: =30
                         RadiusTopRight: =30
                         Size: =22
-                        Text: =_itemSeleccionadoProspecto1.razon_social_prospecto
+                        Text: =_itemSeleccionadoProspect.RazonSocial
                         Width: =1250
             - Button_edit_cancelUpd_ActSelec_verProspec:
                 Control: Classic/Button@2.2.0
@@ -1393,7 +1393,7 @@ Screens:
                         Width: =1431
                         X: =20
                         Y: =80
-                  - Gallery1_52:
+                  - Gallery_list_MaqSeriales_verProspec:
                       Control: Gallery@2.15.0
                       Variant: Vertical
                       Properties:
@@ -1406,7 +1406,7 @@ Screens:
                         X: =12
                         Y: =82
                       Children:
-                        - Button2_548:
+                        - Button_viewAccess_maquReque_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =ColorFade(Self.Fill, -55%)
@@ -1427,7 +1427,7 @@ Screens:
                               Size: =18
                               Text: =
                               Width: =1408
-                        - Label5_64:
+                        - Label_name_maquRequ_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -1439,7 +1439,7 @@ Screens:
                               Text: =ThisItem.maquina
                               Width: =299
                               X: =21
-                        - Label5_108:
+                        - Label_serial_maquRequ_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               Align: =Align.Center
@@ -1452,7 +1452,7 @@ Screens:
                               Text: =ThisItem.serial_maquina
                               Width: =296
                               X: =125
-                        - Label5_231:
+                        - Label_status_maquRequ_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               Align: =Align.Center
@@ -1465,7 +1465,7 @@ Screens:
                               Text: =LookUp(colEstadosMaquinas, id_estados_maquinas = ThisItem.estado_maquina,estado_maquinas)
                               Width: =209
                               X: =427
-                        - Label5_232:
+                        - Label_consMinMen_maquRequ_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               Align: =Align.Center
@@ -1478,7 +1478,7 @@ Screens:
                               Text: =ThisItem.consumo_minimo
                               Width: =209
                               X: =743
-                        - Icon2_3:
+                        - Icon_trash_list_maquRequ_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -1488,7 +1488,7 @@ Screens:
                               OnSelect: =Remove(tab_maquinas_por_cliente,ThisItem)
                               Width: =40
                               X: =1327
-                        - Button2_549:
+                        - Button_edit_requestSerial_toBackOffice_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =RGBA(85, 69, 49, 1)
@@ -1602,9 +1602,9 @@ Screens:
                               Size: =16
                               Text: |-
                                 =If(
-                                    ThisItem.estado_maquina = 0,
+                                    ThisItem.EstadoMaquina.Id = 0,
                                     "Solicitar serial",
-                                    ThisItem.estado_maquina = 2,
+                                    ThisItem.EstadoMaquina.Id = 2,
                                     "Solicitar Instalación"
                                 )
                               Visible: =ThisItem.estado_maquina = 0 Or ThisItem.estado_maquina = 2
@@ -2303,7 +2303,7 @@ Screens:
                         X: =35
                         Y: =96
                       Children:
-                        - Button2_543:
+                        - Button_viewBack_maquCreadas_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =ColorFade(Self.Fill, -55%)
@@ -2324,7 +2324,7 @@ Screens:
                               Size: =18
                               Text: =
                               Width: =1250
-                        - Label5_63:
+                        - Label_namMaq_maquCreadas_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               Align: =Align.Center
@@ -2336,7 +2336,7 @@ Screens:
                               Size: =18
                               Text: =ThisItem.TipoMaquina.Value
                               Width: =425
-                        - Label5_107:
+                        - Label_consMinMen_maquCreadas_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               Align: =Align.Center
@@ -2349,7 +2349,7 @@ Screens:
                               Text: =ThisItem.ConsumoMinimoSugerido
                               Width: =296
                               X: =480
-                        - Label5_153:
+                        - Label_mesColoc_maquCreadas_verProspec:
                             Control: Label@2.5.1
                             Properties:
                               Align: =Align.Center
@@ -2362,7 +2362,7 @@ Screens:
                               Text: =ThisItem.MesColocacionEstimado.Value
                               Width: =393
                               X: =851
-                        - Icon2_2:
+                        - Icon_trash_list_maquCreadas_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -2460,7 +2460,7 @@ Screens:
                               Width: =40
                               X: =1196
                               Y: =3
-                        - Button1_8:
+                        - Button_edit_list_maquSelec_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =Color.Transparent
@@ -3214,7 +3214,7 @@ Screens:
                         Width: =100
                         X: =1151
                         Y: =42
-                  - DropdownCanvas1:
+                  - Selec_editView_Plazo_Client:
                       Control: DropDown@0.0.45
                       Properties:
                         DefaultSelectedItems: =[_itemSeleccionadoProspect.PlazoCredito]
@@ -3389,7 +3389,7 @@ Screens:
                         Width: =1358
                         Y: =45
                       Children:
-                        - TextInputCanvas1_5:
+                        - TextInputCanvas_nameDoc_verProspec:
                             Control: TextInput@0.0.54
                             Properties:
                               Fill: =RGBA(132, 40, 38, 0)
@@ -3398,7 +3398,7 @@ Screens:
                               Value: =ThisItem.nombre_documento
                               Width: =378
                               X: =31
-                        - Rectangle8_43:
+                        - Rectangle_lineSeparated_Docs_verProspec:
                             Control: Rectangle@2.3.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -3407,7 +3407,7 @@ Screens:
                               Width: =1322
                               X: =11
                               Y: =42
-                        - Icon5_2:
+                        - Icon_edit_submitDoc_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -3450,7 +3450,7 @@ Screens:
                               Width: =25
                               X: =548
                               Y: =10
-                        - Icon4:
+                        - Icon_edit_addDoc_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -3472,7 +3472,7 @@ Screens:
                               Width: =16
                               X: =573
                               Y: =10
-                        - Icon5:
+                        - Icon_edit_viewContentDoc_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -3535,7 +3535,7 @@ Screens:
                               Width: =24
                               X: =764
                               Y: =9
-                        - Button2_31:
+                        - Button_edit_statusAprDoc_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =Color.White
@@ -3613,7 +3613,7 @@ Screens:
                               Width: =20
                               X: =969
                               Y: =9
-                        - Button2_32:
+                        - Button_edit_deletDoc_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =Color.White
@@ -3868,7 +3868,7 @@ Screens:
                   X: =70
                   Y: =505
                 Children:
-                  - Button_viewBackgr_headGallerDocs_verProspec:
+                  - Button_viewBackgr_headGallerDocsCred_verProspec:
                       Control: Classic/Button@2.2.0
                       Properties:
                         BorderColor: =ColorFade(Self.Fill, -55%)
@@ -3890,7 +3890,7 @@ Screens:
                         Text: =
                         Width: =1358
                         Y: =21
-                  - TextInpCanv_title_row_nameFile_verProspec:
+                  - TextInpCanv_title_row_nameFileCred_verProspec:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
@@ -3901,7 +3901,7 @@ Screens:
                         Width: =254
                         X: =39
                         Y: =27
-                  - TextInpCanv_title_row_addFile_verProspec:
+                  - TextInpCanv_title_row_addFileCred_verProspec:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
@@ -3912,7 +3912,7 @@ Screens:
                         Width: =127
                         X: =507
                         Y: =27
-                  - TextInpCanv_title_row_viewFile_verProspec:
+                  - TextInpCanv_title_row_viewFileCred_verProspec:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
@@ -3923,7 +3923,7 @@ Screens:
                         Width: =102
                         X: =749
                         Y: =27
-                  - TextInpCanv_title_row_statsFile_verProspec:
+                  - TextInpCanv_title_row_statsFileCred_verProspec:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
@@ -3934,7 +3934,7 @@ Screens:
                         Width: =127
                         X: =941
                         Y: =27
-                  - TextInpCanv_title_row_deleteFile_verProspec:
+                  - TextInpCanv_title_row_deleteFileCred_verProspec:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
@@ -3956,7 +3956,7 @@ Screens:
                         Width: =1358
                         Y: =54
                       Children:
-                        - TextInputCanvas1_10:
+                        - TextInputCanvas_nameDocCred_verProspec:
                             Control: TextInput@0.0.54
                             Properties:
                               Fill: =RGBA(132, 40, 38, 0)
@@ -3965,7 +3965,7 @@ Screens:
                               Value: =ThisItem.nombre_documento
                               Width: =378
                               X: =31
-                        - Rectangle8_44:
+                        - Rectangle_lineSeparated_DocsCred_verProspec:
                             Control: Rectangle@2.3.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -3974,7 +3974,7 @@ Screens:
                               Width: =1322
                               X: =11
                               Y: =42
-                        - Icon5_3:
+                        - Icon_edit_submitDocCred_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -4003,7 +4003,7 @@ Screens:
                               Width: =25
                               X: =548
                               Y: =10
-                        - Icon4_1:
+                        - Icon_edit_addDocCred_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -4015,7 +4015,7 @@ Screens:
                               Width: =16
                               X: =573
                               Y: =10
-                        - Icon5_1:
+                        - Icon_edit_viewContentDocCred_verProspec:
                             Control: Classic/Icon@2.5.0
                             Properties:
                               BorderColor: =RGBA(0, 18, 107, 1)
@@ -4078,7 +4078,7 @@ Screens:
                               Width: =24
                               X: =764
                               Y: =9
-                        - Button2_33:
+                        - Button_edit_statusAprDocCred_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =Color.White
@@ -4156,7 +4156,7 @@ Screens:
                               Width: =20
                               X: =969
                               Y: =9
-                        - Button2_34:
+                        - Button_edit_deletDocCred_verProspec:
                             Control: Classic/Button@2.2.0
                             Properties:
                               BorderColor: =Color.White
@@ -4266,7 +4266,7 @@ Screens:
                   Width: =1358
                   X: =73
                   Y: =501
-            - Image17_2:
+            - Image_Background_All_Banner_Head:
                 Control: Image@2.2.3
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
@@ -4562,7 +4562,7 @@ Screens:
                   Width: =1346
                   X: =88
                   Y: =430
-            - Button2_496:
+            - Button_RequestApprove_DocstoBackOffi_ProspecSelec:
                 Control: Classic/Button@2.2.0
                 Properties:
                   BorderColor: =ColorFade(Self.Fill, -55%)
@@ -4844,170 +4844,6 @@ Screens:
                   Width: =45
                   X: =899
                   Y: =196
-      - activas_contenedor_9:
-          Control: GroupContainer@1.3.0
-          Variant: ManualLayout
-          Properties:
-            BorderColor: =RGBA(243, 239, 230, 1)
-            BorderThickness: =1
-            DropShadow: =DropShadow.Bold
-            Fill: =RGBA(243,239,230,255)
-            Height: =850
-            RadiusBottomLeft: =30
-            RadiusBottomRight: =30
-            RadiusTopLeft: =30
-            RadiusTopRight: =30
-            Visible: =_vencidasVista
-            Width: =1510
-            X: =388
-            Y: =200
-          Children:
-            - Container2_31:
-                Control: GroupContainer@1.3.0
-                Variant: ManualLayout
-                Properties:
-                  Fill: =RGBA(255, 255, 255, 1)
-                  Height: =600
-                  RadiusBottomLeft: =30
-                  RadiusBottomRight: =30
-                  RadiusTopLeft: =30
-                  RadiusTopRight: =30
-                  Visible: =_vencidasVista
-                  Width: =700
-                  X: =40
-                  Y: =118
-                Children:
-                  - Label7_24:
-                      Control: Label@2.5.1
-                      Properties:
-                        Align: =Align.Center
-                        BorderColor: =RGBA(0, 18, 107, 1)
-                        Font: =Font.'Open Sans'
-                        FontWeight: =FontWeight.Semibold
-                        Text: ="Nombre"
-                        Width: =372
-                        Y: =56
-                  - Label7_25:
-                      Control: Label@2.5.1
-                      Properties:
-                        Align: =Align.Center
-                        BorderColor: =RGBA(0, 18, 107, 1)
-                        Font: =Font.'Open Sans'
-                        FontWeight: =FontWeight.Semibold
-                        Text: ="Actividad"
-                        Width: =372
-                        X: =328
-                        Y: =56
-                  - Rectangle4_52:
-                      Control: Rectangle@2.3.0
-                      Properties:
-                        BorderColor: =RGBA(0, 18, 107, 1)
-                        Fill: =RGBA(_r_fondos, _g_fondos, _b_fondos, _a_fondos)
-                        Height: =1
-                        Width: =700
-                        Y: =120
-                  - Gallery1_26:
-                      Control: Gallery@2.15.0
-                      Variant: Vertical
-                      Properties:
-                        BorderColor: =RGBA(0, 18, 107, 1)
-                        Height: =265
-                        Items: =tab_seguimiento
-                        OnSelect: |-
-                          =Set(_itemSeleccionado,ThisItem);
-                          Set(_consulta,true);
-                          Navigate('4_1_creacion_lead_escritorio')
-                        TemplateSize: =53
-                        Width: =681
-                        X: =7
-                        Y: =142
-                      Children:
-                        - Button2_339:
-                            Control: Classic/Button@2.2.0
-                            Properties:
-                              BorderColor: =ColorFade(Self.Fill, -55%)
-                              BorderStyle: =BorderStyle.None
-                              BorderThickness: =1
-                              Color: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
-                              DisabledBorderColor: =RGBA(166, 166, 166, 1)
-                              DisplayMode: =DisplayMode.View
-                              Fill: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
-                              Font: =Font.'Open Sans'
-                              Height: =39
-                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-                              HoverColor: =RGBA(255, 255, 255, 1)
-                              HoverFill: =Self.Fill
-                              PressedBorderColor: =Self.Fill
-                              PressedColor: =Self.Fill
-                              PressedFill: =Self.Color
-                              RadiusBottomLeft: =30
-                              RadiusBottomRight: =30
-                              RadiusTopLeft: =30
-                              RadiusTopRight: =30
-                              Size: =18
-                              Text: ="DATOS DEL LEAD"
-                              Visible: = RoundDown(ThisItem.ID/2,0) =  ThisItem.ID/2
-                              Width: =671
-                        - Label5_138:
-                            Control: Label@2.5.1
-                            Properties:
-                              Align: =Align.Center
-                              BorderColor: =RGBA(0, 18, 107, 1)
-                              Font: =Font.'Open Sans'
-                              Height: =39
-                              OnSelect: =Select(Parent)
-                              Size: =15
-                              Text: =ThisItem.anotaciones
-                              Width: =318
-                              X: =11
-                        - Label5_139:
-                            Control: Label@2.5.1
-                            Properties:
-                              Align: =Align.Center
-                              BorderColor: =RGBA(0, 18, 107, 1)
-                              Font: =Font.'Open Sans'
-                              Height: =39
-                              OnSelect: =Select(Parent)
-                              Size: =15
-                              Text: =ThisItem.estado_seguimiento
-                              Width: =318
-                              X: =345
-            - Container2_32:
-                Control: GroupContainer@1.3.0
-                Variant: ManualLayout
-                Properties:
-                  Fill: =RGBA(255, 255, 255, 1)
-                  Height: =600
-                  RadiusBottomLeft: =30
-                  RadiusBottomRight: =30
-                  RadiusTopLeft: =30
-                  RadiusTopRight: =30
-                  Visible: =_vencidasVista
-                  Width: =700
-                  X: =771
-                  Y: =118
-                Children:
-                  - Label3_14:
-                      Control: Label@2.5.1
-                      Properties:
-                        Align: =Align.Center
-                        BorderColor: =RGBA(0, 18, 107, 1)
-                        DisplayMode: =DisplayMode.View
-                        Font: =Font.'Open Sans'
-                        FontWeight: =FontWeight.Semibold
-                        Height: =55
-                        Overflow: =Overflow.Scroll
-                        Text: ="Calendario de actividades"
-                        Width: =700
-                        Y: =56
-                  - Rectangle4_53:
-                      Control: Rectangle@2.3.0
-                      Properties:
-                        BorderColor: =RGBA(0, 18, 107, 1)
-                        Fill: =RGBA(_r_fondos, _g_fondos, _b_fondos, _a_fondos)
-                        Height: =1
-                        Width: =700
-                        Y: =120
       - boton_solicitudSerial_verProspec:
           Control: GroupContainer@1.3.0
           Variant: ManualLayout
@@ -5442,9 +5278,9 @@ Screens:
                   Size: =20
                   Text: ="DATOS"
                   Width: =250
-      - Rectangle1_4:
+      - Rectangle_viewBackground_View_saveFiles:
           Control: Rectangle@2.3.0
-          Group: GroupCont_5_1_saveFiles_createFolder_ProspecSelec
+          Group: GroupCont_5_1_load_saveFiles_ProspecSelec
           Properties:
             BorderColor: =RGBA(193,186,162,255)
             BorderThickness: =3
@@ -5453,9 +5289,9 @@ Screens:
             Visible: =_adjuntarDocumentos
             Width: =1920
             Y: =95
-      - Icon1_1:
+      - Icon_closeView_loadFile_ProspecSelec:
           Control: Classic/Icon@2.5.0
-          Group: GroupCont_5_1_saveFiles_createFolder_ProspecSelec
+          Group: GroupCont_5_1_load_saveFiles_ProspecSelec
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             Color: =RGBA(193, 186, 162, 1)
@@ -5466,9 +5302,9 @@ Screens:
             Width: =81
             X: =10
             Y: =108
-      - Button2_486:
+      - Button_cancelLoad_saveFIle_ProspecSelec:
           Control: Classic/Button@2.2.0
-          Group: GroupCont_5_1_saveFiles_createFolder_ProspecSelec
+          Group: GroupCont_5_1_load_saveFiles_ProspecSelec
           Properties:
             BorderColor: =ColorFade(Self.Fill, -55%)
             BorderThickness: =0
@@ -5494,9 +5330,9 @@ Screens:
             Width: =150
             X: =773
             Y: =795
-      - Button2_487:
+      - Button_saveFile_ProspecSelec:
           Control: Classic/Button@2.2.0
-          Group: GroupCont_5_1_saveFiles_createFolder_ProspecSelec
+          Group: GroupCont_5_1_load_saveFiles_ProspecSelec
           Properties:
             BorderColor: =ColorFade(Self.Fill, -55%)
             BorderThickness: =0
@@ -5550,7 +5386,7 @@ Screens:
             Width: =150
             X: =954
             Y: =795
-      - Container6_31:
+      - Container6_3!_v2Banner_razSoc:
           Control: GroupContainer@1.3.0
           Variant: ManualLayout
           Properties:
@@ -5595,7 +5431,7 @@ Screens:
           Control: Form@2.4.4
           Variant: Classic
           Layout: Vertical
-          Group: GroupCont_5_1_saveFiles_createFolder_ProspecSelec
+          Group: GroupCont_5_1_load_saveFiles_ProspecSelec
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             DataSource: =tab_documentos_por_cliente
@@ -6338,7 +6174,7 @@ Screens:
                         Width: =30
                         Wrap: =false
                         Y: =DataCardKey45.Y
-      - Button2_114:
+      - Button_viewBackground_View_deleteManyFiles:
           Control: Classic/Button@2.2.0
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6367,7 +6203,7 @@ Screens:
             Text: =
             Visible: =_mensajeConfirmacionVarios
             Width: =1920
-      - Button2_115:
+      - Button_Rectangle_view_deleteManyFiles:
           Control: Classic/Button@2.2.0
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6397,7 +6233,7 @@ Screens:
             Width: =1459
             X: =247
             Y: =252
-      - Button2_501:
+      - Button_closeView_deleteManyFiles:
           Control: Classic/Button@2.2.0
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6424,7 +6260,7 @@ Screens:
             Width: =133
             X: =912
             Y: =630
-      - TextCanvas6_2:
+      - TextCanvas_messageView_deleteManyFIles:
           Control: Text@0.0.51
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6439,7 +6275,7 @@ Screens:
             Width: =596
             X: =681
             Y: =291
-      - Gallery1_6:
+      - Gallery_ListDocs_view_deleteManyFiles:
           Control: Gallery@2.15.0
           Variant: Vertical
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
@@ -6453,7 +6289,7 @@ Screens:
             X: =300
             Y: =420
           Children:
-            - TextInputCanvas1_12:
+            - TextInputCanvas_nameDoc_view_deleteManyFiles:
                 Control: TextInput@0.0.54
                 Properties:
                   Fill: =RGBA(132, 40, 38, 0)
@@ -6462,7 +6298,7 @@ Screens:
                   Value: =ThisItem.Nombre_documento
                   Width: =378
                   X: =31
-            - Rectangle8_66:
+            - Rectangle_lineSeparated_view_deleteManyFiles:
                 Control: Rectangle@2.3.0
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
@@ -6471,7 +6307,7 @@ Screens:
                   Width: =1322
                   X: =11
                   Y: =42
-            - Icon5_17:
+            - Icon_edit_viewContentDoc_view_deleteManyFiles:
                 Control: Classic/Icon@2.5.0
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
@@ -6506,7 +6342,7 @@ Screens:
                   Width: =24
                   X: =764
                   Y: =9
-            - Button2_117:
+            - Button_edit_deletDoc_view_deleteManyFiles:
                 Control: Classic/Button@2.2.0
                 Properties:
                   BorderColor: =Color.White
@@ -6540,7 +6376,7 @@ Screens:
                   Width: =20
                   X: =1220
                   Y: =13
-      - TextInputCanvas1_17:
+      - TextInputCanvas_nameFile_verProspec:
           Control: TextInput@0.0.54
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6553,7 +6389,7 @@ Screens:
             Width: =254
             X: =339
             Y: =378
-      - TextInputCanvas1_76:
+      - TextInputCanvas_viewFile_verProspec:
           Control: TextInput@0.0.54
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6566,7 +6402,7 @@ Screens:
             Width: =102
             X: =1049
             Y: =378
-      - TextInputCanvas1_77:
+      - TextInputCanvas_deleteFile_verProspec:
           Control: TextInput@0.0.54
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
           Properties:
@@ -6836,9 +6672,9 @@ Screens:
             Width: =455
             X: =744
             Y: =436
-      - Button2_116:
+      - Button_background_cleanColor_popup_deleteFiles_viewMessageUnique:
           Control: Classic/Button@2.2.0
-          Group: mensaje_pop_up_3
+          Group: mensaje_pop_up_3_messageUnique
           Properties:
             BorderColor: =RGBA(186, 156, 137, 1)
             BorderThickness: =0
@@ -6865,9 +6701,9 @@ Screens:
             Text: =
             Visible: =_mensajeConfirmacionUnico
             Width: =1920
-      - Button2_118:
+      - Button_rectangle_popup_deleteFiles_viewMessageUnique:
           Control: Classic/Button@2.2.0
-          Group: mensaje_pop_up_3
+          Group: mensaje_pop_up_3_messageUnique
           Properties:
             BorderColor: =RGBA(186, 156, 137, 1)
             Color: =Color.White
@@ -6895,9 +6731,9 @@ Screens:
             Width: =768
             X: =587
             Y: =337
-      - Button2_499:
+      - Button_cancel_deleteFiles_viewMessageUnique:
           Control: Classic/Button@2.2.0
-          Group: mensaje_pop_up_3
+          Group: mensaje_pop_up_3_messageUnique
           Properties:
             BorderColor: =ColorFade(Self.Fill, -55%)
             BorderThickness: =0
@@ -6919,9 +6755,9 @@ Screens:
             Width: =133
             X: =1092
             Y: =605
-      - Button2_502:
+      - Button_confirm_deleteFile_viewMessageUnique:
           Control: Classic/Button@2.2.0
-          Group: mensaje_pop_up_3
+          Group: mensaje_pop_up_3_messageUnique
           Properties:
             BorderColor: =ColorFade(Self.Fill, -55%)
             BorderThickness: =0
@@ -6958,9 +6794,9 @@ Screens:
             Width: =133
             X: =726
             Y: =605
-      - TextCanvas6_3:
+      - TextCanvas_view_deleteFile_messageUnique_fileLoad:
           Control: Text@0.0.51
-          Group: mensaje_pop_up_3
+          Group: mensaje_pop_up_3_messageUnique
           Properties:
             Align: ='TextCanvas.Align'.Center
             Font: =Font.Lato
@@ -7076,7 +6912,7 @@ Screens:
             Color: =RGBA(193, 186, 162, 1)
             Height: =53
             Icon: =Icon.Download
-            OnSelect: =Download("https://nest-corp.sharepoint.com/:x:/r/teams/siteb2bnesspreso/" & First(colDocumentosVer).'Ruta de acceso completa' & "?web=0")
+            OnSelect: =Download("https://nesp-corp.sharepoint.com/:x:/r/teams/siteb2bnesspreso/" & First(colDocumentosVer).'Ruta de acceso completa' & "?web=0")
             Visible: =_visibleVerDocumentoSeleccionado
             Width: =69
             X: =1807
