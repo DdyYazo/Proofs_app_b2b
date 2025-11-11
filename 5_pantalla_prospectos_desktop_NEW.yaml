@@ -596,16 +596,16 @@ Screens:
                                     true
                                 );
                                 Set(
-                                    _itemSeleccionadoProspecto1,
+                                    _itemSeleccionadoProspect,
                                     ThisItem
                                 );
                                 Set(
                                     _itemSeleccionadoProspectoSegmento,
-                                    _itemSeleccionadoProspecto1.Segmento.Value
+                                    _itemSeleccionadoProspect.Segmento.Value
                                 );
                                 Set(
                                     _itemSeleccionadoProspectoSubSegmento,
-                                    _itemSeleccionadoProspecto1.Subsegmento.Value
+                                    _itemSeleccionadoProspect.Subsegmento.Value
                                 );
                                 Set(
                                     _itemSeleccionadoProspectoModeloComercial,
@@ -613,11 +613,11 @@ Screens:
                                 );
                                 Set(
                                     _estadoSeleccionadoProspecto,
-                                    _itemSeleccionadoProspecto1.EstadoCuenta.Value
+                                    _itemSeleccionadoProspect.EstadoCuenta.Value
                                 );
                                 Set(
                                     _interesSeleccionadoProspecto,
-                                    _itemSeleccionadoProspecto1.estado_interes.Value
+                                    _itemSeleccionadoProspect.estado_interes.Value
                                 );
                                 Set(
                                     _consulta,
@@ -627,7 +627,7 @@ Screens:
                                     colMaquinas,
                                     Filter(
                                         tab_maquinas_porCuenta,
-                                        Cuenta.Id = _itemSeleccionadoProspecto1.ID && (Status_maquina.Value = "Activo" || Status_maquina.Value = "Inactivo")
+                                        Cuenta.Id = _itemSeleccionadoProspect.ID && (Status_maquina.Value = "Activo" || Status_maquina.Value = "Inactivo")
                                     )
                                 );
                                 // Colección para seguimiento comercial muestra
@@ -635,7 +635,7 @@ Screens:
                                     colSeguimiento,
                                     Filter(
                                         tab_seguimiento_porCuenta,
-                                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                                        Cuenta.Id = _itemSeleccionadoProspect.ID
                                     )
                                 );
                                 Navigate('5_1_prospectos_escritorio');

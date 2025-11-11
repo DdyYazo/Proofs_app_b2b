@@ -289,7 +289,7 @@ Screens:
                         Items: |-
                           =Filter(
                               tab_seguimiento_porCuenta,
-                              Cuenta.Id = _itemSeleccionadoProspecto1.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
+                              Cuenta.Id = _itemSeleccionadoProspect.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
                           )
                         OnSelect: |-
                           =Set(_itemSeleccionado,ThisItem);
@@ -640,7 +640,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.NIT
+                  Default: =_itemSeleccionadoProspect.NIT
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -680,7 +680,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.Canal.Value
+                  Default: =_itemSeleccionadoProspect.Canal.Value
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -720,7 +720,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.RazonSocial
+                  Default: =_itemSeleccionadoProspect.RazonSocial
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -832,7 +832,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.NombreContacto
+                  Default: =_itemSeleccionadoProspect.NombreContacto
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -872,7 +872,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.ApellidosContacto
+                  Default: =_itemSeleccionadoProspect.ApellidosContacto
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -912,7 +912,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.CargoContacto
+                  Default: =_itemSeleccionadoProspect.CargoContacto
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -952,7 +952,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =_itemSeleccionadoProspecto1.EmailContacto
+                  Default: =_itemSeleccionadoProspect.EmailContacto
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -1086,11 +1086,11 @@ Screens:
                                     Anotaciones: TextInp_edit_ActReali_verProspec.Text,
                                     Observaciones: TextInp_editView_obsvAct_verProspec.Text,
                                     Cuenta: {
-                                        Id: _itemSeleccionadoProspecto1.ID,
-                                        Value: _itemSeleccionadoProspecto1.RazonSocial
+                                        Id: _itemSeleccionadoProspect.ID,
+                                        Value: _itemSeleccionadoProspect.RazonSocial
                                     },
                                     FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                                     ComercialResponsable: {
                                         '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
                                         Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
@@ -1128,11 +1128,11 @@ Screens:
                                     Anotaciones: TextInp_edit_ActReali_verProspec.Text,
                                     Observaciones: TextInp_editView_obsvAct_verProspec.Text,
                                     Cuenta: {
-                                        Id: _itemSeleccionadoProspecto1.ID,
-                                        Value: _itemSeleccionadoProspecto1.RazonSocial
+                                        Id: _itemSeleccionadoProspect.ID,
+                                        Value: _itemSeleccionadoProspect.RazonSocial
                                     },
                                     FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                                    EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                                     ComercialResponsable: {
                                         '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
                                         Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
@@ -1194,7 +1194,7 @@ Screens:
                 Properties:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
-                  Default: =_itemSeleccionadoProspecto1.FechaPasoAProspecto
+                  Default: =_itemSeleccionadoProspect.FechaPasoAProspecto
                   DelayOutput: =true
                   DisplayMode: =DisplayMode.View
                   Font: =Font.'Open Sans'
@@ -1237,7 +1237,7 @@ Screens:
                 Properties:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
-                  Default: =_itemSeleccionadoProspecto1.Ultima_actualizacion_cuenta
+                  Default: =_itemSeleccionadoProspect.Ultima_actualizacion_cuenta
                   DelayOutput: =true
                   DisplayMode: =DisplayMode.View
                   Font: =Font.'Open Sans'
@@ -1285,7 +1285,7 @@ Screens:
                   ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
                   ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
                   ChevronHoverFill: =RGBA(255, 255, 255, 1)
-                  DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Ciudad]
+                  DefaultSelectedItems: =[_itemSeleccionadoProspect.Ciudad]
                   DisplayFields: =["Ciudad0"]
                   Fill: =Color.White
                   Font: =Font.'Open Sans'
@@ -1810,8 +1810,8 @@ Screens:
                                     Defaults(tab_maquinas_porCuenta),
                                     {
                                         Cuenta: {
-                                            Id: _itemSeleccionadoProspecto1.ID,
-                                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                                            Id: _itemSeleccionadoProspect.ID,
+                                            Value: _itemSeleccionadoProspect.RazonSocial
                                         },
                                         TipoMaquina: {
                                             Id: _tipoMaquinaSeleccionada.ID,
@@ -1821,7 +1821,7 @@ Screens:
                                             Id: 1,
                                             Value: "0 - Sin Serial"
                                         },
-                                        EstadoCuentaAlSolicitar: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                                        EstadoCuentaAlSolicitar: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                                         Status_maquina: {Value: "Inactiva"},
                                         FechaSolicitud: Now(),
                                         ComercialSolicitante: {
@@ -1859,7 +1859,7 @@ Screens:
                                         Id: _maquinaCreada.ID,
                                         Value: _tipoMaquinaSeleccionada.nombre_maquina
                                     },
-                                    Cuenta: _itemSeleccionadoProspecto1.RazonSocial,
+                                    Cuenta: _itemSeleccionadoProspect.RazonSocial,
                                     MaquinaAnterior: _tipoMaquinaSeleccionada.nombre_maquina,
                                     FechaRegistroMaquina: Now(),
                                     ConsumoInicial: Value(TextInp_edit_consMinMenMaq_verProspec.Text),
@@ -1964,7 +1964,7 @@ Screens:
                             colMaquinas,
                             Filter(
                                 tab_maquinas_porCuenta,
-                                Cuenta.Id = _itemSeleccionadoProspecto1.ID && Status_maquina.Value <> "Eliminada"
+                                Cuenta.Id = _itemSeleccionadoProspect.ID && Status_maquina.Value <> "Eliminada"
                             )
                         );
                         // Resetear componentes
@@ -2295,7 +2295,7 @@ Screens:
                         Items: |-
                           =Filter(
                               colMaquinas,
-                              Cuenta.Id = _itemSeleccionadoProspecto1.ID && (Status_maquina.Value = "Activa" || Status_maquina.Value = "Inactiva")
+                              Cuenta.Id = _itemSeleccionadoProspect.ID && (Status_maquina.Value = "Activa" || Status_maquina.Value = "Inactiva")
                           )
                         OnSelect: =
                         TemplateSize: =66
@@ -2565,7 +2565,7 @@ Screens:
                   ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
                   ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
                   ChevronHoverFill: =RGBA(255, 255, 255, 1)
-                  DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Segmento]
+                  DefaultSelectedItems: =[_itemSeleccionadoProspect.Segmento]
                   DisplayFields: =["id_segmento_concat"]
                   Fill: =Color.White
                   Font: =Font.'Open Sans'
@@ -2628,7 +2628,7 @@ Screens:
                   ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
                   ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
                   ChevronHoverFill: =RGBA(255, 255, 255, 1)
-                  DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Subsegmento]
+                  DefaultSelectedItems: =[_itemSeleccionadoProspect.Subsegmento]
                   DisplayFields: =["sub_segmento"]
                   Fill: =Color.White
                   Font: =Font.'Open Sans'
@@ -2783,7 +2783,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspecto1.ID).Detalle
+                  Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspect.ID).Detalle
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -2810,7 +2810,7 @@ Screens:
                   BorderColor: =
                   BorderStyle: =BorderStyle.None
                   Color: =RGBA(85, 69, 49, 1)
-                  Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspecto1.ID).Construccion_marca
+                  Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspect.ID).Construccion_marca
                   DelayOutput: =true
                   DisplayMode: =
                   Font: =Font.'Open Sans'
@@ -2913,7 +2913,7 @@ Screens:
                             IsBlank(
                                 LookUp(
                                     tab_oportunidades_cuenta,
-                                    Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                                    Cuenta.Id = _itemSeleccionadoProspect.ID
                                 )
                             ),
                                             // CREAR NUEVA OPORTUNIDAD
@@ -2922,8 +2922,8 @@ Screens:
                                 Defaults(tab_oportunidades_cuenta),
                                 {
                                     Cuenta: {
-                                        Id: _itemSeleccionadoProspecto1.ID,
-                                        Value: _itemSeleccionadoProspecto1.RazonSocial
+                                        Id: _itemSeleccionadoProspect.ID,
+                                        Value: _itemSeleccionadoProspect.RazonSocial
                                     },
                                     TipoOportunidad: {
                                         Id: _tipoOportunidadSeleccionada.ID,
@@ -2931,7 +2931,7 @@ Screens:
                                     },
                                     Detalle: TextInput_edit_detalOporCom_verProspec.Text,
                                     Construccion_marca: TextInput_edit_constMarc_verProspec.Text,
-                                    EstadoCuentaAlCrear: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                                    EstadoCuentaAlCrear: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                                     FechaIdentificacion: Now(),
                                     ComercialIdentifica: {
                                         '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
@@ -2954,7 +2954,7 @@ Screens:
                                 tab_oportunidades_cuenta,
                                 LookUp(
                                     tab_oportunidades_cuenta,
-                                    Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                                    Cuenta.Id = _itemSeleccionadoProspect.ID
                                 ),
                                 {
                                     TipoOportunidad: {
@@ -3031,7 +3031,7 @@ Screens:
                         !IsBlank(
                             LookUp(
                                 tab_oportunidades_cuenta,
-                                Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                                Cuenta.Id = _itemSeleccionadoProspect.ID
                             )
                         ),
                         [
@@ -3039,7 +3039,7 @@ Screens:
                                 colOportunidad,
                                 ID = LookUp(
                                     tab_oportunidades_cuenta,
-                                    Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                                    Cuenta.Id = _itemSeleccionadoProspect.ID
                                 ).TipoOportunidad.Id
                             )
                         ],
@@ -3087,17 +3087,17 @@ Screens:
                   X: =70
                   Y: =108
                 Children:
-                  - TextInputCanvas1:
+                  - TextInputCanvas_Validate_tipoLineaCliente:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
                         FontSize: =24
                         Height: =62
                         Value: ="¿El cliente solicita línea de crédito?:"
-                        Width: =488
-                        X: =51
+                        Width: =399
+                        X: =12
                         Y: =38
-                  - TextInputCanvas1_1:
+                  - TextInputCanvas_Credito_Client:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(189, 49, 51, 0)
@@ -3105,15 +3105,15 @@ Screens:
                         Height: =62
                         Value: ="Sí"
                         Width: =50
-                        X: =521
+                        X: =416
                         Y: =38
-                  - Radio1:
+                  - RadioButton_Credito_Client:
                       Control: Classic/Radio@2.3.0
                       Properties:
                         BorderColor: =RGBA(207, 182, 157, 1)
                         BorderStyle: =BorderStyle.None
                         Color: =RGBA(255, 255, 255, 1)
-                        Default: =If(_necesitaCredito =1,true,false)
+                        Default: =If(_necesitaCredito =true,true,false)
                         Font: =Font.'Open Sans'
                         Height: =70
                         HoverColor: =Color.White
@@ -3121,36 +3121,50 @@ Screens:
                         Items.Value: =Value
                         LineHeight: =1
                         OnSelect: |-
-                          =Set(_spinner,true);
-                          Set(_necesitaCredito,1);
-                          Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cliente_con_credito:_necesitaCredito});
-                          Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
-                          Reset(Radio1_1);
-                          Set(_spinner,false);
+                          =Set(
+                              _spinner,
+                              true
+                          );
+                          Set(
+                              _necesitaCredito,
+                              true
+                          );
+                          Patch(
+                              tab_cuentas,
+                              _itemSeleccionadoProspect,
+                              {RequiereCredito: true}
+                          );
+                          Reset(RadioButton_Contado_Client);
+                          Set(
+                              _spinner,
+                              false
+                          )
                         RadioBackgroundFill: =RGBA(207, 182, 157, 1)
                         RadioBorderColor: =RGBA(207, 182, 157, 1)
                         RadioSelectionFill: =RGBA(255, 255, 255, 1)
                         RadioSize: =40
-                        Width: =80
-                        X: =571
+                        Width: =81
+                        X: =445
                         Y: =38
-                  - TextInputCanvas1_2:
+                  - TextInputCanvas_Contado_Client:
                       Control: TextInput@0.0.54
                       Properties:
+                        DisplayMode: |+
+                          =DisplayMode.Edit
                         Fill: =RGBA(189, 49, 51, 0)
                         FontSize: =24
                         Height: =62
                         Value: ="No"
                         Width: =76
-                        X: =673
+                        X: =512
                         Y: =38
-                  - Radio1_1:
+                  - RadioButton_Contado_Client:
                       Control: Classic/Radio@2.3.0
                       Properties:
                         BorderColor: =RGBA(207, 182, 157, 1)
                         BorderStyle: =BorderStyle.None
                         Color: =RGBA(255, 255, 255, 1)
-                        Default: =If(_necesitaCredito =0,true,false)
+                        Default: =If(_necesitaCredito = false,true,false)
                         Font: =Font.'Open Sans'
                         Height: =70
                         HoverColor: =Color.White
@@ -3158,22 +3172,38 @@ Screens:
                         Items.Value: =Value
                         LineHeight: =1
                         OnSelect: |-
-                          =Set(_spinner,true);
-                          Set(_necesitaCredito,0);
-                          Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cliente_con_credito:_necesitaCredito,
-                          cupo_solicitado:0});
-                          Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
-                          Reset(NumberInput1);
-                          Reset(Radio1);
-                          Set(_spinner,false);
+                          =Set(
+                              _spinner,
+                              true
+                          );
+                          Set(
+                              _necesitaCredito,
+                              false
+                          );
+                          // ✅ Booleano
+                          Patch(
+                              tab_cuentas,
+                              _itemSeleccionadoProspect,
+                              {
+                                  // ✅ Sin LookUp
+                          RequiereCredito: false,
+                                  CupoSolicitado: 0
+                              }
+                          );
+                          Reset(NumberInput_Cupo_Client);
+                          Reset(RadioButton_Credito_Client);
+                          Set(
+                              _spinner,
+                              false
+                          )
                         RadioBackgroundFill: =RGBA(207, 182, 157, 1)
                         RadioBorderColor: =RGBA(207, 182, 157, 1)
                         RadioSelectionFill: =RGBA(255, 255, 255, 1)
                         RadioSize: =40
-                        Width: =80
-                        X: =749
+                        Width: =77
+                        X: =567
                         Y: =38
-                  - TextInputCanvas1_3:
+                  - TextInputCanvas_Plazo_Client:
                       Control: TextInput@0.0.54
                       Properties:
                         Fill: =RGBA(132, 40, 38, 0)
@@ -3182,22 +3212,22 @@ Screens:
                         Value: ="Plazo:"
                         Visible: =_necesitaCredito = 1
                         Width: =100
-                        X: =1137
+                        X: =1151
                         Y: =42
                   - DropdownCanvas1:
                       Control: DropDown@0.0.45
                       Properties:
-                        DefaultSelectedItems: =[_itemSeleccionadoProspecto1.plazo_credito]
+                        DefaultSelectedItems: =[_itemSeleccionadoProspecto1.PlazoCredito]
                         Fill: =RGBA(214, 21, 21, 0)
                         FontSize: =22
                         Height: =40
-                        Items: =["30","45","60", "90"]
+                        Items: =Choices(tab_cuentas.PlazoCredito)
                         OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{plazo_credito:Value(Self.Selected.Value)}))
                         Visible: =_necesitaCredito = 1
                         Width: =100
-                        X: =1222
+                        X: =1243
                         Y: =54
-                  - TextInputCanvas1_4:
+                  - TextInputCanvas_Cupo_Client:
                       Control: TextInput@0.0.54
                       Properties:
                         BasePaletteColor: =RGBA(255, 255, 0, 1)
@@ -3205,10 +3235,61 @@ Screens:
                         FontSize: =24
                         Height: =62
                         Value: ="Cupo:"
-                        Width: =100
-                        X: =829
+                        Width: =93
+                        X: =885
                         Y: =38
-                  - NumberInput1:
+                  - NumberInput_Cupo_Client:
+                      Control: NumberInput@2.9.12
+                      Properties:
+                        BasePaletteColor: =RGBA(245, 245, 245, 1)
+                        BorderColor: =RGBA(214, 221, 224, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =1
+                        FontSize: =24
+                        Height: =52
+                        OnChange: |
+                          =Set(
+                              _spinner,
+                              true
+                          );
+                          If(
+                              !IsBlank(Self.Value),
+                              Patch(
+                                  tab_cuentas,
+                                  LookUp(
+                                      tab_cuentas,
+                                      ID = _itemSeleccionadoProspecto1.ID
+                                  ),
+                                  {CupoSolicitado: Value(Self.Value)}
+                              )
+                          );
+                          Set(
+                              _itemSeleccionadoProspecto1,
+                              LookUp(
+                                  tab_cuentas,
+                                  ID = _itemSeleccionadoProspecto1.ID
+                              )
+                          );
+                          Set(
+                              _spinner,
+                              false
+                          )
+                        Value: =_itemSeleccionadoProspecto1.CupoSolicitado
+                        Width: =174
+                        X: =970
+                        Y: =48
+                  - TextInputCanvas_Cupo_Client_1:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        BasePaletteColor: =RGBA(255, 255, 0, 1)
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =24
+                        Height: =62
+                        Value: ="Tarifa:"
+                        Width: =93
+                        X: =623
+                        Y: =38
+                  - NumberInput_Cupo_Client_1:
                       Control: NumberInput@2.9.12
                       Properties:
                         BasePaletteColor: =RGBA(245, 245, 245, 1)
@@ -3224,9 +3305,9 @@ Screens:
 
                           Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
                           Set(_spinner,false);
-                        Value: =_itemSeleccionadoProspecto1.cupo_solicitado
-                        Width: =208
-                        X: =929
+                        Value: =_itemSeleccionadoProspecto1.Tarifa
+                        Width: =174
+                        X: =702
                         Y: =48
             - Button_header_rowsTipVin_verProspec:
                 Control: Classic/Button@2.2.0
@@ -3344,31 +3425,48 @@ Screens:
                               Color: =RGBA(85, 69, 49, 1)
                               Height: =24
                               Icon: =Icon.View
-                              OnSelect: |+
+                              OnSelect: |
                                 =// dependiendo la cantidad de documentos 
-
-                                Set(_documentoSeleccionadoVer,ThisItem);
-
+                                Set(
+                                    _documentoSeleccionadoVer,
+                                    ThisItem
+                                );
                                 //
-                                ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
-
-
-
+                                ClearCollect(
+                                    colDocumentosVerPre,
+                                    Filter(
+                                        Documentos,
+                                        fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                                    )
+                                );
                                 // validar si el documento ya se creo en al biblioteca 
-
-                                If(CountRows(colDocumentosVerPre)=0,
-
-                                Set(_mensajeAlerta,true),
-
-                                Clear(colDocumentosVer);
-
-                                ForAll(colDocumentosVerPre As Db,
-
-                                Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
-
-                                Set(_numeroDocumentoSeleccionado,1);
-
-                                Set(_visibleVerDocumentoSeleccionado,true));
+                                If(
+                                    CountRows(colDocumentosVerPre) = 0,
+                                    Set(
+                                        _mensajeAlerta,
+                                        true
+                                    ),
+                                    Clear(colDocumentosVer);
+                                    ForAll(
+                                        colDocumentosVerPre As Db,
+                                        Collect(
+                                            colDocumentosVer,
+                                            AddColumns(
+                                                Db,
+                                                id_col,
+                                                CountRows(colDocumentosVer) + 1
+                                            )
+                                        )
+                                    );
+                                    Set(
+                                        _numeroDocumentoSeleccionado,
+                                        1
+                                    );
+                                    Set(
+                                        _visibleVerDocumentoSeleccionado,
+                                        true
+                                    )
+                                );
                               Visible: =If( CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
                               Width: =24
                               X: =764
@@ -4457,7 +4555,7 @@ Screens:
                         tab_cuentas,
                         LookUp(
                             tab_cuentas,
-                            ID = _itemSeleccionadoProspecto1.ID
+                            ID = _itemSeleccionadoProspect.ID
                         ),
                         {
                             NIT: TextInp_editView_nitClient_verProspec.Text,
@@ -4468,7 +4566,7 @@ Screens:
                                     Id: Select_edit_segmento_verProspec.Selected.ID,
                                     Value: Select_edit_segmento_verProspec.Selected.segmento
                                 },
-                                _itemSeleccionadoProspecto1.Segmento
+                                _itemSeleccionadoProspect.Segmento
                             ),
                             Subsegmento: If(
                                 !IsBlank(Select_edit_subsegmento_verProspec.Selected),
@@ -4476,7 +4574,7 @@ Screens:
                                     Id: Select_edit_subsegmento_verProspec.Selected.ID,
                                     Value: Select_edit_subsegmento_verProspec.Selected.sub_segmento
                                 },
-                                _itemSeleccionadoProspecto1.Subsegmento
+                                _itemSeleccionadoProspect.Subsegmento
                             ),
                             Ciudad: If(
                                 !IsBlank(Select_edit_ciudades_verProspec.Selected),
@@ -4484,7 +4582,7 @@ Screens:
                                     Id: Select_edit_ciudades_verProspec.Selected.ID,
                                     Value: Select_edit_ciudades_verProspec.Selected.Ciudad0
                                 },
-                                _itemSeleccionadoProspecto1.Ciudad
+                                _itemSeleccionadoProspect.Ciudad
                             ),
                             NombreContacto: TextInp_edit_nombreContac_verProspec.Text,
                             ApellidosContacto: TextInp_edit_apelliContac_verProspec.Text,
@@ -4494,10 +4592,10 @@ Screens:
                         }
                     );
                     Set(
-                        _itemSeleccionadoProspecto1,
+                        _itemSeleccionadoProspect,
                         LookUp(
                             tab_cuentas,
-                            ID = _itemSeleccionadoProspecto1.ID
+                            ID = _itemSeleccionadoProspect.ID
                         )
                     );
                     Set(
@@ -4804,15 +4902,35 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
-                  OnSelect: |+
-                    =Set(_seguimientoVista,false);
-                    Set(_oportunidadVista,false);
-                    Set(_datosVista,false);
-                    Set(_crearAgenda,false);
-                    Set(_maquinasVista,false);
-                    Set(_documentosVista,false);
-                    Set(_solicitudVista,true)
-
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _documentosVista,
+                        false
+                    );
+                    Set(
+                        _solicitudVista,
+                        true
+                    )
                   PaddingLeft: =20
                   PressedBorderColor: =Self.Fill
                   PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
@@ -4853,19 +4971,58 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
-                  OnSelect: |+
-                    =Set(_spinner,true);
-                    Set(_seguimientoVista,false);
-                    Set(_oportunidadVista,false);
-                    Set(_datosVista,false);
-                    Set(_crearAgenda,false);
-                    Set(_maquinasVista,false);
-                    Set(_solicitudVista,false);
-                    Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
-                    ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
-                    Set(_documentosVista,true);
-                    Set(_necesitaCredito,_itemSeleccionadoProspecto1.cliente_con_credito);
-                    Set(_spinner,false);
+                  OnSelect: |-
+                    =Set(
+                        _spinner,
+                        true
+                    );
+                    Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _solicitudVista,
+                        false
+                    );
+                    ClearCollect(
+                        colDocumentosCliente,
+                        tab_documentos_cliente
+                    );
+                    ClearCollect(
+                        colDocumentosProspecto,
+                        Filter(
+                            tab_documentos_porCuenta,
+                            Cuenta.Id = _itemSeleccionadoProspect.ID
+                        )
+                    );
+                    Set(
+                        _necesitaCredito,
+                        _itemSeleccionadoProspect.RequiereCredito
+                    );
+                    Set(
+                        _documentosVista,
+                        true
+                    );
+                    Set(
+                        _spinner,
+                        false
+                    )
                   PaddingLeft: =40
                   PressedBorderColor: =Self.Fill
                   PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
@@ -4905,16 +5062,39 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
-                  OnSelect: |+
-                    =Set(_seguimientoVista,false);
-                    Set(_oportunidadVista,false);
-                    Set(_datosVista,false);
-                    Set(_crearAgenda,false);
-                    Set(_documentosVista,false);
-                    Set(_solicitudVista,false);
-                    Set(_maquinaSeleccionada,Blank());
-                    Set(_maquinasVista,true)
-
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _documentosVista,
+                        false
+                    );
+                    Set(
+                        _solicitudVista,
+                        false
+                    );
+                    Set(
+                        _maquinaSeleccionada,
+                        Blank()
+                    );
+                    Set(
+                        _maquinasVista,
+                        true
+                    )
                   PaddingLeft: =30
                   PressedBorderColor: =Self.Fill
                   PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
@@ -4954,15 +5134,35 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
-                  OnSelect: |+
-                    =Set(_seguimientoVista,false);
-                    Set(_maquinasVista,false);
-                    Set(_crearAgenda,false);
-                    Set(_datosVista,false);
-                    Set(_documentosVista,false);
-                    Set(_solicitudVista,false);
-                    Set(_oportunidadVista,true)
-
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _documentosVista,
+                        false
+                    );
+                    Set(
+                        _solicitudVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        true
+                    )
                   PaddingLeft: =40
                   PressedBorderColor: =Self.Fill
                   PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
@@ -5003,13 +5203,34 @@ Screens:
                   HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
                   OnSelect: |-
-                    =Set(_oportunidadVista,false);
-                    Set(_maquinasVista,false);
-                    Set(_crearAgenda,false);
-                    Set(_datosVista,false);
-                    Set(_documentosVista,false);
-                    Set(_solicitudVista,false);
-                    Set(_seguimientoVista,true)
+                    =Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        false
+                    );
+                    Set(
+                        _documentosVista,
+                        false
+                    );
+                    Set(
+                        _solicitudVista,
+                        false
+                    );
+                    Set(
+                        _seguimientoVista,
+                        true
+                    )
                   PaddingLeft: =40
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
@@ -5048,14 +5269,35 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
-                  OnSelect: |+
-                    =Set(_seguimientoVista,false);
-                    Set(_oportunidadVista,false);
-                    Set(_maquinasVista,false);
-                    Set(_crearAgenda,false);
-                    Set(_documentosVista,false);
-                    Set(_solicitudVista,false);
-                    Set(_datosVista,true)
+                  OnSelect: |-
+                    =Set(
+                        _seguimientoVista,
+                        false
+                    );
+                    Set(
+                        _oportunidadVista,
+                        false
+                    );
+                    Set(
+                        _maquinasVista,
+                        false
+                    );
+                    Set(
+                        _crearAgenda,
+                        false
+                    );
+                    Set(
+                        _documentosVista,
+                        false
+                    );
+                    Set(
+                        _solicitudVista,
+                        false
+                    );
+                    Set(
+                        _datosVista,
+                        true
+                    )
                   PressedBorderColor: =Self.Fill
                   PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
                   PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
@@ -5400,91 +5642,6 @@ Screens:
                         Width: =30
                         Wrap: =false
                         Y: =DataCardKey20.Y
-            - fk_id_lead_DataCard2:
-                Control: TypedDataCard@1.0.7
-                Variant: ClassicNumberEdit
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_lead"
-                  Default: =Value(_itemSeleccionadoProspecto1.ID)
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_lead)
-                  Required: =false
-                  Update: =Value(_itemSeleccionadoProspecto1.ID)
-                  Visible: =false
-                  Width: =1387
-                  X: =0
-                  Y: =2
-                Children:
-                  - DataCardKey21:
-                      Control: Label@2.5.1
-                      MetadataKey: FieldName
-                      Properties:
-                        AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 18, 107, 1)
-                        Font: =Font.'Open Sans'
-                        Height: =48
-                        Text: =Parent.DisplayName
-                        Width: =Parent.Width - 60
-                        Wrap: =false
-                        X: =30
-                        Y: =10
-                  - DataCardValue21:
-                      Control: Classic/TextInput@2.3.2
-                      MetadataKey: FieldValue
-                      Properties:
-                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        Default: =Parent.Default
-                        DelayOutput: =true
-                        DisplayMode: =Parent.DisplayMode
-                        Font: =Font.'Open Sans'
-                        Format: =TextFormat.Number
-                        HoverBorderColor: =RGBA(0, 18, 107, 1)
-                        HoverFill: =RGBA(186, 202, 226, 1)
-                        PaddingLeft: =5
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Tooltip: =Parent.DisplayName
-                        Width: =Parent.Width - 60
-                        X: =30
-                        Y: =DataCardKey21.Y + DataCardKey21.Height + 5
-                  - ErrorMessage21:
-                      Control: Label@2.5.1
-                      MetadataKey: ErrorMessage
-                      Properties:
-                        AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(168, 0, 0, 1)
-                        Font: =Font.'Open Sans'
-                        FontWeight: =FontWeight.Semibold
-                        Height: =10
-                        Live: =Live.Assertive
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
-                        Size: =24
-                        Text: =Parent.Error
-                        Visible: =Parent.DisplayMode=DisplayMode.Edit
-                        Width: =Parent.Width - 60
-                        X: =30
-                        Y: =DataCardValue21.Y + DataCardValue21.Height
-                  - StarVisible21:
-                      Control: Label@2.5.1
-                      MetadataKey: FieldRequired
-                      Properties:
-                        Align: =Align.Center
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 18, 107, 1)
-                        Font: =Font.'Open Sans'
-                        Height: =DataCardKey21.Height
-                        Text: ="*"
-                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                        Width: =30
-                        Wrap: =false
-                        Y: =DataCardKey21.Y
             - Datos adjuntos_DataCard2:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicAttachmentsEdit
@@ -5615,6 +5772,91 @@ Screens:
                         Width: =1282
                         X: =30
                         Y: =28
+            - fk_id_lead_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicNumberEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="fk_id_lead"
+                  Default: =Value(_itemSeleccionadoProspecto1.ID)
+                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_lead)
+                  Required: =false
+                  Update: =Value(_itemSeleccionadoProspecto1.ID)
+                  Visible: =false
+                  Width: =1387
+                  X: =0
+                  Y: =3
+                Children:
+                  - DataCardKey21:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue21:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey21.Y + DataCardKey21.Height + 5
+                  - ErrorMessage21:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =24
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue21.Y + DataCardValue21.Height
+                  - StarVisible21:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey21.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey21.Y
             - fk_id_doc_DataCard2:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicNumberEdit

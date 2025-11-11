@@ -170,8 +170,8 @@
                         Defaults(tab_maquinas_porCuenta),
                         {
                             Cuenta: {
-                                Id: _itemSeleccionadoProspecto1.ID,
-                                Value: _itemSeleccionadoProspecto1.RazonSocial
+                                Id: _itemSeleccionadoProspect.ID,
+                                Value: _itemSeleccionadoProspect.RazonSocial
                             },
                             TipoMaquina: {
                                 Id: _tipoMaquinaSeleccionada.ID,
@@ -181,7 +181,7 @@
                                 Id: 1,
                                 Value: "0 - Sin Serial"
                             },
-                            EstadoCuentaAlSolicitar: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                            EstadoCuentaAlSolicitar: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                             Status_maquina: {Value: "Inactiva"},
                             FechaSolicitud: Now(),
                             ComercialSolicitante: {
@@ -219,7 +219,7 @@
                             Id: _maquinaCreada.ID,
                             Value: _tipoMaquinaSeleccionada.nombre_maquina
                         },
-                        Cuenta: _itemSeleccionadoProspecto1.RazonSocial,
+                        Cuenta: _itemSeleccionadoProspect.RazonSocial,
                         MaquinaAnterior: _tipoMaquinaSeleccionada.nombre_maquina,
                         FechaRegistroMaquina: Now(),
                         ConsumoInicial: Value(TextInp_edit_consMinMenMaq_verProspec.Text),
@@ -324,7 +324,7 @@
                 colMaquinas,
                 Filter(
                     tab_maquinas_porCuenta,
-                    Cuenta.Id = _itemSeleccionadoProspecto1.ID && Status_maquina.Value <> "Eliminada"
+                    Cuenta.Id = _itemSeleccionadoProspect.ID && Status_maquina.Value <> "Eliminada"
                 )
             );
             // Resetear componentes
@@ -655,7 +655,7 @@
             Items: |-
               =Filter(
                   colMaquinas,
-                  Cuenta.Id = _itemSeleccionadoProspecto1.ID && (Status_maquina.Value = "Activa" || Status_maquina.Value = "Inactiva")
+                  Cuenta.Id = _itemSeleccionadoProspect.ID && (Status_maquina.Value = "Activa" || Status_maquina.Value = "Inactiva")
               )
             OnSelect: =
             TemplateSize: =66

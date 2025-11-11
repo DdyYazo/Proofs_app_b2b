@@ -5,7 +5,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.NIT
+      Default: =_itemSeleccionadoProspect.NIT
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -45,7 +45,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.Canal.Value
+      Default: =_itemSeleccionadoProspect.Canal.Value
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -85,7 +85,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.RazonSocial
+      Default: =_itemSeleccionadoProspect.RazonSocial
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -197,7 +197,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.NombreContacto
+      Default: =_itemSeleccionadoProspect.NombreContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -237,7 +237,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.ApellidosContacto
+      Default: =_itemSeleccionadoProspect.ApellidosContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -277,7 +277,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.CargoContacto
+      Default: =_itemSeleccionadoProspect.CargoContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -317,7 +317,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =_itemSeleccionadoProspecto1.EmailContacto
+      Default: =_itemSeleccionadoProspect.EmailContacto
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -341,7 +341,7 @@
     Properties:
       BorderColor: =
       BorderStyle: =BorderStyle.None
-      Default: =_itemSeleccionadoProspecto1.FechaPasoAProspecto
+      Default: =_itemSeleccionadoProspect.FechaPasoAProspecto
       DelayOutput: =true
       DisplayMode: =DisplayMode.View
       Font: =Font.'Open Sans'
@@ -384,7 +384,7 @@
     Properties:
       BorderColor: =
       BorderStyle: =BorderStyle.None
-      Default: =_itemSeleccionadoProspecto1.Ultima_actualizacion_cuenta
+      Default: =_itemSeleccionadoProspect.Ultima_actualizacion_cuenta
       DelayOutput: =true
       DisplayMode: =DisplayMode.View
       Font: =Font.'Open Sans'
@@ -432,7 +432,7 @@
       ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
       ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       ChevronHoverFill: =RGBA(255, 255, 255, 1)
-      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Ciudad]
+      DefaultSelectedItems: =[_itemSeleccionadoProspect.Ciudad]
       DisplayFields: =["Ciudad0"]
       Fill: =Color.White
       Font: =Font.'Open Sans'
@@ -520,7 +520,7 @@
       ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
       ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       ChevronHoverFill: =RGBA(255, 255, 255, 1)
-      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Segmento]
+      DefaultSelectedItems: =[_itemSeleccionadoProspect.Segmento]
       DisplayFields: =["id_segmento_concat"]
       Fill: =Color.White
       Font: =Font.'Open Sans'
@@ -583,7 +583,7 @@
       ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
       ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
       ChevronHoverFill: =RGBA(255, 255, 255, 1)
-      DefaultSelectedItems: =[_itemSeleccionadoProspecto1.Subsegmento]
+      DefaultSelectedItems: =[_itemSeleccionadoProspect.Subsegmento]
       DisplayFields: =["sub_segmento"]
       Fill: =Color.White
       Font: =Font.'Open Sans'
@@ -643,7 +643,7 @@
             tab_cuentas,
             LookUp(
                 tab_cuentas,
-                ID = _itemSeleccionadoProspecto1.ID
+                ID = _itemSeleccionadoProspect.ID
             ),
             {
                 NIT: TextInp_editView_nitClient_verProspec.Text,
@@ -654,7 +654,7 @@
                         Id: Select_edit_segmento_verProspec.Selected.ID,
                         Value: Select_edit_segmento_verProspec.Selected.segmento
                     },
-                    _itemSeleccionadoProspecto1.Segmento
+                    _itemSeleccionadoProspect.Segmento
                 ),
                 Subsegmento: If(
                     !IsBlank(Select_edit_subsegmento_verProspec.Selected),
@@ -662,7 +662,7 @@
                         Id: Select_edit_subsegmento_verProspec.Selected.ID,
                         Value: Select_edit_subsegmento_verProspec.Selected.sub_segmento
                     },
-                    _itemSeleccionadoProspecto1.Subsegmento
+                    _itemSeleccionadoProspect.Subsegmento
                 ),
                 Ciudad: If(
                     !IsBlank(Select_edit_ciudades_verProspec.Selected),
@@ -670,7 +670,7 @@
                         Id: Select_edit_ciudades_verProspec.Selected.ID,
                         Value: Select_edit_ciudades_verProspec.Selected.Ciudad0
                     },
-                    _itemSeleccionadoProspecto1.Ciudad
+                    _itemSeleccionadoProspect.Ciudad
                 ),
                 NombreContacto: TextInp_edit_nombreContac_verProspec.Text,
                 ApellidosContacto: TextInp_edit_apelliContac_verProspec.Text,
@@ -680,10 +680,10 @@
             }
         );
         Set(
-            _itemSeleccionadoProspecto1,
+            _itemSeleccionadoProspect,
             LookUp(
                 tab_cuentas,
-                ID = _itemSeleccionadoProspecto1.ID
+                ID = _itemSeleccionadoProspect.ID
             )
         );
         Set(

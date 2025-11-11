@@ -30,7 +30,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspecto1.ID).Detalle
+      Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspect.ID).Detalle
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -57,7 +57,7 @@
       BorderColor: =
       BorderStyle: =BorderStyle.None
       Color: =RGBA(85, 69, 49, 1)
-      Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspecto1.ID).Construccion_marca
+      Default: =LookUp(tab_oportunidades_cuenta, Cuenta.Id = _itemSeleccionadoProspect.ID).Construccion_marca
       DelayOutput: =true
       DisplayMode: =
       Font: =Font.'Open Sans'
@@ -160,7 +160,7 @@
                 IsBlank(
                     LookUp(
                         tab_oportunidades_cuenta,
-                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                        Cuenta.Id = _itemSeleccionadoProspect.ID
                     )
                 ),
                                 // CREAR NUEVA OPORTUNIDAD
@@ -169,8 +169,8 @@
                     Defaults(tab_oportunidades_cuenta),
                     {
                         Cuenta: {
-                            Id: _itemSeleccionadoProspecto1.ID,
-                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                            Id: _itemSeleccionadoProspect.ID,
+                            Value: _itemSeleccionadoProspect.RazonSocial
                         },
                         TipoOportunidad: {
                             Id: _tipoOportunidadSeleccionada.ID,
@@ -178,7 +178,7 @@
                         },
                         Detalle: TextInput_edit_detalOporCom_verProspec.Text,
                         Construccion_marca: TextInput_edit_constMarc_verProspec.Text,
-                        EstadoCuentaAlCrear: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                        EstadoCuentaAlCrear: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                         FechaIdentificacion: Now(),
                         ComercialIdentifica: {
                             '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
@@ -201,7 +201,7 @@
                     tab_oportunidades_cuenta,
                     LookUp(
                         tab_oportunidades_cuenta,
-                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                        Cuenta.Id = _itemSeleccionadoProspect.ID
                     ),
                     {
                         TipoOportunidad: {
@@ -278,7 +278,7 @@
             !IsBlank(
                 LookUp(
                     tab_oportunidades_cuenta,
-                    Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                    Cuenta.Id = _itemSeleccionadoProspect.ID
                 )
             ),
             [
@@ -286,7 +286,7 @@
                     colOportunidad,
                     ID = LookUp(
                         tab_oportunidades_cuenta,
-                        Cuenta.Id = _itemSeleccionadoProspecto1.ID
+                        Cuenta.Id = _itemSeleccionadoProspect.ID
                     ).TipoOportunidad.Id
                 )
             ],

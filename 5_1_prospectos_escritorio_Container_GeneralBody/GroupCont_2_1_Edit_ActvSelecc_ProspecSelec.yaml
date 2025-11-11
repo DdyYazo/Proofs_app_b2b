@@ -65,11 +65,11 @@
                         Anotaciones: TextInp_edit_ActReali_verProspec.Text,
                         Observaciones: TextInp_editView_obsvAct_verProspec.Text,
                         Cuenta: {
-                            Id: _itemSeleccionadoProspecto1.ID,
-                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                            Id: _itemSeleccionadoProspect.ID,
+                            Value: _itemSeleccionadoProspect.RazonSocial
                         },
                         FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                         ComercialResponsable: {
                             '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
                             Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),
@@ -107,11 +107,11 @@
                         Anotaciones: TextInp_edit_ActReali_verProspec.Text,
                         Observaciones: TextInp_editView_obsvAct_verProspec.Text,
                         Cuenta: {
-                            Id: _itemSeleccionadoProspecto1.ID,
-                            Value: _itemSeleccionadoProspecto1.RazonSocial
+                            Id: _itemSeleccionadoProspect.ID,
+                            Value: _itemSeleccionadoProspect.RazonSocial
                         },
                         FechaSeguimiento: Select_edit_fechaAct_verProspec.SelectedDate,
-                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspecto1.EstadoCuenta.Value},
+                        EstadoCuentaEnSeguimiento: {Value: _itemSeleccionadoProspect.EstadoCuenta.Value},
                         ComercialResponsable: {
                             '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
                             Claims: "i:0#.f|membership|" & Lower(_infoUsuarioLoggeado.Email),

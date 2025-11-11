@@ -74,7 +74,7 @@
             Items: |-
               =Filter(
                   tab_seguimiento_porCuenta,
-                  Cuenta.Id = _itemSeleccionadoProspecto1.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
+                  Cuenta.Id = _itemSeleccionadoProspect.ID && (IsBlank(_fechaFiltroActividades) || DateValue(Text(FechaSeguimiento)) = DateValue(Text(_fechaFiltroActividades)))
               )
             OnSelect: |-
               =Set(_itemSeleccionado,ThisItem);
