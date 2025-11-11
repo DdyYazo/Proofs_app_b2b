@@ -1485,7 +1485,7 @@ Screens:
                               Color: =RGBA(85, 69, 49, 1)
                               Height: =46
                               Icon: =Icon.Trash
-                              OnSelect: =Remove(tab_maquinas_por_cliente,ThisItem)
+                              OnSelect: =Remove(tab_maquinas_porCuenta,ThisItem)
                               Width: =40
                               X: =1327
                         - Button_edit_requestSerial_toBackOffice_verProspec:
@@ -1511,9 +1511,9 @@ Screens:
                                 // solciitar Serial de maquina
                                 If( ThisItem.estado_maquina = 0,
                                 Patch(
-                                    tab_maquinas_por_cliente,
+                                    tab_maquinas_porCuenta,
                                     LookUp(
-                                        tab_maquinas_por_cliente,
+                                        tab_maquinas_porCuenta,
                                         ID = ThisItem.ID
                                     ),
                                     {
@@ -1524,8 +1524,8 @@ Screens:
                                 ClearCollect(
                                     colMaquinas,
                                     Filter(
-                                        tab_maquinas_por_cliente,
-                                        fk_id_cliente_nesp-corp = _itemSeleccionadoProspecto1.ID
+                                        tab_maquinas_porCuenta,
+                                        Cuenta.Id = _itemSeleccionadoProspect.ID
                                     )
                                 );
                                 Office365Outlook.SendEmailV2(
@@ -1534,8 +1534,8 @@ Screens:
                                         correo,
                                         ";"
                                     ),
-                                    "Solicitud Asignación Serial a Maquina: " & _itemSeleccionadoProspecto1.razon_social_prospecto,
-                                    "El Canal " & _itemSeleccionadoProspecto1.nombre_comercial_prospecto & " ha solicitado la asignación de serial a Maquina " & _itemSeleccionadoProspecto1.razon_social_prospecto & " por favor ingrese a la aplicacion dando clic <a 
+                                    "Solicitud Asignación Serial a Maquina: " & _itemSeleccionadoProspect.RazonSocial,
+                                    "El Canal " & _itemSeleccionadoProspect.Título & " ha solicitado la asignación de serial a Maquina " & _itemSeleccionadoProspect.RazonSocial & " por favor ingrese a la aplicacion dando clic <a 
                                   href=https://apps.powerapps.com/play/e/default-12a3af23-a769-4654-847f-958f3d479f4a/a/002f0ece-12ca-4574-a45c-3506693e230f?tenantId=12a3af23-a769-4654-847f-958f3d479f4a&hint=29d33854-bc26-4b3e-b846-59d8a8d2f6e5&sourcetime=1752165330010 
                                 >
                                   aquí
@@ -1551,9 +1551,9 @@ Screens:
                                 ThisItem.estado_maquina = 2,
 
                                 Patch(
-                                    tab_maquinas_por_cliente,
+                                    tab_maquinas_porCuenta,
                                     LookUp(
-                                        tab_maquinas_por_cliente,
+                                        tab_maquinas_porCuenta,
                                         ID = ThisItem.ID
                                     ),
                                     {
@@ -1564,8 +1564,8 @@ Screens:
                                 ClearCollect(
                                     colMaquinas,
                                     Filter(
-                                        tab_maquinas_por_cliente,
-                                        fk_id_cliente_nesp-corp = _itemSeleccionadoProspecto1.ID
+                                        tab_maquinas_porCuenta,
+                                        Cuenta.Id = _itemSeleccionadoProspect.ID
                                     )
                                 );
                                 Office365Outlook.SendEmailV2(
@@ -1574,8 +1574,8 @@ Screens:
                                         correo,
                                         ";"
                                     ),
-                                    "Solicitud Instalación de Maquina: " & _itemSeleccionadoProspecto1.razon_social_prospecto,
-                                    "El Canal " & _itemSeleccionadoProspecto1.nombre_comercial_prospecto & " ha solicitado la instalación de Maquina " & _itemSeleccionadoProspecto1.razon_social_prospecto & " por favor ingrese a la aplicacion dando clic <a 
+                                    "Solicitud Instalación de Maquina: " & _itemSeleccionadoProspect.RazonSocial,
+                                    "El Canal " & _itemSeleccionadoProspect.Título & " ha solicitado la instalación de Maquina " & _itemSeleccionadoProspect.RazonSocial & " por favor ingrese a la aplicacion dando clic <a 
                                   href=https://apps.powerapps.com/play/e/default-12a3af23-a769-4654-847f-958f3d479f4a/a/002f0ece-12ca-4574-a45c-3506693e230f?tenantId=12a3af23-a769-4654-847f-958f3d479f4a&hint=29d33854-bc26-4b3e-b846-59d8a8d2f6e5&sourcetime=1752165330010 
                                 >
                                   aquí
@@ -4023,7 +4023,7 @@ Screens:
                               Height: =24
                               Icon: =Icon.View
                               OnSelect: |
-                                =// dependiendo la cantidad de documentos 
+                                =// dependiendo la cantidad de documentos
                                 Set(
                                     _documentoSeleccionadoVer,
                                     ThisItem
@@ -4032,8 +4032,8 @@ Screens:
                                 ClearCollect(
                                     colDocumentosVerPre,
                                     Filter(
-                                        Documentos,
-                                        fk_id_lead = _itemSeleccionadoProspect.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                                        tab_documentos_porCuenta,
+                                        Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.Id = _documentoSeleccionadoVer.ID
                                     )
                                 );
                                 // validar si el documento ya se creo en al biblioteca 
@@ -4582,18 +4582,18 @@ Screens:
                         true
                     );
                     Patch(
-                        tab_leads,
+                        tab_cuentas,
                         LookUp(
-                            tab_leads,
-                            ID = _itemSeleccionadoProspecto1.ID
+                            tab_cuentas,
+                            ID = _itemSeleccionadoProspect.ID
                         ),
-                        {id_estado_negociacion: 3}
+                        {EstadoNegociacion: LookUp(tab_statusNegociacion, ID = 3)}
                     );
                     Set(
-                        _itemSeleccionadoProspecto1,
+                        _itemSeleccionadoProspect,
                         LookUp(
-                            tab_leads,
-                            ID = _itemSeleccionadoProspecto1.ID
+                            tab_cuentas,
+                            ID = _itemSeleccionadoProspect.ID
                         )
                     );
                     ClearCollect(
@@ -4609,8 +4609,8 @@ Screens:
                             correo,
                             ";"
                         ),
-                        "Solicitud Aprobación Documentos: " & _itemSeleccionadoProspecto1.razon_social_prospecto,
-                        "El Canal " & _itemSeleccionadoProspecto1.nombre_comercial_prospecto & " ha solicitado la revisión de documentos del cliente " & _itemSeleccionadoProspecto1.razon_social_prospecto & " por favor ingrese a la aplicacion dando clic <a 
+                        "Solicitud Aprobación Documentos: " & _itemSeleccionadoProspect.RazonSocial,
+                        "El Canal " & _itemSeleccionadoProspect.Título & " ha solicitado la revisión de documentos del cliente " & _itemSeleccionadoProspect.RazonSocial & " por favor ingrese a la aplicacion dando clic <a 
                       href=https://apps.powerapps.com/play/e/default-12a3af23-a769-4654-847f-958f3d479f4a/a/002f0ece-12ca-4574-a45c-3506693e230f?tenantId=12a3af23-a769-4654-847f-958f3d479f4a&hint=29d33854-bc26-4b3e-b846-59d8a8d2f6e5&sourcetime=1752165330010 
                     >
                       aquí
@@ -4636,7 +4636,7 @@ Screens:
                   Text: ="SOLICITAR APROBACIÓN"
                   Visible: |-
                     =_documentosVista && If(
-                        _itemSeleccionadoProspecto1.id_estado_negociacion = 2 Or _itemSeleccionadoProspecto1.id_estado_negociacion = 7,
+                        _itemSeleccionadoProspect.EstadoNegociacion.Id = 2 Or _itemSeleccionadoProspect.EstadoNegociacion.Id = 7,
                         If(
                             _necesitaCredito = 1,
                             If(
@@ -4856,7 +4856,7 @@ Screens:
             RadiusTopLeft: =30
             RadiusTopRight: =30
             Width: =250
-            X: '=If(_itemSeleccionadoProspecto1.requiere_documentos = 1,1438,1228)  '
+            X: '=If(_itemSeleccionadoProspect.RequiereDocumentos,1438,1228)  '
             Y: =140
           Children:
             - Button_Edit_secc_seriales_verProspec:
@@ -5364,8 +5364,8 @@ Screens:
                   ClearCollect(
                       colDocumentosProspecto,
                       Filter(
-                          tab_documentos_por_cliente,
-                          fk_id_lead = _itemSeleccionadoProspecto1.ID
+                          tab_documentos_porCuenta,
+                          Cuenta.Id = _itemSeleccionadoProspect.ID
                       )
                   )
               );
@@ -5434,7 +5434,7 @@ Screens:
           Group: GroupCont_5_1_load_saveFiles_ProspecSelec
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
-            DataSource: =tab_documentos_por_cliente
+            DataSource: =tab_documentos_porCuenta
             Height: =408
             Visible: '=_adjuntarDocumentos '
             Width: =1387
@@ -5446,12 +5446,11 @@ Screens:
                 Variant: ClassicTextualEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="estado_documento"
-                  Default: =1
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,estado_documento)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, estado_documento)
+                  DataField: ="EstadoDocumento"
+                  Default: =LookUp(tab_estados_documentos, ID = 1)
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,EstadoDocumento)
                   Required: =false
-                  Update: =1
+                  Update: =LookUp(tab_estados_documentos, ID = 1)
                   Visible: =false
                   Width: =1387
                   X: =0
@@ -5532,11 +5531,11 @@ Screens:
                 Variant: ClassicNumberEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_nesp-corp_cliente"
-                  Default: =Value(_itemSeleccionadoProspecto1.id_nesp-corp_nit)
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_nesp-corp_cliente)
+                  DataField: ="Cuenta"
+                  Default: =_itemSeleccionadoProspect
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Cuenta)
                   Required: =false
-                  Update: =Value(_itemSeleccionadoProspecto1.id_nesp-corp_nit)
+                  Update: =_itemSeleccionadoProspect
                   Visible: =false
                   Width: =1387
                   X: =0
@@ -5617,11 +5616,11 @@ Screens:
                 Variant: ClassicAttachmentsEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="{Attachments}"
-                  Default: =ThisItem.'Datos adjuntos'
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,'Datos adjuntos')
+                  DataField: ="URLDocumento"
+                  Default: =""
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,URLDocumento)
                   Required: =false
-                  Update: =DataCardValue23.Attachments
+                  Update: =DataCardValue23.Text
                   Width: =1387
                   X: =0
                   Y: =3
@@ -5747,11 +5746,11 @@ Screens:
                 Variant: ClassicNumberEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_lead"
-                  Default: =Value(_itemSeleccionadoProspecto1.ID)
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_lead)
+                  DataField: ="Cuenta"
+                  Default: =_itemSeleccionadoProspect
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Cuenta)
                   Required: =false
-                  Update: =Value(_itemSeleccionadoProspecto1.ID)
+                  Update: =_itemSeleccionadoProspect
                   Visible: =false
                   Width: =1387
                   X: =0
@@ -5832,13 +5831,13 @@ Screens:
                 Variant: ClassicNumberEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_doc"
+                  DataField: ="TipoDocumento"
                   Default: |-
                     =
-                    _itemSeleccionadoDocumentos.ID
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_doc)
+                    _itemSeleccionadoDocumentos
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,TipoDocumento)
                   Required: =false
-                  Update: =_itemSeleccionadoDocumentos.ID
+                  Update: =_itemSeleccionadoDocumentos
                   Visible: =false
                   Width: =1387
                   X: =0
@@ -5919,12 +5918,12 @@ Screens:
                 Variant: ClassicTextualEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="nombre_carpeta_cliente"
-                  Default: =Substitute(_itemSeleccionadoProspecto1.razon_social_prospecto," ","")
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,nombre_carpeta_cliente)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, nombre_carpeta_cliente)
+                  DataField: ="Nombre_carpeta_cliente"
+                  Default: =Substitute(_itemSeleccionadoProspect.RazonSocial," ","")
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Nombre_carpeta_cliente)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, Nombre_carpeta_cliente)
                   Required: =false
-                  Update: =Substitute(_itemSeleccionadoProspecto1.razon_social_prospecto," ","")
+                  Update: =Substitute(_itemSeleccionadoProspect.RazonSocial," ","")
                   Visible: =false
                   Width: =1387
                   X: =0
@@ -6005,10 +6004,10 @@ Screens:
                 Variant: ClassicTextualEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="nompre_tipo_de_documento"
+                  DataField: ="Nombre_documento"
                   Default: =_itemSeleccionadoDocumentos.nombre_carpeta_documento
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,nompre_tipo_de_documento)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, nompre_tipo_de_documento)
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Nombre_documento)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, Nombre_documento)
                   Required: =false
                   Update: |-
                     =
@@ -6093,10 +6092,10 @@ Screens:
                 Variant: ClassicTextualEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="nombre_documento"
+                  DataField: ="Nombre_documento"
                   Default: =First(DataCardValue23.Attachments).Name
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,nombre_documento)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, nombre_documento)
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Nombre_documento)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, Nombre_documento)
                   Required: =false
                   Update: =First(DataCardValue23.Attachments).Name
                   Visible: =false
@@ -6315,12 +6314,12 @@ Screens:
                   Height: =24
                   Icon: =Icon.View
                   OnSelect: |
-                    =// dependiendo la cantidad de documentos 
+                    =// dependiendo la cantidad de documentos
 
-                    Set(_documentoSeleccionadoVer,LookUp(tab_documentos_cliente,ID = ThisItem.fk_id_tipo_documento));
+                    Set(_documentoSeleccionadoVer,LookUp(tab_documentos_cliente,ID = ThisItem.TipoDocumento.Id));
 
                     //
-                    ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+                    ClearCollect(colDocumentosVerPre,Filter(tab_documentos_porCuenta, Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.Id = _documentoSeleccionadoVer.ID));
 
 
 
@@ -6628,22 +6627,22 @@ Screens:
 
 
 
-              // eliminar de la lista de documentos 
-              RemoveIf(tab_documentos_por_cliente, fk_id_doc = _documentoSeleccionadoVer.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID);
+              // eliminar de la lista de documentos
+              RemoveIf(tab_documentos_porCuenta, TipoDocumento.Id = _documentoSeleccionadoVer.ID && Cuenta.Id = _itemSeleccionadoProspect.ID);
 
 
-              // eliminar de la biblioteca de sharepoint 
+              // eliminar de la biblioteca de sharepoint
 
 
-              ClearCollect(colDocumentosEliminar,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+              ClearCollect(colDocumentosEliminar,Filter(tab_documentos_porCuenta, Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.Id = _documentoSeleccionadoVer.ID));
 
               ForAll(colDocumentosEliminar As DB,
 
 
-              RemoveIf(Documentos, ID = DB.ID));
+              Remove(tab_documentos_porCuenta, DB));
 
 
-                  ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
+                  ClearCollect(colDocumentosProspecto,Filter(tab_documentos_porCuenta, Cuenta.Id =  _itemSeleccionadoProspect.ID));
 
               Set(_spinner,false);
 
@@ -6774,10 +6773,9 @@ Screens:
 
 
 
-              // eliminar de la lista de documentos 
-              RemoveIf(tab_documentos_por_cliente, fk_id_documento_sharepoint = _documentoSeleccionadoEliminar.ID);
-              RemoveIf(Documentos,ID = _documentoSeleccionadoEliminar.ID);
-                  ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
+              // eliminar de la lista de documentos
+              Remove(tab_documentos_porCuenta, _documentoSeleccionadoEliminar);
+                  ClearCollect(colDocumentosProspecto,Filter(tab_documentos_porCuenta, Cuenta.Id =  _itemSeleccionadoProspect.ID));
 
 
 
@@ -6844,33 +6842,11 @@ Screens:
           Group: GroupCon_5_3_viewFilesContent_filesLoad
           Properties:
             Document: |-
-              =If(
-                  EndsWith(
-                      LookUp(
-                          colDocumentosVer,
-                          id_col = _numeroDocumentoSeleccionado
-                      ).'Nombre de archivo con extensión',
-                      "pdf"
-                  ),
-              // si el documento es de tipo pdf
-                  LookUp(
-                      tab_documentos_por_cliente,
-                      fk_id_documento_sharepoint = LookUp(
-                          colDocumentosVer,
-                          id_col = _numeroDocumentoSeleccionado
-                      ).ID
-                  ).data_uri
-              // si es otro tipo de documento diferente a pdf
-              ,
-                  Substitute(
-                      LookUp(
-                          colDocumentosVer,
-                          id_col = _numeroDocumentoSeleccionado
-                      ).Thumbnail.Large,
-                      "/thumbnail",
-                      "/pdf"
-                  )
-              )
+              =// Obtener el documento seleccionado desde la colección
+              LookUp(
+                  colDocumentosVer,
+                  id_col = _numeroDocumentoSeleccionado
+              ).URLDocumento
             Height: =858
             ShowControls: =true
             Visible: =_visibleVerDocumentoSeleccionado
@@ -6940,8 +6916,8 @@ Screens:
               ClearCollect(
                   colComentariosDocumentos,
                   Filter(
-                      tab_comentarios_documentos,
-                      fk_id_lead = _itemSeleccionadoProspecto.ID && fk_id_documento = LookUp(
+                      tab_hist_comentDocumentos,
+                      Cuenta.Id = _itemSeleccionadoProspect.ID && Documento.Id = LookUp(
                           colDocumentosVer,
                           id_col = _numeroDocumentoSeleccionado
                       ).ID
