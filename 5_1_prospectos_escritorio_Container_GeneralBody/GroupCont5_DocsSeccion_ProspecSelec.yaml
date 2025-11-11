@@ -59,7 +59,7 @@
               );
               Patch(
                   tab_cuentas,
-                  _itemSeleccionadoProspect,
+                  _itemSeleccionadoProspecto1,
                   {RequiereCredito: true}
               );
               Reset(RadioButton_Contado_Client);
@@ -111,7 +111,7 @@
               // ✅ Booleano
               Patch(
                   tab_cuentas,
-                  _itemSeleccionadoProspect,
+                  _itemSeleccionadoProspecto1,
                   {
                       // ✅ Sin LookUp
               RequiereCredito: false,
@@ -145,12 +145,12 @@
       - DropdownCanvas1:
           Control: DropDown@0.0.45
           Properties:
-            DefaultSelectedItems: =[_itemSeleccionadoProspect.PlazoCredito]
+            DefaultSelectedItems: =[_itemSeleccionadoProspecto1.PlazoCredito]
             Fill: =RGBA(214, 21, 21, 0)
             FontSize: =22
             Height: =40
             Items: =Choices(tab_cuentas.PlazoCredito)
-            OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_cuentas,LookUp(tab_cuentas,ID = _itemSeleccionadoProspect.ID),{PlazoCredito:Value(Self.Selected.Value)}))
+            OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_cuentas,LookUp(tab_cuentas,ID = _itemSeleccionadoProspecto1.ID),{PlazoCredito:Self.Selected}))
             Visible: =_necesitaCredito = true
             Width: =100
             X: =1243
@@ -186,23 +186,23 @@
                       tab_cuentas,
                       LookUp(
                           tab_cuentas,
-                          ID = _itemSeleccionadoProspect.ID
+                          ID = _itemSeleccionadoProspecto1.ID
                       ),
                       {CupoSolicitado: Value(Self.Value)}
                   )
               );
               Set(
-                  _itemSeleccionadoProspect,
+                  _itemSeleccionadoProspecto1,
                   LookUp(
                       tab_cuentas,
-                      ID = _itemSeleccionadoProspect.ID
+                      ID = _itemSeleccionadoProspecto1.ID
                   )
               );
               Set(
                   _spinner,
                   false
               )
-            Value: =_itemSeleccionadoProspect.CupoSolicitado
+            Value: =_itemSeleccionadoProspecto1.CupoSolicitado
             Width: =174
             X: =970
             Y: =48
@@ -229,11 +229,11 @@
             OnChange: |-
               =Set(_spinner,true);
               If(!IsBlank(Self.Value),
-              Patch(tab_cuentas,LookUp(tab_cuentas,ID = _itemSeleccionadoProspect.ID),{Tarifa:Value(Self.Value)}));
+              Patch(tab_cuentas,LookUp(tab_cuentas,ID = _itemSeleccionadoProspecto1.ID),{Tarifa:Value(Self.Value)}));
 
-              Set(_itemSeleccionadoProspect,LookUp(tab_cuentas,ID = _itemSeleccionadoProspect.ID));
+              Set(_itemSeleccionadoProspecto1,LookUp(tab_cuentas,ID = _itemSeleccionadoProspecto1.ID));
               Set(_spinner,false);
-            Value: =_itemSeleccionadoProspect.Tarifa
+            Value: =_itemSeleccionadoProspecto1.Tarifa
             Width: =174
             X: =702
             Y: =48
@@ -325,12 +325,12 @@
                   OnSelect: |-
                     =
                     Set(_verDocumentos,false);
-                    Set(_carpetaCreadaProspecto,_itemSeleccionadoProspect.CarpetaCreada);
+                    Set(_carpetaCreadaProspecto,_itemSeleccionadoProspecto1.CarpetaCreada);
                     Set(_adjuntarDocumentos,true);
                     Set(_idDocumentoCarga,ThisItem.ID);
                     Set(_itemSeleccionadoDocumentos,ThisItem);
                     NewForm(Form_guardar_documentos)
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
                   Width: =25
                   X: =548
                   Y: =10
@@ -342,7 +342,7 @@
                   Height: =13
                   Icon: =Icon.Add
                   OnSelect: =Select(Parent)
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
                   Width: =16
                   X: =573
                   Y: =10
@@ -364,7 +364,7 @@
                         colDocumentosVerPre,
                         Filter(
                             tab_documentos_porCuenta,
-                            Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
+                            Cuenta.Id = _itemSeleccionadoProspecto1.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
                         )
                     );
                     // validar si el documento ya se creo en al biblioteca 
@@ -395,7 +395,7 @@
                             true
                         )
                     );
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
                   Width: =24
                   X: =764
                   Y: =9
@@ -414,7 +414,7 @@
                         CountRows(
                             Filter(
                                 colDocumentosProspecto,
-                                TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID && EstadoDocumento.id_estado_documento = 1
+                                TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 1
                             )
                         ) > 0,
                         RGBA(
@@ -427,7 +427,7 @@
                         CountRows(
                             Filter(
                                 colDocumentosProspecto,
-                                TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID && EstadoDocumento.id_estado_documento = 2
+                                TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 2
                             )
                         ) > 0,
                         RGBA(
@@ -440,7 +440,7 @@
                         CountRows(
                             Filter(
                                 colDocumentosProspecto,
-                                TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID && EstadoDocumento.id_estado_documento = 3
+                                TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 3
                             )
                         ) > 0,
                         RGBA(
@@ -503,10 +503,10 @@
                         colDocumentosVerPre,
                         Filter(
                             tab_documentos_porCuenta,
-                            Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
+                            Cuenta.Id = _itemSeleccionadoProspecto1.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
                         )
                     );
-                    // validar si el documento ya se creo en al biblioteca 
+                    // validar si el documento ya se creo en al biblioteca
                     If(
                         CountRows(colDocumentosVerPre) < ThisItem.cantidad_de_documentos,
                         Set(
@@ -516,8 +516,8 @@
                         ClearCollect(
                             colDocumentosEliminar,
                             Filter(
-                                Documentos,
-                                fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                                tab_documentos_porCuenta,
+                                Cuenta.Id = _itemSeleccionadoProspecto1.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
                             )
                         );
                         If(
@@ -541,7 +541,7 @@
                   RadiusTopRight: =100
                   Size: =8
                   Text: ="X"
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
                   Width: =20
                   X: =1220
                   Y: =13
@@ -787,12 +787,12 @@
                   OnSelect: |-
                     =
                     Set(_verDocumentos,false);
-                    Set(_carpetaCreadaProspecto,_itemSeleccionadoProspect.CarpetaCreada);
+                    Set(_carpetaCreadaProspecto,_itemSeleccionadoProspecto1.CarpetaCreada);
                     Set(_adjuntarDocumentos,true);
                     Set(_idDocumentoCarga,ThisItem.ID);
                     Set(_itemSeleccionadoDocumentos,ThisItem);
                     NewForm(Form_guardar_documentos)
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
                   Width: =25
                   X: =548
                   Y: =10
@@ -804,7 +804,7 @@
                   Height: =13
                   Icon: =Icon.Add
                   OnSelect: =Select(Parent)
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , false,true)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , false,true)
                   Width: =16
                   X: =573
                   Y: =10
@@ -826,7 +826,7 @@
                         colDocumentosVerPre,
                         Filter(
                             tab_documentos_porCuenta,
-                            Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
+                            Cuenta.Id = _itemSeleccionadoProspecto1.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
                         )
                     );
                     // validar si el documento ya se creo en al biblioteca 
@@ -857,7 +857,7 @@
                             true
                         )
                     );
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
                   Width: =24
                   X: =764
                   Y: =9
@@ -877,14 +877,14 @@
 
                     If( 
                         // estado pendiente
-                        CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID && EstadoDocumento.id_estado_documento = 1)) > 0, RGBA(239,194,14,64),
+                        CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 1)) > 0, RGBA(239,194,14,64),
 
                     // estado aprobado
-                    CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID && EstadoDocumento.id_estado_documento = 2)) > 0,RGBA(50,129,45,100),
+                    CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 2)) > 0,RGBA(50,129,45,100),
 
                     // estado rechazado
 
-                    CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID && EstadoDocumento.id_estado_documento = 3)) > 0,RGBA(219,15,15,64),RGBA(239,194,14,64))
+                    CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 3)) > 0,RGBA(219,15,15,64),RGBA(239,194,14,64))
 
 
 
@@ -935,10 +935,10 @@
                         colDocumentosVerPre,
                         Filter(
                             tab_documentos_porCuenta,
-                            Cuenta.Id = _itemSeleccionadoProspect.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
+                            Cuenta.Id = _itemSeleccionadoProspecto1.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
                         )
                     );
-                    // validar si el documento ya se creo en al biblioteca 
+                    // validar si el documento ya se creo en al biblioteca
                     If(
                         CountRows(colDocumentosVerPre) < ThisItem.cantidad_de_documentos,
                         Set(
@@ -948,8 +948,8 @@
                         ClearCollect(
                             colDocumentosEliminar,
                             Filter(
-                                Documentos,
-                                fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                                tab_documentos_porCuenta,
+                                Cuenta.Id = _itemSeleccionadoProspecto1.ID && TipoDocumento.ID = _documentoSeleccionadoVer.ID
                             )
                         );
                         If(
@@ -973,7 +973,7 @@
                   RadiusTopRight: =100
                   Size: =8
                   Text: ="X"
-                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspect.ID) ) = ThisItem.cantidad_de_documentos , true,false)
+                  Visible: =If( CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID) ) = ThisItem.cantidad_de_documentos , true,false)
                   Width: =20
                   X: =1220
                   Y: =13

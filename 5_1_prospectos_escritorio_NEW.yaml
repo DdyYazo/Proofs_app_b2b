@@ -5008,12 +5008,12 @@ Screens:
                         colDocumentosProspecto,
                         Filter(
                             tab_documentos_porCuenta,
-                            Cuenta.Id = _itemSeleccionadoProspect.ID
+                            Cuenta.Id = _itemSeleccionadoProspecto1.ID
                         )
                     );
                     Set(
                         _necesitaCredito,
-                        _itemSeleccionadoProspect.RequiereCredito
+                        _itemSeleccionadoProspecto1.RequiereCredito
                     );
                     Set(
                         _documentosVista,
