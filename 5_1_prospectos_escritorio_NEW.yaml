@@ -3210,7 +3210,7 @@ Screens:
                         FontSize: =24
                         Height: =62
                         Value: ="Plazo:"
-                        Visible: =_necesitaCredito = 1
+                        Visible: =_necesitaCredito = true
                         Width: =100
                         X: =1151
                         Y: =42
@@ -3223,7 +3223,7 @@ Screens:
                         Height: =40
                         Items: =Choices(tab_cuentas.PlazoCredito)
                         OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{plazo_credito:Value(Self.Selected.Value)}))
-                        Visible: =_necesitaCredito = 1
+                        Visible: =_necesitaCredito = true
                         Width: =100
                         X: =1243
                         Y: =54
@@ -3353,7 +3353,7 @@ Screens:
                   RadiusBottomRight: =30
                   RadiusTopLeft: =30
                   RadiusTopRight: =30
-                  Visible: =_documentosVista && Or(_necesitaCredito = 1, _necesitaCredito = 0)
+                  Visible: =_documentosVista
                   Width: =1358
                   X: =70
                   Y: =242
@@ -3486,7 +3486,7 @@ Screens:
                                     CountRows(
                                         Filter(
                                             colDocumentosProspecto,
-                                            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "1"
+                                            TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 1
                                         )
                                     ) > 0,
                                     RGBA(
@@ -3499,7 +3499,7 @@ Screens:
                                     CountRows(
                                         Filter(
                                             colDocumentosProspecto,
-                                            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "2"
+                                            TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 2
                                         )
                                     ) > 0,
                                     RGBA(
@@ -3512,7 +3512,7 @@ Screens:
                                     CountRows(
                                         Filter(
                                             colDocumentosProspecto,
-                                            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "3"
+                                            TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 3
                                         )
                                     ) > 0,
                                     RGBA(
@@ -3722,7 +3722,7 @@ Screens:
                   RadiusTopRight: =5
                   Size: =16
                   Text: ="DOCUMENTOS EMPRESA"
-                  Visible: =_documentosVista && Or(_necesitaCredito = 1, _necesitaCredito = 0)
+                  Visible: =_documentosVista
                   Width: =1358
                   X: =71
                   Y: =233
@@ -3789,7 +3789,7 @@ Screens:
                   RadiusBottomRight: =30
                   RadiusTopLeft: =30
                   RadiusTopRight: =30
-                  Visible: =_documentosVista && _necesitaCredito = 1
+                  Visible: =_documentosVista && _necesitaCredito = true
                   Width: =1358
                   X: =70
                   Y: =505
@@ -4000,14 +4000,14 @@ Screens:
 
                                 If( 
                                     // estado pendiente
-                                    CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "1")) > 0, RGBA(239,194,14,64),
+                                    CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 1)) > 0, RGBA(239,194,14,64),
 
                                 // estado aprobado
-                                CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "2")) > 0,RGBA(50,129,45,100),
+                                CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 2)) > 0,RGBA(50,129,45,100),
 
                                 // estado rechazado
 
-                                CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID && estado_documento = "3")) > 0,RGBA(219,15,15,64),RGBA(239,194,14,64))
+                                CountRows(Filter(colDocumentosProspecto, TipoDocumento.ID = ThisItem.ID && Cuenta.Id = _itemSeleccionadoProspecto1.ID && EstadoDocumento.id_estado_documento = 3)) > 0,RGBA(219,15,15,64),RGBA(239,194,14,64))
 
 
 
@@ -4128,7 +4128,7 @@ Screens:
                   RadiusTopRight: =5
                   Size: =16
                   Text: ="DOCUMENTOS LINEA DE CREDITO"
-                  Visible: =_documentosVista && _necesitaCredito = 1
+                  Visible: =_documentosVista && _necesitaCredito = true
                   Width: =1358
                   X: =73
                   Y: =501
@@ -4504,9 +4504,9 @@ Screens:
                     =_documentosVista && If(
                         _itemSeleccionadoProspecto1.id_estado_negociacion = 2 Or _itemSeleccionadoProspecto1.id_estado_negociacion = 7,
                         If(
-                            _necesitaCredito = 1,
+                            _necesitaCredito = true,
                             If(
-                                CountRows(Filter(colDocumentosProspecto, estado_documento = "1")) = Sum(
+                                CountRows(Filter(colDocumentosProspecto, EstadoDocumento.id_estado_documento = 1)) = Sum(
                                     Filter(
                                         colDocumentosCliente,
                                         ID <> 10
@@ -4516,7 +4516,7 @@ Screens:
                                 true,
                                 false
                             ),
-                            CountRows(Filter(colDocumentosProspecto, estado_documento = "1")) = Sum(
+                            CountRows(Filter(colDocumentosProspecto, EstadoDocumento.id_estado_documento = 1)) = Sum(
                                 Filter(
                                     colDocumentosCliente,
                                     tipo_documento = 1,
