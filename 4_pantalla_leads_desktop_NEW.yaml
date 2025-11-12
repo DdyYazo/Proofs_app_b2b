@@ -36,7 +36,7 @@ Screens:
             colLeads,
             Filter(
                 tab_cuentas,
-                EstadoCuenta.Value = "Lead" && (ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado || _rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6)
+                EstadoCuenta = 1 && (ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado || _rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6)
             )
         );
         // Colección para seguimiento comercial desde la nueva lista
@@ -162,15 +162,15 @@ Screens:
                                                                 _rolUsuarioLoggeado = 6,
                                                                 Filter(
                                                                     tab_cuentas,
-                                                                    EstadoCuenta.Value = "Lead",
+                                                                    EstadoCuenta = 1,
                                                                     IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                    IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                                                    IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes
                                                                 ),
                                                                 Filter(
                                                                     tab_cuentas,
-                                                                    EstadoCuenta.Value = "Lead",
+                                                                    EstadoCuenta = 1,
                                                                     IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                    IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value,
+                                                                    IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes,
                                                                     ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                                                 )
                                                             ),
@@ -186,15 +186,15 @@ Screens:
                                                                     _rolUsuarioLoggeado = 6,
                                                                     Filter(
                                                                         tab_cuentas,
-                                                                        EstadoCuenta.Value = "Lead",
+                                                                        EstadoCuenta = 1,
                                                                         IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes
                                                                     ),
                                                                     Filter(
                                                                         tab_cuentas,
-                                                                        EstadoCuenta.Value = "Lead",
+                                                                        EstadoCuenta = 1,
                                                                         IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value,
+                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes,
                                                                         ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                                                     )
                                                                 ),
@@ -207,15 +207,15 @@ Screens:
                                                                     _rolUsuarioLoggeado = 6,
                                                                     Filter(
                                                                         tab_cuentas,
-                                                                        EstadoCuenta.Value = "Lead",
+                                                                        EstadoCuenta = 1,
                                                                         IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes
                                                                     ),
                                                                     Filter(
                                                                         tab_cuentas,
-                                                                        EstadoCuenta.Value = "Lead",
+                                                                        EstadoCuenta = 1,
                                                                         IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value,
+                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes,
                                                                         ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                                                     )
                                                                 ),
@@ -228,15 +228,15 @@ Screens:
                                                                     _rolUsuarioLoggeado = 6,
                                                                     Filter(
                                                                         tab_cuentas,
-                                                                        EstadoCuenta.Value = "Lead",
+                                                                        EstadoCuenta = 1,
                                                                         IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value
+                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes
                                                                     ),
                                                                     Filter(
                                                                         tab_cuentas,
-                                                                        EstadoCuenta.Value = "Lead",
+                                                                        EstadoCuenta = 1,
                                                                         IsBlank(Select_RazSoc_lead.Selected.Value) || Select_RazSoc_lead.Selected.Value = RazonSocial,
-                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes.Value,
+                                                                        IsBlank(Select_interes_lead.Selected.Value) || Select_interes_lead.Selected.Value = estado_interes,
                                                                         ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado
                                                                     )
                                                                 ),
@@ -370,7 +370,7 @@ Screens:
                               BorderColor: =RGBA(0, 18, 107, 1)
                               Color: |+
                                 =If(
-                                    ThisItem.estado_interes.Value = "Descartado",
+                                    ThisItem.estado_interes = "Descartado",
                                     RGBA(
                                         184,
                                         0,
@@ -378,7 +378,7 @@ Screens:
                                         1
                                     ),// Rojo para Descartado
                                     If(
-                                        ThisItem.estado_interes.Value = "Interesado",
+                                        ThisItem.estado_interes = "Interesado",
                                         RGBA(
                                             50,
                                             129,
@@ -398,7 +398,7 @@ Screens:
                               Height: =52
                               OnSelect: =Select(Parent)
                               Size: =19
-                              Text: =ThisItem.estado_interes.Value
+                              Text: =ThisItem.estado_interes
                               Width: =280
                               X: =1133
                               Y: =21
@@ -427,11 +427,11 @@ Screens:
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSegmento,
-                                    _itemSeleccionadoLead.Segmento.Value
+                                    _itemSeleccionadoLead.Segmento
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSubSegmento,
-                                    _itemSeleccionadoLead.Subsegmento.Value
+                                    _itemSeleccionadoLead.Subsegmento
                                 );
 
                                 Set(
@@ -440,11 +440,11 @@ Screens:
                                 );
                                 Set(
                                     _estadoSeleccionadoLead,
-                                    _itemSeleccionadoLead.EstadoCuenta.Value
+                                    _itemSeleccionadoLead.EstadoCuenta
                                 );
                                 Set(
                                     _interesSeleccionadoLead,
-                                    _itemSeleccionadoLead.estado_interes.Value
+                                    _itemSeleccionadoLead.estado_interes
                                 );
                                 Set(
                                     _consulta,
@@ -454,7 +454,7 @@ Screens:
                                     colMaquinas,
                                     Filter(
                                         tab_maquinas_porCuenta,
-                                        Cuenta.Id = _itemSeleccionadoLead.ID && (Status_maquina.Value = "Activo" || Status_maquina.Value = "Inactivo")
+                                        Cuenta.Id = _itemSeleccionadoLead.ID && (Status_maquina_detail = "Activo" || Status_maquina_detail = "Inactivo")
                                     )
                                 );
                                 // Colección para seguimiento comercial muestra
@@ -486,7 +486,7 @@ Screens:
                               DisabledColor: =Color.White
                               DisabledFill: |-
                                 =Switch(
-                                    ThisItem.estado_interes.Value,
+                                    ThisItem.estado_interes,
                                     "Interesado",
                                     RGBA(
                                         50,
@@ -791,12 +791,12 @@ Screens:
                                   _rolUsuarioLoggeado = 6,
                                   Filter(
                                       tab_cuentas,
-                                      EstadoCuenta.Value = "Lead"
+                                      EstadoCuenta = 1
                                   ),
                                   Filter(
                                       tab_cuentas,
                                       (ComercialAsignado.Email = _correoLoggeado || ComercialAsignado.Email = _correoLoggeadoNormalizado),
-                                      EstadoCuenta.Value = "Lead"
+                                      EstadoCuenta = 1
                                   )
                               ),
                               RazonSocial
@@ -843,7 +843,7 @@ Screens:
                         HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
                         HoverFill: =RGBA(235, 222, 184, 1)
                         InputTextPlaceholder: ="Interés Lead"
-                        Items: =Choices(tab_cuentas.estado_interes)
+                        Items: =Distinct(tab_cuentas, estado_interes)
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 0, 0, 0)
                         SearchFields: =["Value"]
