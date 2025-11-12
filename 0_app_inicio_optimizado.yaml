@@ -38,9 +38,9 @@ Set(
         )
     )
 );;
-// Normalización de dominio para usuarios con @n est-corp.com y @nesp-corp.com
+// Normalización de dominio para usuarios con @nest-corp.com y @nesp-corp.com
 If(
-    _dominioUsuario = "n est-corp.com";
+    _dominioUsuario = "nest-corp.com";
     Set(
         _correoLoggeadoNormalizado;
         Left(
@@ -95,7 +95,7 @@ Set(
     _rolUsuarioLoggeado;
     If(
         !IsBlank(_rolUsuarioInfo);
-        _rolUsuarioInfo.id_rol;  // Campo numérico directo en esquema definitivo
+        _rolUsuarioInfo.id_rol;
         1  // Default: Comercial si no se encuentra rol
     )
 );;
@@ -128,8 +128,8 @@ Set(
         EmailNormalizado: _correoLoggeadoNormalizado;
         NombreCompleto: _nameLoggeado;
         RolID: _rolUsuarioLoggeado;
-        RolNombre: If(!IsBlank(_rolUsuarioInfo); LookUp(tab_roles; pk_id_rol = _rolUsuarioInfo.id_rol).rol; "Comercial");
-        CanalAsignado: If(!IsBlank(_canalComercial); _canalComercial.canal; "No Asignado");
+        RolNombre: If(!IsBlank(_rolUsuarioInfo); LookUp(tab_roles; pk_id_rol = _rolUsuarioInfo.id_rol).rol;"Comercial");
+        CanalAsignado: If(!IsBlank(_canalComercial); _canalComercial.canal_relacionado.Value; "No Asignado");
         PerfilOfice365: _infoUsuarioLoggeado
     }
 );;
@@ -213,10 +213,10 @@ ClearCollect(
     tab_documentos_cliente
 );;
 
-// coleccion nombre de maquinas
+// coleccion nombre de maquinas 
 ClearCollect(
     colNombreMaquinas;
-    tab_nombres_maquinas_nesp_corp
+    tab_nombres_maquinas_nesp-corp
 );;
 
 //coleccion oportunidad 
@@ -326,7 +326,7 @@ ClearCollect(
     )
 );;
 
-// Colección de seguimiento por cuenta - OPTIMIZADA CON ESQUEMA DEFINITIVO
+// Colección de seguimiento por cuenta - OPTIMIZADA
 ClearCollect(
     colSeguimiento;
     Filter(
@@ -347,8 +347,8 @@ ClearCollect(
         _rolUsuarioLoggeado = 4 || _rolUsuarioLoggeado >= 5  // Supply y líderes
     )
 );;
-
-/* -> Antigua: Coleccion para seguimiento comercial muestra - YA NO SE USA
+/*
+// -> Antigua: Coleccion para seguimiento comercial muestra
 ClearCollect(
     colSeguimiento;
     Filter(
@@ -356,8 +356,7 @@ ClearCollect(
         correo_responsable = _correoLoggeado;
         estado_seguimiento = 1
     )
-);;
-*/
+);;*/
 
 // 4.4. COLECCIONES HISTÓRICAS (TRAZABILIDAD)
 ClearCollect(
@@ -390,27 +389,26 @@ ClearCollect(
     )
 );;
 
-/* -> Antigua: coleccion instalaciones - YA NO SE USA, SE CREA EN SECCIÓN 5 PARA ROL SUPPLY
+/*//-> Antigua: coleccion instalaciones 
 ClearCollect(
     colInstalaciones;
   Filter(
         tab_maquinas_por_cliente;
         estado_maquina = 3
     )
-);;
-*/
+);;*/
 
-/* -> Antigua: coleccion retiro - YA NO SE USA, SE CREA EN SECCIÓN 5 PARA ROL SUPPLY
+/*//-> Antigua: coleccion retiro 
 ClearCollect(
     colRetiros;
     Filter(
         tab_maquinas_por_cliente;
         estado_maquina = 5
     )
-);;
-*/
+);;*/
 
-/* -> Antigua: coleccion leads creados - YA NO SE USA, SE REEMPLAZA CON colCuentas Y colMisLeads
+/*
+//coleccion leads creados -> Antigua
 ClearCollect(
     colLeads;
     Filter(
@@ -457,14 +455,14 @@ If(
         colInstalaciones;
         Filter(
             colMaquinasCuenta;
-            Status_maquina_detail = "Instalada" || fk_estadoMaquina = 3
+            fk_estadoMaquina = 3
         )
     );
     ClearCollect(
         colRetiros;
         Filter(
             colMaquinasCuenta;
-            Status_maquina_detail = "Retirada" || fk_estadoMaquina = 5
+            fk_estadoMaquina = 5
         )
     )
 );;
@@ -581,7 +579,7 @@ Switch(
             };
             {
                 ID: 4;
-                pantalla: pantalla_clientes_desktop;
+                pantalla: '6_pantalla_clientes_desktop';
                 nombre: "Clientes";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe;
@@ -605,7 +603,7 @@ Switch(
         [
             {
                 ID: 5;
-                pantalla: pantalla_clientes_desktop;
+                pantalla: '6_pantalla_clientes_desktop';
                 nombre: "Clientes";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe;
@@ -613,7 +611,7 @@ Switch(
             };
             {
                 ID: 6;
-                pantalla: pantalla_backoffice_documentos_desktop;
+                pantalla: '7_pantalla_backoffice_documentos_desktop';
                 nombre: "Documentos";
                 mobile: 0;
                 img: Icono_visitas_cafe;
@@ -621,7 +619,7 @@ Switch(
             };
             {
                 ID: 7;
-                pantalla: pantalla_backoffice_serial_desktop;
+                pantalla: '8_pantalla_backoffice_serial_desktop';
                 nombre: "Serial";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe;
@@ -637,7 +635,7 @@ Switch(
         [
             {
                 ID: 5;
-                pantalla: pantalla_clientes_desktop;
+                pantalla: '6_pantalla_clientes_desktop';
                 nombre: "Clientes";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe;
@@ -645,7 +643,7 @@ Switch(
             };
             {
                 ID: 8;
-                pantalla: pantalla_finanzas_desktop;
+                pantalla: '9_pantalla_finanzas_desktop';
                 nombre: "Finanzas";
                 mobile: 0;
                 img: Icono_visitas_cafe;
@@ -725,7 +723,7 @@ Switch(
             };
             {
                 ID: 5;
-                pantalla: pantalla_clientes_desktop;
+                pantalla: '6_pantalla_clientes_desktop';
                 nombre: "Clientes";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe;
@@ -733,7 +731,7 @@ Switch(
             };
             {
                 ID: 6;
-                pantalla: pantalla_backoffice_documentos_desktop;
+                pantalla: '7_pantalla_backoffice_documentos_desktop';
                 nombre: "Documentos";
                 mobile: 0;
                 img: Icono_visitas_cafe;
@@ -741,7 +739,7 @@ Switch(
             };
             {
                 ID: 7;
-                pantalla: pantalla_backoffice_serial_desktop;
+                pantalla: '8_pantalla_backoffice_serial_desktop';
                 nombre: "Serial";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe;
@@ -749,7 +747,7 @@ Switch(
             };
             {
                 ID: 8;
-                pantalla: pantalla_finanzas_desktop;
+                pantalla: '9_pantalla_finanzas_desktop';
                 nombre: "Finanzas";
                 mobile: 0;
                 img: Icono_visitas_cafe;
@@ -818,7 +816,7 @@ Switch(
             };
             {
                 ID: 4;
-                pantalla: pantalla_clientes_desktop;
+                pantalla: '6_pantalla_clientes_desktop';
                 nombre: "Clientes";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe
@@ -832,21 +830,21 @@ Switch(
             };
             {
                 ID: 6;
-                pantalla: pantalla_backoffice_documentos_desktop;
+                pantalla: '7_pantalla_backoffice_documentos_desktop';
                 nombre: "Documentos";
                 mobile: 0;
                 img: Icono_documentos_cafe
             };
             {
                 ID: 7;
-                pantalla: pantalla_backoffice_serial_desktop;
+                pantalla: '8_pantalla_backoffice_serial_desktop';
                 nombre: "Serial";
                 mobile: 0;
                 img: Icono_clientes_negociaciones_cafe
             };
             {
                 ID: 8;
-                pantalla: pantalla_finanzas_desktop;
+                pantalla: '9_pantalla_finanzas_desktop';
                 nombre: "Finanzas";
                 mobile: 0;
                 img: Icono_visitas_cafe
@@ -961,6 +959,7 @@ Set(_crearAgenda; false);;
 // Variables de control de actividades
 Set(_itemSeguimientoSeleccionado; Blank());;
 Set(_idLeadSeleccionado; Blank());;
+//Set(_cuentaCreada; Blank());;
 Set(_seguimientoNuevo; 1);;
 
 // Variables para trazabilidad E2E

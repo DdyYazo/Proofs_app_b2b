@@ -427,11 +427,11 @@ Screens:
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSegmento,
-                                    _itemSeleccionadoLead.segmento
+                                    _itemSeleccionadoLead.Segmento.Value
                                 );
                                 Set(
                                     _itemSeleccionadoLeadSubSegmento,
-                                    _itemSeleccionadoLead.subsegmento
+                                    _itemSeleccionadoLead.Subsegmento.Value
                                 );
 
                                 Set(
