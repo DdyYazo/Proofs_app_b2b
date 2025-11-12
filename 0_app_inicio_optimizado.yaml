@@ -82,7 +82,7 @@ If(
     )
 );;
 
-// 2.5. Rol de usuario Loggeado "utilizando lookup"
+// 2.5. Rol de usuario Loggeado "utilizando id_rol del esquema definitivo"
 Set(
     _rolUsuarioInfo;
     LookUp(
@@ -95,7 +95,7 @@ Set(
     _rolUsuarioLoggeado;
     If(
         !IsBlank(_rolUsuarioInfo);
-        _rolUsuarioInfo.rol_designado.Id;
+        _rolUsuarioInfo.id_rol;  // Campo numérico directo en esquema definitivo
         1  // Default: Comercial si no se encuentra rol
     )
 );;
@@ -128,8 +128,8 @@ Set(
         EmailNormalizado: _correoLoggeadoNormalizado;
         NombreCompleto: _nameLoggeado;
         RolID: _rolUsuarioLoggeado;
-        RolNombre: If(!IsBlank(_rolUsuarioInfo); _rolUsuarioInfo.rol_designado.Value; "1 - Comercial");
-        CanalAsignado: If(!IsBlank(_canalComercial); _canalComercial.canal_relacionado.Value; "No Asignado");
+        RolNombre: If(!IsBlank(_rolUsuarioInfo); LookUp(tab_roles; pk_id_rol = _rolUsuarioInfo.id_rol).rol; "Comercial");
+        CanalAsignado: If(!IsBlank(_canalComercial); _canalComercial.canal; "No Asignado");
         PerfilOfice365: _infoUsuarioLoggeado
     }
 );;
@@ -213,10 +213,10 @@ ClearCollect(
     tab_documentos_cliente
 );;
 
-// coleccion nombre de maquinas 
+// coleccion nombre de maquinas
 ClearCollect(
     colNombreMaquinas;
-    tab_nombres_maquinas_nesp-corp
+    tab_nombres_maquinas_nesp_corp
 );;
 
 //coleccion oportunidad 
@@ -326,7 +326,7 @@ ClearCollect(
     )
 );;
 
-// Colección de seguimiento por cuenta - OPTIMIZADA
+// Colección de seguimiento por cuenta - OPTIMIZADA CON ESQUEMA DEFINITIVO
 ClearCollect(
     colSeguimiento;
     Filter(
@@ -348,7 +348,7 @@ ClearCollect(
     )
 );;
 
-// -> Antigua: Coleccion para seguimiento comercial muestra
+/* -> Antigua: Coleccion para seguimiento comercial muestra - YA NO SE USA
 ClearCollect(
     colSeguimiento;
     Filter(
@@ -357,6 +357,7 @@ ClearCollect(
         estado_seguimiento = 1
     )
 );;
+*/
 
 // 4.4. COLECCIONES HISTÓRICAS (TRAZABILIDAD)
 ClearCollect(
@@ -389,7 +390,7 @@ ClearCollect(
     )
 );;
 
-//-> Antigua: coleccion instalaciones 
+/* -> Antigua: coleccion instalaciones - YA NO SE USA, SE CREA EN SECCIÓN 5 PARA ROL SUPPLY
 ClearCollect(
     colInstalaciones;
   Filter(
@@ -397,8 +398,9 @@ ClearCollect(
         estado_maquina = 3
     )
 );;
+*/
 
-//-> Antigua: coleccion retiro 
+/* -> Antigua: coleccion retiro - YA NO SE USA, SE CREA EN SECCIÓN 5 PARA ROL SUPPLY
 ClearCollect(
     colRetiros;
     Filter(
@@ -406,9 +408,9 @@ ClearCollect(
         estado_maquina = 5
     )
 );;
+*/
 
-
-//coleccion leads creados -> Antigua
+/* -> Antigua: coleccion leads creados - YA NO SE USA, SE REEMPLAZA CON colCuentas Y colMisLeads
 ClearCollect(
     colLeads;
     Filter(
@@ -416,6 +418,7 @@ ClearCollect(
         correo_comercial_creador = _correoLoggeado
     )
 );;
+*/
 
 // 5. COLECCIONES ESPECÍFICAS POR ROL - OPTIMIZADAS
 
@@ -426,7 +429,7 @@ If(
         colMisLeads;
         Filter(
             colCuentas;
-            EstadoCuenta.Value = "Lead"
+            EstadoCuenta_Detail = "Lead" || EstadoCuenta = 1
         )
     );;
 
@@ -434,7 +437,7 @@ If(
         colMisProspectos;
         Filter(
             colCuentas;
-            EstadoCuenta.Value = "Prospecto"
+            EstadoCuenta_Detail = "Prospecto" || EstadoCuenta = 2
         )
     );;
 
@@ -442,7 +445,7 @@ If(
         colMisClientes;
         Filter(
             colCuentas;
-            EstadoCuenta.Value = "Cliente"
+            EstadoCuenta_Detail = "Cliente" || EstadoCuenta = 3
         )
     )
 );;
@@ -454,14 +457,14 @@ If(
         colInstalaciones;
         Filter(
             colMaquinasCuenta;
-            EstadoMaquina.Value = "Instalada"
+            Status_maquina_detail = "Instalada" || fk_estadoMaquina = 3
         )
     );
     ClearCollect(
         colRetiros;
         Filter(
             colMaquinasCuenta;
-            EstadoMaquina.Value = "Retirada"
+            Status_maquina_detail = "Retirada" || fk_estadoMaquina = 5
         )
     )
 );;
