@@ -1,0 +1,813 @@
+OnStart: = 
+// 1. Inicializar Spiner de carga inicial de app
+Set(
+    _spinner;
+    true
+);; 
+
+Set(
+    _location;
+    Location.Altitude
+);;
+//2. Recuperacion de informacion de usuario logueado
+
+//2.1. Inicializacion de variable usuario logueado
+Set(
+    _infoUsuarioLoggeado;
+    User()
+);;
+
+//2.2. Informacion de entrada del usuario (Email)
+Set(
+    _correoLoggeado;
+    UsuariosdeOffice365.UserProfileV2(_infoUsuarioLoggeado.EntraObjectId).mail
+);;
+If(
+    IsBlank(_correoLoggeado);
+    Set(
+        _correoLoggeado;
+        _infoUsuarioLoggeado.Email
+    )
+);;
+
+// canal comercial
+Set(
+    _canalComercial;
+    LookUp(
+        tab_canal_por_comercial;
+        comercial_designado.Email = _correoLoggeado //campo nuevo 
+        //correo_comercial = _correoLoggeado -> campo antiguo
+    )
+);;
+
+//NOMBRES USUARIO LOGGEADO 
+Set(
+    _infoUsuarioLoggeado;
+    User()
+);;
+// informacion del usuario
+Set(
+    _nameLoggeado;
+    UsuariosdeOffice365.UserProfileV2(_infoUsuarioLoggeado.EntraObjectId).displayName
+);;
+If(
+    IsBlank(_nameLoggeado);
+    Set(
+        _nameLoggeado;
+        _infoUsuarioLoggeado.FullName
+    )
+);;
+// canal comercial
+Set(
+    _canalComercial;
+    LookUp(
+        tab_canal_por_comercial;
+        comercial_designado.Email = _nameLoggeado
+        //correo_comercial = _correoLoggeado
+    )
+);;
+
+// ROL DE PERSONA LOGGEADA 
+Set(
+    _rolUsuarioLoggeado;
+    LookUp(
+        tab_roles_usuarios;
+        correo = _correoLoggeado
+    ).id_rol
+);;
+
+/*retrieves calendar events for all days in current month view and selected calendar 
+_minDate and _maxDate act as markers to prevent duplicate data collection*/         
+Set(
+    _dateSelected;
+    Today()
+);;
+Set(
+    _firstDayOfMonth;
+    DateAdd(
+        Today();
+        1 - Day(Today());
+        TimeUnit.Days
+    )
+);;
+Set(
+    _firstDayInView;
+    DateAdd(
+        _firstDayOfMonth;
+        -(Weekday(_firstDayOfMonth) - 2 + 1);
+        TimeUnit.Days
+    )
+);;
+Set(
+    _lastDayOfMonth;
+    DateAdd(
+        DateAdd(
+            _firstDayOfMonth;
+            1;
+            TimeUnit.Months
+        );
+        -1;
+        TimeUnit.Days
+    )
+);;
+
+// 3. Declaracion de colecciones
+
+// coleccion estado documentos
+ClearCollect(
+    colEstadosDocumentos;
+    tab_estados_documentos
+);;
+//coleccion documentos clientes
+ClearCollect(
+    colDocumentosCliente;
+    tab_documentos_cliente
+);;
+//coleccion canales 
+ClearCollect(
+    colCanales;
+    tab_canales
+);;
+//coleccion instalaciones
+ClearCollect(
+    colInstalaciones;
+    Filter(
+        tab_maquinas_por_cliente;
+        estado_maquina = 3
+    )
+);;
+//coleccion oportunidad 
+ClearCollect(
+    colOportunidad;
+    tab_oportunidad
+);;
+//coleccion retiro
+ClearCollect(
+    colRetiros;
+    Filter(
+        tab_maquinas_por_cliente;
+        estado_maquina = 5
+    )
+);;
+//coleccion de meses 
+ClearCollect(
+    colMeses;
+    tbl_meses
+);;
+//coleccion de roles de la app
+ClearCollect(
+    colRoles;
+    tab_roles
+);;
+// coleccion nombre de maquinas 
+ClearCollect(
+    colNombreMaquinas;
+    tab_nombres_maquinas_nest_corp
+);;
+// coleccion de los clientes 
+ClearCollect(
+    colClientes;
+    tab_cliente
+);;
+//coleccion estados negociaciones 
+ClearCollect(
+    colEstadoNegociaciones;
+    tab_estados_negociaciones
+);;
+// coleccion de tipo de cliente 
+ClearCollect(
+    colTipoCliente;
+    tab_tipo_cliente
+);;
+//coleccion leads creados
+ClearCollect(
+    colLeads;
+    Filter(
+        tab_leads;
+        correo_comercial_creador = _correoLoggeado
+    )
+);;
+//
+//Coleccion para seguimiento comercial muestra 
+ClearCollect(
+    colSeguimiento;
+    Filter(
+        tab_seguimiento;
+        correo_responsable = _correoLoggeado;
+        estado_seguimiento = 1
+    )
+);;
+//coleccion estado maquinas
+ClearCollect(
+    colEstadosMaquinas;
+    tab_estados_maquinas
+);;
+//coleccion segmento
+ClearCollect(
+    colSegmento;
+    tab_segmentos
+);;
+//col subsegmento 
+ClearCollect(
+    colSubSegmento;
+    tab_subsegmentos
+);;
+//col ciudades
+ClearCollect(
+    colCiudades;
+    tab_ciudades
+);;
+
+// 4. Declaracion de medidas de visualizacion de pantallas y otros componentes visuales
+//alto y ancho pantalla desktop
+Set(
+    _anchoDesktop;
+    1920
+);;
+Set(
+    _altoDesktop;
+    1080
+);;
+//alto y ancho de los titulos de las sesiones internas 
+Set(
+    _anchoTitulos;
+    1540
+);;
+Set(
+    _altoTitulos;
+    65
+);;
+//variables de colores de fondo oscuro
+Set(
+    _r_fondos;
+    170
+);;
+Set(
+    _g_fondos;
+    137
+);;
+Set(
+    _b_fondos;
+    106
+);;
+Set(
+    _a_fondos;
+    1
+);;
+//variable fondo crema
+Set(
+    _r_fondo_crema;
+    243
+);;
+Set(
+    _g_fondo_crema;
+    239
+);;
+Set(
+    _b_fondo_crema;
+    230
+);;
+Set(
+    _a_fondo_crema;
+    1
+);;
+//variables de colores de botones enviar
+Set(
+    _r_boton_enviar;
+    104
+);;
+Set(
+    _g_boton_enviar;
+    110
+);;
+Set(
+    _b_boton_enviar;
+    72
+);;
+Set(
+    _a_boton_enviar;
+    1
+);;
+//variables de colores para boton cancelar
+Set(
+    _r_boton_cancelar;
+    170
+);;
+Set(
+    _g_boton_cancelar;
+    137
+);;
+Set(
+    _b_boton_cancelar;
+    106
+);;
+Set(
+    _a_boton_cancelar;
+    1
+);;
+//variable de colores fondos claros 
+Set(
+    _r_fondo_claro;
+    235
+);;
+Set(
+    _g_fondo_claro;
+    222
+);;
+Set(
+    _b_fondo_claro;
+    184
+);;
+Set(
+    _a_fondo_claro;
+    1
+);;
+//variable color claro de botones new version
+Set(
+    _r_boton_claro_nw;
+    207
+);;
+Set(
+    _g_boton_claro_nw;
+    182
+);;
+Set(
+    _b_boton_claro_nw;
+    157
+);;
+Set(
+    _a_boton_claro_nw;
+    1
+);;
+//Variable botones claros
+Set(
+    _rBotonClaro;
+    186
+);;
+Set(
+    _gBotonClaro;
+    156
+);;
+Set(
+    _bBotonClaro;
+    137
+);;
+Set(
+    _aBotonClaro;
+    1
+);;
+//variable color dark leaf Set(
+Set(
+    _rdarkLeaf;
+    104
+);;
+Set(
+    _gDarkLeaf;
+    110
+);;
+Set(
+    _bDarkLeaf;
+    72
+);;
+Set(
+    _aDarkLeaf;
+    1
+);;
+//variable color etiqueta muy interesado
+Set(
+    _r_MuyInteresado;
+    196
+);;
+Set(
+    _g_MuyInteresado;
+    197
+);;
+Set(
+    _b_MuyInteresado;
+    168
+);;
+Set(
+    _a_MuyInteresado;
+    1
+);;
+//Variable color etiqueta poco interesado
+Set(
+    _r_PocoInteresado;
+    207
+);;
+Set(
+    _g_PocoInteresado;
+    182
+);;
+Set(
+    _b_PocoInteresado;
+    155
+);;
+Set(
+    _a_PocoInteresadoo;
+    1
+);;
+Set(
+    _spinner;
+    false
+);;
+
+// 5. Designacion de pantallas por pantalla mobile
+//Coleccion Menu Mobile
+ClearCollect(
+    col_navegacion_menu_mobile;
+    [
+        {
+            ID: 1;
+            pantalla: pantalla_dashboard_mobile;
+            nombre: "Dashboard";
+            mobile: 0;
+            img: Icono_visitas_cafe
+        };
+        {
+            ID: 2;
+            pantalla: pantalla_actividades_mobile;
+            nombre: "Actividades";
+            mobile: 0;
+            img: Icono_clientes_negociaciones_cafe
+        };
+        {
+            ID: 3;
+            pantalla: pantalla_leads_mobile;
+            nombre: "Leads";
+            mobile: 0;
+            img: Icono_clientes_negociaciones_cafe
+        }
+    ]
+);;
+
+// 6. Designacion de pantallas por roles de usuarios logueados
+/// menu segun el rol
+Switch(
+    _rolUsuarioLoggeado;
+// comercial 
+    1;
+//Coleccion Menu
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 1;
+                pantalla: '2_pantalla_dashboard_desktop';
+                nombre: "Dashboard";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 2;
+                pantalla: '4_pantalla_leads_desktop';
+                nombre: "Leads";
+                mobile: 0;
+                img: Icono_Leads_cafe_3
+            };
+            {
+                ID: 3;
+                pantalla: '5_pantalla_prospectos_desktop';
+                nombre: "Prospectos";
+                mobile: 0;
+                img: Icono_Prospects_cafe
+            };
+            {
+                ID: 4;
+                pantalla: pantalla_clientes_desktop;
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 5;
+                pantalla: '3_pantalla_actividades_desktop';
+                nombre: "Actividades";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            }
+        ]
+    );
+// back office
+    2;
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 5;
+                pantalla: pantalla_clientes_desktop;
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 6;
+                pantalla: pantalla_backoffice_documentos_desktop;
+                nombre: "Documentos";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 7;
+                pantalla: pantalla_backoffice_serial_desktop;
+                nombre: "Serial";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+        ]
+    );
+// finanzas
+    3;
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 5;
+                pantalla: pantalla_clientes_desktop;
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 8;
+                pantalla: pantalla_finanzas_desktop;
+                nombre: "Finanzas";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            }
+        ]
+    );
+    4;
+// supply
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 9;
+                pantalla: pantalla_intalaciones_desktop;
+                nombre: "Instalaciones";
+                mobile: 0;
+                img: Icono_ventas_cafe
+            };
+            {
+                ID: 10;
+                pantalla: pantalla_retiros_desktop;
+                nombre: "Retiros";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            };
+            {
+                ID: 11;
+                pantalla: pantalla_visitas_desktop;
+                nombre: "Visitas";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            }
+        ]
+    );
+    5;
+//lider comercial 
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 1;
+                pantalla: '2_pantalla_dashboard_desktop';
+                nombre: "Dashboard";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 2;
+                pantalla: '3_pantalla_actividades_desktop';
+                nombre: "Actividades";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 3;
+                pantalla: '4_pantalla_leads_desktop';
+                nombre: "Leads";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 4;
+                pantalla: '5_pantalla_prospectos_desktop';
+                nombre: "Prospectos";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 5;
+                pantalla: pantalla_clientes_desktop;
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 6;
+                pantalla: pantalla_backoffice_documentos_desktop;
+                nombre: "Documentos";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 7;
+                pantalla: pantalla_backoffice_serial_desktop;
+                nombre: "Serial";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 8;
+                pantalla: pantalla_finanzas_desktop;
+                nombre: "Finanzas";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 11;
+                pantalla: pantalla_ventas_desktop;
+                nombre: "Ventas";
+                mobile: 0;
+                img: Icono_roles
+            };
+            {
+                ID: 12;
+                pantalla: pantalla_indicadores_desktop;
+                nombre: "indicadores";
+                mobile: 0;
+                img: Icono_documentos_cafe
+            };
+            {
+                ID: 9;
+                pantalla: pantalla_intalaciones_desktop;
+                nombre: "Instalaciones";
+                mobile: 0;
+                img: Icono_ventas_cafe
+            };
+            {
+                ID: 10;
+                pantalla: pantalla_retiros_desktop;
+                nombre: "Retiros";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            }
+        ]
+    );
+    6;
+//Coleccion Menu
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 1;
+                pantalla: '2_pantalla_dashboard_desktop';
+                nombre: "Dashboard";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 2;
+                pantalla: '4_pantalla_leads_desktop';
+                nombre: "Leads";
+                mobile: 0;
+                img: Icono_Leads_cafe_3
+            };
+            {
+                ID: 3;
+                pantalla: '5_pantalla_prospectos_desktop';
+                nombre: "Prospectos";
+                mobile: 0;
+                img: Icono_Prospects_cafe
+            };
+            {
+                ID: 4;
+                pantalla: pantalla_clientes_desktop;
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 5;
+                pantalla: '3_pantalla_actividades_desktop';
+                nombre: "Actividades";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            };
+            {
+                ID: 6;
+                pantalla: pantalla_backoffice_documentos_desktop;
+                nombre: "Documentos";
+                mobile: 0;
+                img: Icono_documentos_cafe
+            };
+            {
+                ID: 7;
+                pantalla: pantalla_backoffice_serial_desktop;
+                nombre: "Serial";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 8;
+                pantalla: pantalla_finanzas_desktop;
+                nombre: "Finanzas";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 9;
+                pantalla: pantalla_intalaciones_desktop;
+                nombre: "Instalaciones";
+                mobile: 0;
+                img: Icono_ventas_cafe
+            };
+            {
+                ID: 10;
+                pantalla: pantalla_retiros_desktop;
+                nombre: "Retiros";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            };
+            {
+                ID: 11;
+                pantalla: pantalla_ventas_desktop;
+                nombre: "Ventas";
+                mobile: 0;
+                img: Icono_roles
+            };
+            {
+                ID: 12;
+                pantalla: pantalla_indicadores_desktop;
+                nombre: "indicadores";
+                mobile: 0;
+                img: Icono_documentos_cafe
+            }
+        ]
+    )
+);;
+
+
+//7. Colecciones por validar 
+ClearCollect(
+    colIndicadore;
+    AddColumns(
+        'meta data';
+        valor;
+        1
+    )
+);;
+ClearCollect(
+    colValoresReales;
+    'tabla real'
+);;
+ClearCollect(
+    colIndicadore2;
+    colIndicadore
+);;
+ForAll(
+    colIndicadore2 As DB;
+    Patch(
+        colIndicadore;
+        LookUp(
+            colIndicadore;
+            ID = DB.ID
+        );
+        {
+            valor: LookUp(
+                colValoresReales;
+                fecha >= DB.fecha && fecha <= DB.fecha
+            ).'valor real'
+        }
+    )
+);;
+//col
+ClearCollect(
+    colCostoAnual;
+    {
+        real: 2504230;
+        meta: 5543928
+    }
+);;
+//col
+ClearCollect(
+    colCapsulasAnual;
+    {
+        real: 239;
+        meta: 1300
+    }
+);;
+//col
+ClearCollect(
+    colMaquinaAnual;
+    {
+        real: 50;
+        meta: 60
+    }
+);;
+Set(
+    _spinner;
+    false
+);;
