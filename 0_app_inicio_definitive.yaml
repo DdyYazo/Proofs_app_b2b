@@ -1,0 +1,1046 @@
+﻿OnStart: = 
+// 1. Inicializar Spinner de carga inicial de app
+Set(
+    _spinner;
+    true
+);;
+// 1.1. Variables de posicionamiento dinámico por roles
+Set(
+    _location;
+    Location.Altitude
+);;
+// 2. RECUPERACIÓN DE INFORMACIÓN DE USUARIO LOGUEADO
+// 2.1. Inicialización de variable usuario logueado
+Set(
+    _infoUsuarioLoggeado;
+    User()
+);;
+//2.2. Informacion de entrada del usuario (Email)
+// IMPORTANTE: Se usa UserProfileV2.mail como correo principal porque es el correo
+// primario configurado en Office 365, que puede ser diferente al UPN (_infoUsuarioLoggeado.Email)
+Set(
+    _correoLoggeado;
+    UsuariosdeOffice365.UserProfileV2(_infoUsuarioLoggeado.EntraObjectId).mail
+);;
+
+// 2.2.1. Validación de correo obtenido
+// Si UserProfileV2.mail está vacío, usar el UPN como fallback
+If(
+    IsBlank(_correoLoggeado);
+    Set(
+        _correoLoggeado;
+        _infoUsuarioLoggeado.Email
+    )
+);;
+
+// 2.2.2. Normalización del correo para comparaciones
+// Se mantiene el correo original en _correoLoggeado (para guardar en listas)
+// Se crea _correoLoggeadoNormalizado para comparaciones case-insensitive y cross-domain
+Set(
+    _correoLoggeadoNormalizado;
+    _correoLoggeado
+);;
+
+// 2.3. Extracción de dominio del usuario
+Set(
+    _dominioUsuario;
+    Right(
+        _correoLoggeado;
+        Len(_correoLoggeado) - Find(
+            "@";
+            _correoLoggeado
+        )
+    )
+);;
+
+// 2.4. Canal Comercial del usuario "usando lookup nuevo" (si aplica)
+// Se busca usando correo normalizado para match case-insensitive
+Set(
+    _canalComercial;
+    LookUp(
+        tab_canal_por_comercial;
+        correo_comercial = _correoLoggeadoNormalizado
+    )
+);;
+
+// 2.4. Nombres de usuario Loggeado - Información completa del perfil
+Set(
+    _nameLoggeado;
+    UsuariosdeOffice365.UserProfileV2(_infoUsuarioLoggeado.EntraObjectId).displayName
+);;
+
+If(
+    IsBlank(_nameLoggeado);
+    Set(
+        _nameLoggeado;
+        _infoUsuarioLoggeado.FullName
+    )
+);;
+
+// 2.4.1. Variable de nombre completo para almacenar en listas
+// Esta variable se usará para los campos *_Nombre en las listas de SharePoint
+// Facilita la reportería y filtrado por nombre sin necesidad de lookups
+Set(
+    _nombreCompletoLoggeado;
+    _nameLoggeado
+);;
+
+// 2.5. Rol de usuario Loggeado "utilizando id_rol del esquema definitivo"
+Set(
+    _rolUsuarioInfo;
+    LookUp(
+        tab_roles_usuarios;
+        correo = _correoLoggeadoNormalizado
+    )
+);;
+
+Set(
+    _rolUsuarioLoggeado;
+    If(
+        !IsBlank(_rolUsuarioInfo);
+        _rolUsuarioInfo.id_rol;
+        1  // Default: Comercial si no se encuentra rol
+    )
+);;
+/* canal comercial
+Set(
+    _canalComercial;
+    LookUp(
+        tab_canal_por_comercial;
+        comercial_designado.Email = _nameLoggeado
+        //correo_comercial = _correoLoggeado
+    )
+);;*/
+
+/*/ ROL DE PERSONA LOGGEADA 
+Set(
+    _rolUsuarioLoggeado;
+    LookUp(
+        tab_roles_usuarios;
+        //correo = _correoLoggeado -> campo anterior
+        usuario.Email = _correoLoggeado // campo nuevo
+    ).id_rol
+);;
+*/
+
+// Variables adicionales de usuario para mejor trazabilidad
+Set(
+    _usuarioCompleto;
+    {
+        Email: _correoLoggeado;
+        NombreCompleto: _nameLoggeado;
+        RolID: _rolUsuarioLoggeado;
+        RolNombre: If(!IsBlank(_rolUsuarioInfo); LookUp(tab_roles; pk_id_rol = _rolUsuarioInfo.id_rol).rol;"Comercial");
+        CanalAsignado: If(!IsBlank(_canalComercial); _canalComercial.canal_relacionado.Value; "No Asignado");
+        PerfilOfice365: _infoUsuarioLoggeado
+    }
+);;
+
+
+
+// 3. INICIALIZACIÓN DE FECHAS Y CALENDARIO
+
+/*retrieves calendar events for all days in current month view and selected calendar 
+_minDate and _maxDate act as markers to prevent duplicate data collection*/         
+Set(
+    _dateSelected;
+    Today()
+);;
+Set(
+    _firstDayOfMonth;
+    DateAdd(
+        Today();
+        1 - Day(Today());
+        TimeUnit.Days
+    )
+);;
+Set(
+    _firstDayInView;
+    DateAdd(
+        _firstDayOfMonth;
+        -(Weekday(_firstDayOfMonth) - 2 + 1);
+        TimeUnit.Days
+    )
+);;
+Set(
+    _lastDayOfMonth;
+    DateAdd(
+        DateAdd(
+            _firstDayOfMonth;
+            1;
+            TimeUnit.Months
+        );
+        -1;
+        TimeUnit.Days
+    )
+);;
+// 4. COLECCIONES MAESTRAS - OPTIMIZADAS CON NUEVO MODELO DE LISTAS CREADAS
+
+// 4.1. COLECCIONES INDEPENDIENTES (CATÁLOGO - INICIAL)
+
+//coleccion de roles de la app
+ClearCollect(
+    colRoles;
+    tab_roles
+);;
+
+//coleccion canales 
+ClearCollect(
+    colCanales;
+    tab_canales
+);;
+
+//coleccion segmento
+ClearCollect(
+    colSegmento;
+    tab_segmentos
+);;
+
+//col subsegmento 
+ClearCollect(
+    colSubSegmento;
+    tab_subsegmentos
+);;
+
+
+//col ciudades
+ClearCollect(
+    colCiudades;
+    tab_ciudades
+);;
+
+//coleccion documentos clientes
+ClearCollect(
+    colDocumentosCliente;
+    tab_documentos_cliente
+);;
+
+// coleccion nombre de maquinas 
+ClearCollect(
+    colNombreMaquinas;
+    tab_nombres_maquinas_nesp_corp
+);;
+
+//coleccion oportunidad 
+ClearCollect(
+    colOportunidad;
+    tab_oportunidad
+);;
+
+//coleccion estados negociaciones 
+ClearCollect(
+    colEstadoNegociaciones;
+    tab_estados_negociaciones
+);;
+
+//coleccion estado maquinas
+ClearCollect(
+    colEstadosMaquinas;
+    tab_estados_maquinas
+);;
+
+// coleccion estado documentos
+ClearCollect(
+    colEstadosDocumentos;
+    tab_estados_documentos
+);;
+
+// COLECCIONES INNECESARIOAS
+/*
+// coleccion de los clientes 
+ClearCollect(
+    colClientes;
+    tab_cliente
+);;
+
+
+// coleccion de tipo de cliente 
+ClearCollect(
+    colTipoCliente;
+    tab_tipo_cliente
+);;
+
+//coleccion de meses 
+ClearCollect(
+    colMeses;
+    tbl_meses
+);;
+
+*/
+
+// 4.2. COLECCIONES DEPENDIENTES (CATÁLOGO - INICIAL)
+
+
+ClearCollect(
+    colRolesUsuarios;
+    tab_roles_usuarios
+);;
+
+ClearCollect(
+    colCanalPorComercial;
+    tab_canal_por_comercial
+);;
+
+// 4.3. COLECCIONES PRINCIPALES (CON TRAZABILIDAD - BASE)
+
+// Colección de cuentas unificada (reemplaza tab_leads + tab_cliente)
+ClearCollect(
+    colCuentas;
+    If(
+        _rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6;
+        // Líderes comerciales o admin ven todas (delegable)
+        tab_cuentas;
+        // Comerciales ven solo sus cuentas - comparación exacta con correo normalizado
+        Filter(
+            tab_cuentas;
+            ComercialAsignado = _correoLoggeado ||
+            ComercialAsignado = _correoLoggeadoNormalizado ||
+            ComercialAsignado = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+// Colección de oportunidades por cuenta
+ClearCollect(
+    colOportunidadesCuenta;
+    If(
+        _rolUsuarioLoggeado = 5 || _rolUsuarioLoggeado = 6;
+        // Líderes comerciales o admin ven todas (delegable)
+        tab_oportunidades_cuenta;
+        // Comerciales ven solo las suyas
+        Filter(
+            tab_oportunidades_cuenta;
+            ComercialIdentifica = _correoLoggeado ||
+            ComercialIdentifica = _correoLoggeadoNormalizado ||
+            ComercialIdentifica = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+
+// Colección de documentos por cuenta
+ClearCollect(
+    colDocumentosCuenta;
+    If(
+        _rolUsuarioLoggeado >= 2;
+        // Back office y superiores ven todos (delegable)
+        tab_documentos_porCuenta;
+        // Comerciales ven solo los que cargaron
+        Filter(
+            tab_documentos_porCuenta;
+            UsuarioCarga = _correoLoggeado ||
+            UsuarioCarga = _correoLoggeadoNormalizado ||
+            UsuarioCarga = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+// Colección de máquinas por cuenta
+ClearCollect(
+    colMaquinasCuenta;
+    If(
+        _rolUsuarioLoggeado >= 3;
+        // Finanzas y superiores ven todas (delegable)
+        tab_maquinas_porCuenta;
+        // Comerciales ven solo las que solicitaron
+        Filter(
+            tab_maquinas_porCuenta;
+            ComercialSolicitante = _correoLoggeado ||
+            ComercialSolicitante = _correoLoggeadoNormalizado ||
+            ComercialSolicitante = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+// Colección de seguimiento por cuenta - OPTIMIZADA
+ClearCollect(
+    colSeguimiento;
+    If(
+        _rolUsuarioLoggeado = 1 || _rolUsuarioLoggeado >= 5;
+        // Comercial y líderes comerciales ven todos (delegable si no hay filtro adicional)
+        tab_seguimiento_porCuenta;
+        // Otros roles: ven solo sus seguimientos
+        Filter(
+            tab_seguimiento_porCuenta;
+            ComercialResponsable = _correoLoggeado ||
+            ComercialResponsable = _correoLoggeadoNormalizado ||
+            ComercialResponsable = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+// Colección de visitas por cuenta
+ClearCollect(
+    colVisitasCuenta;
+    If(
+        _rolUsuarioLoggeado = 4 || _rolUsuarioLoggeado >= 5;
+        // Supply y líderes ven todas 
+        tab_visitas_porCuenta;
+        // Otros roles: ven solo sus visitas
+        Filter(
+            tab_visitas_porCuenta;
+            UsuarioResponsable = _correoLoggeado ||
+            UsuarioResponsable = _correoLoggeadoNormalizado ||
+            UsuarioResponsable = _correoLoggeadoNormalizado
+        )
+    )
+);;
+/*
+// -> Antigua: Coleccion para seguimiento comercial muestra
+ClearCollect(
+    colSeguimiento;
+    Filter(
+        tab_seguimiento;
+        correo_responsable = _correoLoggeado;
+        estado_seguimiento = 1
+    )
+);;*/
+
+// 4.4. COLECCIONES HISTÓRICAS (TRAZABILIDAD)
+ClearCollect(
+    colHistorialCuentas;
+    If(
+        _rolUsuarioLoggeado >= 5;
+        // Líderes comerciales y admin ven todo (delegable)
+        tab_hist_cambioEstd_cuenta;
+        // Otros roles: ven solo su historial
+        Filter(
+            tab_hist_cambioEstd_cuenta;
+            UsuarioResponsable = _correoLoggeado ||
+            UsuarioResponsable = _correoLoggeadoNormalizado ||
+            UsuarioResponsable = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+ClearCollect(
+    colHistorialMaquinas;
+    If(
+        _rolUsuarioLoggeado >= 4;
+        // Supply y superiores ven todo (delegable)
+        tab_hist_cambioEstd_maqu;
+        // Otros roles: ven solo su historial
+        Filter(
+            tab_hist_cambioEstd_maqu;
+            UsuarioResponsable = _correoLoggeado ||
+            UsuarioResponsable = _correoLoggeadoNormalizado ||
+            UsuarioResponsable = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+ClearCollect(
+    colHistorialComentarios;
+    If(
+        _rolUsuarioLoggeado >= 2;
+        // Back office y superiores ven todo (delegable)
+        tab_hist_comentDocumentos;
+        // Comerciales: ven solo sus comentarios
+        Filter(
+            tab_hist_comentDocumentos;
+            UsuarioComenta = _correoLoggeado ||
+            UsuarioComenta = _correoLoggeadoNormalizado ||
+            UsuarioComenta = _correoLoggeadoNormalizado
+        )
+    )
+);;
+
+/*//-> Antigua: coleccion instalaciones 
+ClearCollect(
+    colInstalaciones;
+  Filter(
+        tab_maquinas_por_cliente;
+        estado_maquina = 3
+    )
+);;*/
+
+/*//-> Antigua: coleccion retiro 
+ClearCollect(
+    colRetiros;
+    Filter(
+        tab_maquinas_por_cliente;
+        estado_maquina = 5
+    )
+);;*/
+
+/*
+//coleccion leads creados -> Antigua
+ClearCollect(
+    colLeads;
+    Filter(
+        tab_leads;
+        correo_comercial_creador = _correoLoggeado
+    )
+);;
+*/
+
+// 5. COLECCIONES ESPECÍFICAS POR ROL - OPTIMIZADAS
+
+// Para comerciales: solo sus leads/prospectos/clientes
+If(
+    _rolUsuarioLoggeado = 1;
+    ClearCollect(
+        colMisLeads;
+        Filter(
+            colCuentas;
+            EstadoCuenta_Detail = "Lead" || EstadoCuenta = 1
+        )
+    );;
+
+    ClearCollect(
+        colMisProspectos;
+        Filter(
+            colCuentas;
+            EstadoCuenta_Detail = "Prospecto" || EstadoCuenta = 2
+        )
+    );;
+
+    ClearCollect(
+        colMisClientes;
+        Filter(
+            colCuentas;
+            EstadoCuenta_Detail = "Cliente" || EstadoCuenta = 3
+        )
+    )
+);;
+
+// Para Supply: instalaciones y retiros
+If(
+    _rolUsuarioLoggeado = 4;
+    ClearCollect(
+        colInstalaciones;
+        Filter(
+            colMaquinasCuenta;
+            fk_estadoMaquina = 3
+        )
+    );
+    ClearCollect(
+        colRetiros;
+        Filter(
+            colMaquinasCuenta;
+            fk_estadoMaquina = 5
+        )
+    )
+);;
+
+
+// 6. VARIABLES DE VISUALIZACIÓN - DESKTOP
+
+Set(_anchoDesktop; 1920);;
+Set(_altoDesktop; 1080);;
+Set(_anchoTitulos; 1540);;
+Set(_altoTitulos; 65);;
+
+// Variables de posicionamiento dinámico
+//Set(_posicionXFiltros; If(_rolUsuarioLoggeado >= 5; 30; 406));;
+
+
+//variables de colores de fondo oscuro
+Set(_r_fondos; 170);; Set(_g_fondos; 137);; Set(_b_fondos; 106);; Set(_a_fondos; 1);;
+
+//variable fondo crema
+Set(_r_fondo_crema; 243);; Set(_g_fondo_crema; 239);; Set(_b_fondo_crema; 230);; Set(_a_fondo_crema; 1);;
+
+//variables de colores de botones enviar
+Set(_r_boton_enviar; 104);; Set(_g_boton_enviar; 110);; Set(_b_boton_enviar; 72);; Set(_a_boton_enviar; 1);;
+
+//variables de colores para boton cancelar
+Set(_r_boton_cancelar; 170);; Set(_g_boton_cancelar; 137);; Set(_b_boton_cancelar; 106);; Set(_a_boton_cancelar; 1);;
+
+//variable de colores fondos claros 
+Set(_r_fondo_claro; 235);; Set(_g_fondo_claro; 222);; Set(_b_fondo_claro; 184);; Set(_a_fondo_claro; 1);;
+
+//variable color claro de botones new version
+Set(_r_boton_claro_nw; 207);; Set(_g_boton_claro_nw; 182);; Set(_b_boton_claro_nw; 157);; Set(_a_boton_claro_nw; 1);;
+
+//Variable botones claros
+Set(_rBotonClaro; 186);; Set(_gBotonClaro; 156);; Set(_bBotonClaro; 137);; Set(_aBotonClaro; 1);;
+
+//variable color dark leaf Set(
+Set(_rdarkLeaf; 104);; Set(_gDarkLeaf; 110);; Set(_bDarkLeaf; 72);; Set(_aDarkLeaf; 1);;
+
+//variable color etiqueta muy interesado
+Set(_r_MuyInteresado; 196);; Set(_g_MuyInteresado; 197);; Set(_b_MuyInteresado; 168);; Set(_a_MuyInteresado; 1);;
+
+//Variable color etiqueta poco interesado
+Set(_r_PocoInteresado; 207);; Set(_g_PocoInteresado; 182);; Set(_b_PocoInteresado; 155);; Set(_a_PocoInteresadoo; 1);;
+
+Set(
+    _spinner;
+    false
+);;
+
+// 7. MENÚ DE NAVEGACIÓN MOBILE - MEJORADO
+
+ClearCollect(
+    col_navegacion_menu_mobile;
+    [
+        {
+            ID: 1;
+            pantalla: pantalla_dashboard_mobile;
+            nombre: "Dashboard";
+            mobile: 0;
+            img: Icono_visitas_cafe
+        };
+        {
+            ID: 2;
+            pantalla: pantalla_actividades_mobile;
+            nombre: "Actividades";
+            mobile: 0;
+            img: Icono_clientes_negociaciones_cafe
+        };
+        {
+            ID: 3;
+            pantalla: pantalla_leads_mobile;
+            nombre: "Leads";
+            mobile: 0;
+            img: Icono_clientes_negociaciones_cafe
+        }
+    ]
+);;
+
+
+// 8. MENÚ DE NAVEGACIÓN POR ROLES - OPTIMIZADO
+
+Switch(
+    _rolUsuarioLoggeado;
+// ROL 1: COMERCIAL
+    1;
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 1;
+                pantalla: '2_pantalla_dashboard_desktop';
+                nombre: "Dashboard";
+                mobile: 0;
+                img: Icono_visitas_cafe;
+                descripcion: "Panel principal comercial"
+            };
+            {
+                ID: 2;
+                pantalla: '4_pantalla_leads_desktop';
+                nombre: "Leads";
+                mobile: 0;
+                img: Icono_Leads_cafe_3;
+                descripcion: "Gestión de leads"
+            };
+            {
+                ID: 3;
+                pantalla: '5_pantalla_prospectos_desktop';
+                nombre: "Prospectos";
+                mobile: 0;
+                img: Icono_Prospects_cafe;
+                descripcion: "Seguimiento de prospectos"
+            };
+            {
+                ID: 4;
+                pantalla: '6_pantalla_clientes_desktop';
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Base de clientes activos"
+            };
+            {
+                ID: 5;
+                pantalla: '3_pantalla_actividades_desktop';
+                nombre: "Actividades";
+                mobile: 0;
+                img: Icono_reportes_cafe;
+                descripcion: "Seguimiento de actividades"
+            }
+        ]
+    );
+
+    // ROL 2: BACK OFFICE
+    2;
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 5;
+                pantalla: '6_pantalla_clientes_desktop';
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Validación de clientes"
+            };
+            {
+                ID: 6;
+                pantalla: '7_pantalla_backoffice_documentos_desktop';
+                nombre: "Documentos";
+                mobile: 0;
+                img: Icono_visitas_cafe;
+                descripcion: "Aprobación de documentos"
+            };
+            {
+                ID: 7;
+                pantalla: '8_pantalla_backoffice_serial_desktop';
+                nombre: "Serial";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripción: "Asignación de seriales"
+            };
+        ]
+    );
+
+    // ROL 3: FINANZAS
+    3;
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 5;
+                pantalla: '6_pantalla_clientes_desktop';
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Evaluación financiera"
+            };
+            {
+                ID: 8;
+                pantalla: '9_pantalla_finanzas_desktop';
+                nombre: "Finanzas";
+                mobile: 0;
+                img: Icono_visitas_cafe;
+                descripcion: "Aprobación financiera"
+            }
+        ]
+    );
+    4;
+
+    // ROL 4: SUPPLY
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 9;
+                pantalla: pantalla_intalaciones_desktop;
+                nombre: "Instalaciones";
+                mobile: 0;
+                img: Icono_ventas_cafe;
+                descripcion: "Gestión de instalaciones"
+            };
+            {
+                ID: 10;
+                pantalla: pantalla_retiros_desktop;
+                nombre: "Retiros";
+                mobile: 0;
+                img: Icono_reportes_cafe;
+                descripcion: "Programación de retiros"
+            };
+            {
+                ID: 11;
+                pantalla: pantalla_visitas_desktop;
+                nombre: "Visitas";
+                mobile: 0;
+                img: Icono_reportes_cafe;
+                descripcion: "Visitas técnicas"
+            }
+        ]
+    );
+    5;
+
+    // ROL 5: LÍDER COMERCIAL
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 1;
+                pantalla: '2_pantalla_dashboard_desktop';
+                nombre: "Dashboard";
+                mobile: 0;
+                img: Icono_visitas_cafe;
+                descripcion: "Dashboard ejecutivo"
+            };
+            {
+                ID: 2;
+                pantalla: '3_pantalla_actividades_desktop';
+                nombre: "Actividades";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Supervisión de actividades"
+            };
+            {
+                ID: 3;
+                pantalla: '4_pantalla_leads_desktop';
+                nombre: "Leads";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Supervisión de leads"
+            };
+            {
+                ID: 4;
+                pantalla: '5_pantalla_prospectos_desktop';
+                nombre: "Prospectos";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Control de prospectos"
+            };
+            {
+                ID: 5;
+                pantalla: '6_pantalla_clientes_desktop';
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Base completa de clientes"
+            };
+            {
+                ID: 6;
+                pantalla: '7_pantalla_backoffice_documentos_desktop';
+                nombre: "Documentos";
+                mobile: 0;
+                img: Icono_visitas_cafe;
+                descripcion: "Revisión documental"
+            };
+            {
+                ID: 7;
+                pantalla: '8_pantalla_backoffice_serial_desktop';
+                nombre: "Serial";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe;
+                descripcion: "Control de seriales"
+            };
+            {
+                ID: 8;
+                pantalla: '9_pantalla_finanzas_desktop';
+                nombre: "Finanzas";
+                mobile: 0;
+                img: Icono_visitas_cafe;
+                descripcion: "Supervisión financiera"
+            };
+                    {
+                ID: 9;
+                pantalla: pantalla_intalaciones_desktop;
+                nombre: "Instalaciones";
+                mobile: 0;
+                img: Icono_ventas_cafe;
+                descripcion: "Control de instalaciones"
+            };
+            {
+                ID: 10;
+                pantalla: pantalla_retiros_desktop;
+                nombre: "Retiros";
+                mobile: 0;
+                img: Icono_reportes_cafe;
+                descripcion: "Control de retiros"
+            };
+            {
+                ID: 11;
+                pantalla: pantalla_ventas_desktop;
+                nombre: "Ventas";
+                mobile: 0;
+                img: Icono_roles;
+                descripcion: "Análisis de ventas"
+            };
+            {
+                ID: 12;
+                pantalla: pantalla_indicadores_desktop;
+                nombre: "indicadores";
+                mobile: 0;
+                img: Icono_documentos_cafe;
+                descripcion: "KPIs y métricas"
+            }
+        ]
+    );
+    6;
+
+    // ROL 6: SUPER ADMINISTRADOR
+    ClearCollect(
+        col_navegacion_menu;
+        [
+            {
+                ID: 1;
+                pantalla: '2_pantalla_dashboard_desktop';
+                nombre: "Dashboard";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 2;
+                pantalla: '4_pantalla_leads_desktop';
+                nombre: "Leads";
+                mobile: 0;
+                img: Icono_Leads_cafe_3
+            };
+            {
+                ID: 3;
+                pantalla: '5_pantalla_prospectos_desktop';
+                nombre: "Prospectos";
+                mobile: 0;
+                img: Icono_Prospects_cafe
+            };
+            {
+                ID: 4;
+                pantalla: '6_pantalla_clientes_desktop';
+                nombre: "Clientes";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 5;
+                pantalla: '3_pantalla_actividades_desktop';
+                nombre: "Actividades";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            };
+            {
+                ID: 6;
+                pantalla: '7_pantalla_backoffice_documentos_desktop';
+                nombre: "Documentos";
+                mobile: 0;
+                img: Icono_documentos_cafe
+            };
+            {
+                ID: 7;
+                pantalla: '8_pantalla_backoffice_serial_desktop';
+                nombre: "Serial";
+                mobile: 0;
+                img: Icono_clientes_negociaciones_cafe
+            };
+            {
+                ID: 8;
+                pantalla: '9_pantalla_finanzas_desktop';
+                nombre: "Finanzas";
+                mobile: 0;
+                img: Icono_visitas_cafe
+            };
+            {
+                ID: 9;
+                pantalla: pantalla_intalaciones_desktop;
+                nombre: "Instalaciones";
+                mobile: 0;
+                img: Icono_ventas_cafe
+            };
+            {
+                ID: 10;
+                pantalla: pantalla_retiros_desktop;
+                nombre: "Retiros";
+                mobile: 0;
+                img: Icono_reportes_cafe
+            };
+            {
+                ID: 11;
+                pantalla: pantalla_ventas_desktop;
+                nombre: "Ventas";
+                mobile: 0;
+                img: Icono_roles
+            };
+            {
+                ID: 12;
+                pantalla: pantalla_indicadores_desktop;
+                nombre: "indicadores";
+                mobile: 0;
+                img: Icono_documentos_cafe
+            }
+        ]
+    )
+);;
+
+// -> Antiguas: 9. COLECCIONES DE INDICADORES - OPTIMIZADAS
+
+ClearCollect(
+    colIndicadore;
+    AddColumns(
+        'meta data';
+        valor;
+        1
+    )
+);;
+ClearCollect(
+    colValoresReales;
+    'tabla real'
+);;
+ClearCollect(
+    colIndicadore2;
+    colIndicadore
+);;
+ForAll(
+    colIndicadore2 As DB;
+    Patch(
+        colIndicadore;
+        LookUp(
+            colIndicadore;
+            ID = DB.ID
+        );
+        {
+            valor: LookUp(
+                colValoresReales;
+                fecha >= DB.fecha && fecha <= DB.fecha
+            ).'valor real'
+        }
+    )
+);;
+//col
+ClearCollect(
+    colCostoAnual;
+    {
+        real: 2504230;
+        meta: 5543928
+    }
+);;
+//col
+ClearCollect(
+    colCapsulasAnual;
+    {
+        real: 239;
+        meta: 1300
+    }
+);;
+//col
+ClearCollect(
+    colMaquinaAnual;
+    {
+        real: 50;
+        meta: 60
+    }
+);;
+
+// 10. VARIABLES ADICIONALES PARA NUEVA FUNCIONALIDAD
+
+// Variables para validación de fechas
+Set(_fechaActivaSseleccionada; Blank());;
+
+// Variables de control de pantallas
+Set(_indicadoresVista; true);;
+Set(_mesVista; true);;
+Set(_semestreVista; false);;
+Set(_anioVista; false);;
+Set(_dinero; true);;
+Set(_capsula; false);;
+Set(_maquina; false);;
+Set(_crearAgenda; false);;
+// Variables de control de pantallas
+
+// Variables de control de actividades
+Set(_itemSeguimientoSeleccionado; Blank());;
+Set(_idLeadSeleccionado; Blank());;
+//Set(_cuentaCreada; Blank());;
+Set(_seguimientoNuevo; 1);;
+
+// Variables para trazabilidad E2E
+Set(_ultimoCambioEstado; Now());;
+Set(_historialNavegacion; []);;
+
+// Finalizar carga
+Set(
+    _spinner;
+    false
+);;
+
+// Mensaje de bienvenida según rol
+Notify(
+    "¡Bienvenido " & _infoUsuarioLoggeado.FullName & "! " & 
+    Switch(
+        _rolUsuarioLoggeado;
+        1; "Rol: Comercial - Gestiona tus leads y prospectos";
+        2; "Rol: Back Office - Procesa documentos y asigna seriales"; 
+        3; "Rol: Finanzas - Aprueba evaluaciones financieras";
+        4; "Rol: Supply - Gestiona instalaciones y visitas";
+        5; "Rol: Líder Comercial - Supervisa el equipo comercial";
+        6; "Rol: Super Admin - Acceso completo al sistema";
+        "Rol no reconocido - Contacta al administrador"
+    );
+    NotificationType.Success;
+    8000
+)
