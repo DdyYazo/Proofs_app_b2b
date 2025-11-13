@@ -1,0 +1,3075 @@
+Screens:
+  back_office_documentos_datos:
+    Properties:
+      Fill: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+      Height: =_altoDesktop
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Set(_seguimientoVista,false);
+        Set(_oportunidadVista,false);
+        Set(_maquinasVista,false);
+        Set(_crearAgenda,false);
+        Set(_datosVista,true)
+      Width: =_anchoDesktop
+    Children:
+      - Container2_50:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(243, 239, 230, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            Height: =930
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Visible: =_indicadoresVista
+            Width: =1510
+            X: =385
+            Y: =125
+          Children:
+            - Image16_7:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =170
+                  Image: ='Rectangle 30'
+                  Visible: =_datosVista
+                  Width: =1330
+                  X: =84
+                  Y: =110
+            - Button2_400:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(104, 110, 72, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="ACTUALIZAR"
+                  Visible: =_oportunidadVista
+                  Width: =300
+                  X: =602
+                  Y: =597
+            - Image16_6:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =170
+                  Image: ='Rectangle 30'
+                  Visible: =_datosVista
+                  Width: =1330
+                  X: =84
+                  Y: =112
+            - Container6_23:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  BorderStyle: =BorderStyle.None
+                  DropShadow: =DropShadow.Semibold
+                  Height: =50
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: =_datosVista
+                  Width: =1250
+                  X: =134
+                  Y: =106
+                Children:
+                  - Image15_9:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =50
+                        Image: ='Rounded rectangle'
+                        ImagePosition: =ImagePosition.Fill
+                        Width: =1250
+                  - Button2_577:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderThickness: =1
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =Color.Transparent
+                        Font: =Font.Lato
+                        FontWeight: =FontWeight.Normal
+                        Height: =50
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(0, 0, 0, 1)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: =
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Color.Black
+                        PressedFill: =ColorFade(Self.Color, 1)
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Size: =22
+                        Text: =_itemSeleccionadoProspecto1.razon_social_prospecto
+                        Width: =1250
+            - Container2_12:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =112
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: =_maquinasVista
+                  Width: =1358
+                  X: =69
+                  Y: =138
+                Children:
+                  - TextInputCanvas1_38:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =24
+                        Height: =62
+                        Value: ="¿El cliente solicita línea de crédito?:"
+                        Width: =488
+                        X: =51
+                        Y: =38
+                  - TextInputCanvas1_39:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(189, 49, 51, 0)
+                        FontSize: =24
+                        Height: =62
+                        Value: ="Sí"
+                        Visible: =_itemSeleccionadoProspecto1.cliente_con_credito = 1
+                        Width: =50
+                        X: =521
+                        Y: =38
+                  - Radio1_4:
+                      Control: Classic/Radio@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(207, 182, 157, 1)
+                        BorderStyle: =BorderStyle.None
+                        Color: =RGBA(255, 255, 255, 1)
+                        Default: =If(_necesitaCredito =1,true,false)
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Open Sans'
+                        Height: =70
+                        HoverColor: =Color.White
+                        Items: =[1]
+                        Items.Value: =Value
+                        LineHeight: =1
+                        OnSelect: |-
+                          =Set(_spinner,true);
+                          Set(_necesitaCredito,1);
+                          Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cliente_con_credito:_necesitaCredito});
+                          Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
+                          Reset(Radio1_5);
+                          Set(_spinner,false);
+                        RadioBackgroundFill: =RGBA(207, 182, 157, 1)
+                        RadioBorderColor: =RGBA(207, 182, 157, 1)
+                        RadioSelectionFill: =RGBA(255, 255, 255, 1)
+                        RadioSize: =40
+                        Visible: =_itemSeleccionadoProspecto1.cliente_con_credito = 1
+                        Width: =80
+                        X: =571
+                        Y: =38
+                  - TextInputCanvas1_40:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(189, 49, 51, 0)
+                        FontSize: =24
+                        Height: =62
+                        Value: ="No"
+                        Width: =76
+                        X: =673
+                        Y: =38
+                  - Radio1_5:
+                      Control: Classic/Radio@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(207, 182, 157, 1)
+                        BorderStyle: =BorderStyle.None
+                        Color: =RGBA(255, 255, 255, 1)
+                        Default: =If(_necesitaCredito =0,true,false)
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Open Sans'
+                        Height: =70
+                        HoverColor: =Color.White
+                        Items: =[1]
+                        Items.Value: =Value
+                        LineHeight: =1
+                        OnSelect: |-
+                          =Set(_spinner,true);
+                          Set(_necesitaCredito,0);
+                          Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cliente_con_credito:_necesitaCredito,
+                          cupo_solicitado:0});
+                          Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
+                          Reset(NumberInput1_2);
+                          Reset(Radio1_4);
+                          Set(_spinner,false);
+                        RadioBackgroundFill: =RGBA(207, 182, 157, 1)
+                        RadioBorderColor: =RGBA(207, 182, 157, 1)
+                        RadioSelectionFill: =RGBA(255, 255, 255, 1)
+                        RadioSize: =40
+                        Width: =80
+                        X: =749
+                        Y: =38
+                  - TextInputCanvas1_41:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =24
+                        Height: =62
+                        Value: ="Plazo:"
+                        Visible: =_maquinasVista && _itemSeleccionadoProspecto1.cliente_con_credito = 1
+                        Width: =100
+                        X: =834
+                        Y: =38
+                  - DropdownCanvas1_2:
+                      Control: DropDown@0.0.45
+                      Properties:
+                        DefaultSelectedItems: =[_itemSeleccionadoProspecto1.plazo_credito]
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(214, 21, 21, 0)
+                        FontSize: =22
+                        Height: =40
+                        Items: =["30", "60", "90"]
+                        Visible: =_maquinasVista && _itemSeleccionadoProspecto1.cliente_con_credito = 1
+                        Width: =100
+                        X: =919
+                        Y: =50
+                  - TextInputCanvas1_42:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        BasePaletteColor: =RGBA(255, 255, 0, 1)
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =24
+                        Height: =62
+                        Value: ="Cupo:"
+                        Visible: '=_maquinasVista '
+                        Width: =100
+                        X: =1019
+                        Y: =38
+                  - NumberInput1_2:
+                      Control: NumberInput@2.9.12
+                      Properties:
+                        BasePaletteColor: =RGBA(245, 245, 245, 1)
+                        BorderColor: =RGBA(214, 221, 224, 1)
+                        BorderStyle: =BorderStyle.Solid
+                        BorderThickness: =1
+                        DisplayMode: =DisplayMode.View
+                        FontSize: =24
+                        Height: =52
+                        OnChange: |-
+                          =Set(_spinner,true);
+
+                          Patch(tab_leads,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),{cupo_solicitado:Value(Self.Value)});
+
+                          Set(_itemSeleccionadoProspecto1,LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID));
+                          Set(_spinner,false);
+                        Value: =_itemSeleccionadoProspecto1.cupo_solicitado
+                        Visible: '=_maquinasVista '
+                        Width: =208
+                        X: =1119
+                        Y: =48
+            - Button2_45:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(207, 182, 157, 1)
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =RGBA(207, 182, 157, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =37
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =5
+                  RadiusBottomRight: =5
+                  RadiusTopLeft: =5
+                  RadiusTopRight: =5
+                  Size: =16
+                  Text: ="TIPO DE VINCULACION DE CLIENTE"
+                  Visible: =_maquinasVista
+                  Width: =1358
+                  X: =69
+                  Y: =138
+            - Container2_13:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =251
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: =_maquinasVista
+                  Width: =1358
+                  X: =69
+                  Y: =272
+                Children:
+                  - Gallery1_10:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =206
+                        Items: =Filter(colDocumentosCliente,tipo_documento = 1, ID <> 10)
+                        TemplateSize: =44
+                        Width: =1358
+                        Y: =45
+                      Children:
+                        - TextInputCanvas1_43:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Fill: =RGBA(132, 40, 38, 0)
+                              FontSize: =22
+                              Height: =43
+                              Value: =ThisItem.nombre_documento
+                              Width: =378
+                              X: =31
+                        - Rectangle8_51:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(218, 195, 177, 0.5)
+                              Height: =1
+                              Width: =1322
+                              X: =11
+                              Y: =42
+                        - Icon5_9:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Height: =24
+                              Icon: =Icon.View
+                              OnSelect: |
+                                =// dependiendo la cantidad de documentos 
+
+                                Set(_documentoSeleccionadoVer,ThisItem);
+
+                                //
+                                ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+
+
+
+                                // validar si el documento ya se creo en al biblioteca 
+
+                                If(CountRows(colDocumentosVerPre)=0,
+
+                                Set(_mensajeAlerta,true),
+
+                                Clear(colDocumentosVer);
+
+                                ForAll(colDocumentosVerPre As Db,
+
+                                Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
+
+                                Set(_numeroDocumentoSeleccionado,1);
+
+                                Set(_visibleVerDocumentoSeleccionado,true));
+                              Width: =24
+                              X: =522
+                              Y: =9
+                        - Button2_47:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.White
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: =Color.White
+                              DisabledBorderColor: =Color.White
+                              DisabledColor: =Color.White
+                              DisabledFill: =RGBA(185, 5, 6, 1)
+                              Fill: =RGBA(185, 5, 6, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                              HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              OnSelect: |
+                                =Set(
+                                    _spinner,
+                                    true
+                                );
+                                Set(
+                                    _documentoSeleccionadoVer,
+                                    ThisItem
+                                );
+                                ClearCollect(
+                                    colDocumentosEliminar,
+                                    Filter(
+                                        Documentos,
+                                        fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID
+                                    )
+                                );
+                                If(
+                                    CountRows(colDocumentosEliminar) > 1,
+                                    Set(
+                                        _mensajeConfirmacionVarios,
+                                        true
+                                    );
+                                    Set(
+                                        _aprobar,
+                                        false
+                                    ),
+                                    Patch(
+                                        tab_documentos_por_cliente,
+                                        LookUp(
+                                            tab_documentos_por_cliente,
+                                            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID
+                                        ),
+                                        {
+                                            aprobado_back_office: 2,
+                                            estado_documento: 3
+                                        }
+                                    );
+                                    Patch(
+                                        tab_leads,
+                                        LookUp(
+                                            tab_leads,
+                                            ID = _itemSeleccionadoProspecto1.ID
+                                        ),
+                                        {id_estado_negociacion: 7}
+                                    );
+                                    Office365Outlook.SendEmailV2(
+                                        _itemSeleccionadoProspecto1.correo_comercial_creador,
+                                        "Rechazo documento",
+                                        "El Equipo Back office ha rechazado el documento " & LookUp(
+                                            tab_documentos_por_cliente,
+                                            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID
+                                        ).nombre_documento & " por favor ingrese a la aplicación B2B para su revisión"
+                                    );
+                                    ClearCollect(
+                                        colDocumentosProspecto,
+                                        Filter(
+                                            tab_documentos_por_cliente,
+                                            fk_id_lead = _itemSeleccionadoProspecto1.ID
+                                        )
+                                    );
+                                    Notify(
+                                        "Documento rechazado correctamente",
+                                        NotificationType.Success,
+                                        5000
+                                    )
+                                );
+                                Set(
+                                    _spinner,
+                                    false
+                                );
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                              PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                              RadiusBottomLeft: =100
+                              RadiusBottomRight: =100
+                              RadiusTopLeft: =100
+                              RadiusTopRight: =100
+                              Size: =8
+                              Text: =
+                              Width: =20
+                              X: =1220
+                              Y: =13
+                        - Button2_128:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.White
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: =Color.White
+                              DisabledBorderColor: =Color.White
+                              DisabledColor: =Color.White
+                              DisabledFill: =RGBA(50,129,45,100)
+                              Fill: =RGBA(50,129,45,100)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(50,129,45,100)
+                              HoverFill: =RGBA(50,129,45,100)
+                              OnSelect: "=Set(\n    _spinner,\n    true\n);\nSet(\n    _documentoSeleccionadoVer,\n    ThisItem\n);\nClearCollect(\n    colDocumentosEliminar,\n    Filter(\n        Documentos,\n        fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID\n    )\n);\nIf(\n    CountRows(colDocumentosEliminar) > 1,\n    Set(\n        _mensajeConfirmacionVarios,\n        true\n    );\n    Set(_aprobar,true)\n    \n    ,\n    Patch(\n        tab_documentos_por_cliente,\n        LookUp(\n            tab_documentos_por_cliente,\n            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID\n        ),\n        {aprobado_back_office: 1,estado_documento:1}\n    );\n\n    ClearCollect(\n        colDocumentosProspecto,\n        Filter(\n            tab_documentos_por_cliente,\n            fk_id_lead = _itemSeleccionadoProspecto1.ID\n        )\n    );\n    Notify(\n        \"Documento aprobado correctamente\",\n        NotificationType.Success,\n        5000\n    )\n);\nSet(\n    _spinner,\n    false\n);\n"
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =RGBA(50,129,45,100)
+                              PressedFill: =RGBA(50,129,45,100)
+                              RadiusBottomLeft: =100
+                              RadiusBottomRight: =100
+                              RadiusTopLeft: =100
+                              RadiusTopRight: =100
+                              Size: =8
+                              Text: =
+                              Width: =20
+                              X: =973
+                              Y: =13
+                        - TextInputCanvas1_45:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Fill: =RGBA(132, 40, 38, 0)
+                              FontSize: =22
+                              Height: =41
+                              OnChange: =
+                              Value: |-
+                                =If(CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && aprobado_back_office = 1)) = ThisItem.cantidad_de_documentos, "Aprobado",
+                                CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && aprobado_back_office = 2)) = ThisItem.cantidad_de_documentos,"Rechazado","Pendiente")
+                              Width: =131
+                              X: =680
+                              Y: =2
+                  - Button2_574:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -55%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(207, 182, 157, 0.38)
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =Self.Fill
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =18
+                        Text: =
+                        Width: =1358
+                        Y: =13
+                  - TextInputCanvas1_44:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Documento"
+                        Width: =254
+                        X: =39
+                        Y: =17
+                  - TextInputCanvas1_46:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Ver"
+                        Width: =102
+                        X: =509
+                        Y: =17
+                  - TextInputCanvas1_47:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Estado"
+                        Width: =127
+                        X: =701
+                        Y: =17
+                  - TextInputCanvas1_48:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Rechazar"
+                        Width: =127
+                        X: =1174
+                        Y: =17
+                  - TextInputCanvas1_55:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Aprobar"
+                        Width: =127
+                        X: =937
+                        Y: =17
+            - Button2_48:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(207, 182, 157, 1)
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =RGBA(207, 182, 157, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =33
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =5
+                  RadiusBottomRight: =5
+                  RadiusTopLeft: =5
+                  RadiusTopRight: =5
+                  Size: =16
+                  Text: ="DOCUMENTOS EMPRESA"
+                  Visible: =_maquinasVista
+                  Width: =1358
+                  X: =70
+                  Y: =263
+            - Container2_28:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =311
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Visible: =_maquinasVista && _itemSeleccionadoProspecto1.cliente_con_credito = 1
+                  Width: =1358
+                  X: =69
+                  Y: =535
+                Children:
+                  - Button2_575:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -55%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(207, 182, 157, 0.38)
+                        Font: =Font.'Open Sans'
+                        Height: =43
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =Self.Fill
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Size: =18
+                        Text: =
+                        Width: =1358
+                        Y: =21
+                  - TextInputCanvas1_49:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Documento"
+                        Width: =254
+                        X: =39
+                        Y: =27
+                  - TextInputCanvas1_50:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Ver"
+                        Width: =102
+                        X: =509
+                        Y: =27
+                  - TextInputCanvas1_51:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Estado"
+                        Width: =127
+                        X: =701
+                        Y: =27
+                  - TextInputCanvas1_52:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Rechazar"
+                        Width: =127
+                        X: =1174
+                        Y: =27
+                  - TextInputCanvas1_97:
+                      Control: TextInput@0.0.54
+                      Properties:
+                        Fill: =RGBA(132, 40, 38, 0)
+                        FontSize: =22
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        Value: ="Aprobar"
+                        Width: =127
+                        X: =937
+                        Y: =27
+                  - Gallery1_24:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =246
+                        Items: =Filter(colDocumentosCliente,tipo_documento = 2)
+                        TemplateSize: =44
+                        Width: =1358
+                        Y: =65
+                      Children:
+                        - TextInputCanvas1_53:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Fill: =RGBA(132, 40, 38, 0)
+                              FontSize: =22
+                              Height: =43
+                              Value: =ThisItem.nombre_documento
+                              Width: =378
+                              X: =31
+                        - Rectangle8_52:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(218, 195, 177, 0.5)
+                              Height: =1
+                              Width: =1322
+                              X: =11
+                              Y: =42
+                        - Icon5_10:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Height: =24
+                              Icon: =Icon.View
+                              OnSelect: |
+                                =// dependiendo la cantidad de documentos 
+
+                                Set(_documentoSeleccionadoVer,ThisItem);
+
+                                //
+                                ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+
+
+
+                                // validar si el documento ya se creo en al biblioteca 
+
+                                If(CountRows(colDocumentosVerPre)=0,
+
+                                Set(_mensajeAlerta,true),
+
+                                Clear(colDocumentosVer);
+
+                                ForAll(colDocumentosVerPre As Db,
+
+                                Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
+
+                                Set(_numeroDocumentoSeleccionado,1);
+
+                                Set(_visibleVerDocumentoSeleccionado,true));
+                              Width: =24
+                              X: =522
+                              Y: =9
+                        - Button2_49:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.White
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: =Color.White
+                              DisabledBorderColor: =Color.White
+                              DisabledColor: =Color.White
+                              DisabledFill: =RGBA(185, 5, 6, 1)
+                              Fill: =RGBA(185, 5, 6, 1)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                              HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              OnSelect: "=Set(\n    _spinner,\n    true\n);\nSet(\n    _documentoSeleccionadoVer,\n    ThisItem\n);\nClearCollect(\n    colDocumentosEliminar,\n    Filter(\n        Documentos,\n        fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID\n    )\n);\nIf(\n    CountRows(colDocumentosEliminar) > 1,\n    Set(\n        _mensajeConfirmacionVarios,\n        true\n    );\n    Set(_aprobar,false)\n    \n    ,\n    Patch(\n        tab_documentos_por_cliente,\n        LookUp(\n            tab_documentos_por_cliente,\n            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID\n        ),\n        {\n        aprobado_back_office: 2,estado_documento:3}\n    );\n\n        Office365Outlook.SendEmailV2(_itemSeleccionadoProspecto1.correo_comercial_creador, \"Rechazo documento\", \"El Equipo Back office ha rechazado el documento \"& LookUp(\n            tab_documentos_por_cliente,\n            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID\n        ).nombre_documento &\" por favor ingrese a la aplicación B2B para su revisión\");\n        \n    ClearCollect(\n        colDocumentosProspecto,\n        Filter(\n            tab_documentos_por_cliente,\n            fk_id_lead = _itemSeleccionadoProspecto1.ID\n        )\n    );\n    Notify(\n        \"Documento rechazado correctamente\",\n        NotificationType.Success,\n        5000\n    )\n);\nSet(\n    _spinner,\n    false\n);\n"
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                              PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                              RadiusBottomLeft: =100
+                              RadiusBottomRight: =100
+                              RadiusTopLeft: =100
+                              RadiusTopRight: =100
+                              Size: =8
+                              Text: =
+                              Width: =20
+                              X: =1220
+                              Y: =13
+                        - Button2_134:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.White
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =1
+                              Color: =Color.White
+                              DisabledBorderColor: =Color.White
+                              DisabledColor: =Color.White
+                              DisabledFill: =RGBA(50,129,45,100)
+                              Fill: =RGBA(50,129,45,100)
+                              Font: =Font.'Open Sans'
+                              Height: =20
+                              HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                              HoverColor: =RGBA(50,129,45,100)
+                              HoverFill: =RGBA(50,129,45,100)
+                              OnSelect: "=Set(\n    _spinner,\n    true\n);\nSet(\n    _documentoSeleccionadoVer,\n    ThisItem\n);\nClearCollect(\n    colDocumentosEliminar,\n    Filter(\n        Documentos,\n        fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID\n    )\n);\nIf(\n    CountRows(colDocumentosEliminar) > 1,\n    Set(\n        _mensajeConfirmacionVarios,\n        true\n    );\n    Set(_aprobar,true)\n    \n    ,\n    Patch(\n        tab_documentos_por_cliente,\n        LookUp(\n            tab_documentos_por_cliente,\n            fk_id_doc = ThisItem.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID\n        ),\n        {aprobado_back_office: 1,estado_documento:1}\n    );\n\n    ClearCollect(\n        colDocumentosProspecto,\n        Filter(\n            tab_documentos_por_cliente,\n            fk_id_lead = _itemSeleccionadoProspecto1.ID\n        )\n    );\n    Notify(\n        \"Documento aprobado correctamente\",\n        NotificationType.Success,\n        5000\n    )\n);\nSet(\n    _spinner,\n    false\n);\n"
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =RGBA(50,129,45,100)
+                              PressedFill: =RGBA(50,129,45,100)
+                              RadiusBottomLeft: =100
+                              RadiusBottomRight: =100
+                              RadiusTopLeft: =100
+                              RadiusTopRight: =100
+                              Size: =8
+                              Text: =
+                              Width: =20
+                              X: =973
+                              Y: =13
+                        - TextInputCanvas1_54:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Fill: =RGBA(132, 40, 38, 0)
+                              FontSize: =22
+                              Height: =41
+                              OnChange: =
+                              Value: |-
+                                =If(CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && aprobado_back_office = 1)) = ThisItem.cantidad_de_documentos, "Aprobado",
+                                CountRows(Filter(colDocumentosProspecto, fk_id_doc = ThisItem.ID && aprobado_back_office = 2)) = ThisItem.cantidad_de_documentos,"Rechazado","Pendiente")
+                              Width: =131
+                              X: =680
+                              Y: =2
+            - Button2_51:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(207, 182, 157, 1)
+                  DisplayMode: =DisplayMode.Disabled
+                  Fill: =RGBA(207, 182, 157, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =33
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: =
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =5
+                  RadiusBottomRight: =5
+                  RadiusTopLeft: =5
+                  RadiusTopRight: =5
+                  Size: =16
+                  Text: ="DOCUMENTOS LINEA DE CREDITO"
+                  Visible: =_maquinasVista && _itemSeleccionadoProspecto1.cliente_con_credito = 1
+                  Width: =1358
+                  X: =69
+                  Y: =535
+            - Button2_511:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(186, 156, 137, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |+
+                    =// enviar a aprobacion equipo de finanzas la solicitud
+                    Set(
+                        _spinner,
+                        true
+                    );
+
+                    // validar que todos los documentos esten aprobado y que ya se haya asignado el id nesp_cop
+
+
+                    If(CountRows(Filter(colDocumentosProspecto, Or(aprobado_back_office = 0,aprobado_back_office = 2))) <> 0,
+                    Notify("Todos los documentos deben estar aprobados", NotificationType.Warning, 5000),
+                    IsBlank(_itemSeleccionadoProspecto1.id_nesp_cop_nit),
+                    Set(_mensajeConfirmacion,true),
+                    Patch(
+                        tab_leads,
+                        LookUp(
+                            tab_leads,
+                            ID = _itemSeleccionadoProspecto1.ID
+                        ),
+                        {id_estado_negociacion: 4,
+                        aprobacion_back_office:1,
+                        fecha_paso_a_cliente:Today()}
+                    );
+
+                    Set(
+                        _itemSeleccionadoProspecto1,
+                        LookUp(
+                            tab_leads,
+                            ID = _itemSeleccionadoProspecto1.ID
+                        )
+                    );
+
+                    If( IsBlank(LookUp(tab_cliente, id_nesp_cop = Value(_itemSeleccionadoProspecto1.id_nesp_cop_nit))),Patch(tab_cliente,Defaults(tab_cliente),{
+
+                        nombre:_itemSeleccionadoProspecto1.razon_social_prospecto,
+                        id_nesp_cop:Value(_itemSeleccionadoProspecto1.id_nesp_cop_nit),
+                        fecha_creacion:Today(),
+                        correo:_infoUsuarioLoggeado.Email,
+                        canal:_itemSeleccionadoProspecto1.nombre_comercial_prospecto,
+                        ciudad:_itemSeleccionadoProspecto1.ciudad,
+                        segmento:_itemSeleccionadoProspecto1.segmento,
+                        subsegmento:_itemSeleccionadoProspecto1.subsegmento,
+                        nombre_contacto:_itemSeleccionadoProspecto1.nombre_contacto,
+                        apellido_contacto:_itemSeleccionadoProspecto1.apellidos_contacto,
+                        cargo:_itemSeleccionadoProspecto1.cargo,
+                        email:_itemSeleccionadoProspecto1.email,
+                        payment_mode:_itemSeleccionadoProspecto1.payment_mode,
+                        tarifa:_itemSeleccionadoProspecto1.tarifa,
+                        sagrilatf:_itemSeleccionadoProspecto1.sagrilaft,
+                        cliente_con_credito:_itemSeleccionadoProspecto1.cliente_con_credito,
+                        cupo_solicitado:_itemSeleccionadoProspecto1.cupo_solicitado
+                    }));
+                            Office365Outlook.SendEmailV2(_itemSeleccionadoProspecto1.correo_comercial_creador, "Rechazo documento", "El Equipo Back office ha aprobado todos los documentos, ha asignado el id nesp_cop para el cliente y ahora se enviara a probación por parte del equipo de finanzas");
+
+                    ClearCollect(colUsuariosBackOffice,Filter(tab_roles_usuarios,id_rol = 3));
+
+                    Office365Outlook.SendEmailV2(Concat(colUsuariosBackOffice,correo,";"),"Solicitud Aprobación Documentos: "&_itemSeleccionadoProspecto1.nombre_comercial_prospecto,
+                    "El Canal " & _itemSeleccionadoProspecto1.nombre_comercial_prospecto &" ha solicitado la revisión de documentos del cliente "& _itemSeleccionadoProspecto1.nombre_comercial_prospecto & " por favor ingrese a la aplicacion dando clic <a 
+                      href=https://apps.powerapps.com/play/e/default-12a3af23-a769-4654-847f-958f3d479f4a/a/002f0ece-12ca-4574-a45c-3506693e230f?tenantId=12a3af23-a769-4654-847f-958f3d479f4a&hint=29d33854-bc26-4b3e-b846-59d8a8d2f6e5&sourcetime=1752165330010 
+                    >
+                      aquí
+                    </a>" 
+
+                    );
+                    Notify("Se envio la solicitud de aprobación", NotificationType.Success, 4000);
+
+
+                    );
+
+
+
+
+
+                    Set(
+                        _spinner,
+                        false
+                    );
+
+
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="APROBAR"
+                  Visible: =_maquinasVista && CountRows(Filter(colDocumentosProspecto, Or(aprobado_back_office = 0,aprobado_back_office = 2))) = 0
+                  Width: =290
+                  X: =606
+                  Y: =870
+            - Label6_177:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="ID nesp_cop:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =134
+                  Y: =264
+            - id_nesp_cop_text_input_4:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.id_nesp_cop_nit
+                  DelayOutput: =true
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =484
+                  Y: =264
+            - Label6_193:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Canal:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =134
+                  Y: =314
+            - nombre_comercial_text_input_5:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.nombre_comercial_prospecto
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =484
+                  Y: =314
+            - Label6_194:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Razón social:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =134
+                  Y: =364
+            - razon_social_text_input_5:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.razon_social_prospecto
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =484
+                  Y: =364
+            - Label6_195:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Ciudad:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =134
+                  Y: =420
+            - estatus_cuenta_43:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =59
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =485
+                  Y: =413
+            - Label6_197:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =33
+                  Size: =20
+                  Text: ="Segmento:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =134
+                  Y: =483
+            - Label6_199:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Subsegmento:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =133
+                  Y: =546
+            - Label6_200:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Nombres Prospecto:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =133
+                  Y: =616
+            - nombre_text_input_5:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.nombre_contacto
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =483
+                  Y: =616
+            - Label6_201:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Apellidos Prospecto:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =133
+                  Y: =666
+            - apellido_text_input_5:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.apellidos_contacto
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =483
+                  Y: =666
+            - Label6_202:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =33
+                  Size: =20
+                  Text: ="Cargo Prospecto:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =133
+                  Y: =716
+            - cargo_text_input_5:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.cargo
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =483
+                  Y: =716
+            - Label6_203:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =20
+                  Text: ="Email Prospecto:"
+                  Visible: =_datosVista
+                  Width: =350
+                  X: =133
+                  Y: =766
+            - email_text_input_6:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =_itemSeleccionadoProspecto1.email
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =483
+                  Y: =766
+            - estatus_cuenta_125:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Default: =_itemSeleccionadoProspecto1.fecha_creacion_lead
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  Height: =30
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  LineHeight: |
+                    =
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =14
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =267
+                  X: =520
+                  Y: =180
+            - Label6_204:
+                Control: Label@2.5.1
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  LineHeight: |
+                    =
+                  Size: =20
+                  Text: ="Fecha creación de Prospecto:"
+                  Visible: =_datosVista
+                  Width: =387
+                  X: =134
+                  Y: =183
+            - ciudad_combobox_4:
+                Control: Classic/ComboBox@2.4.0
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoProspecto1.ciudad]
+                  DisplayFields: =["Value"]
+                  DisplayMode: =DisplayMode.View
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =46
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  Items: =["Bogota","Medellin","Cali","Barranquilla"]
+                  OnChange: =Set(_ciudadSeleccionada,Self.Selected.Value)
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_datosVista
+                  Width: =877
+                  X: =494
+                  Y: =420
+            - segmento_text_input_6:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =482
+                  Y: =484
+            - subsegmento_text_input_6:
+                Control: Classic/TextInput@2.3.2
+                Group: Group15_1
+                Properties:
+                  BorderColor: =
+                  BorderStyle: =BorderStyle.None
+                  Color: =RGBA(85, 69, 49, 1)
+                  Default: =
+                  DelayOutput: =true
+                  DisplayMode: =DisplayMode.View
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =53
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(214, 221, 224, 1)
+                  PaddingLeft: =5
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Size: =16
+                  Tooltip: =
+                  Visible: =_datosVista
+                  Width: =900
+                  X: =484
+                  Y: =550
+            - segmento_combobox_6:
+                Control: Classic/ComboBox@2.4.0
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoProspecto1.segmento]
+                  DisplayFields: =["Value"]
+                  DisplayMode: =DisplayMode.View
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =46
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  Items: =["Restaurantes & Clubes","Hoteles & Pastelerias","Oficinas"]
+                  OnChange: =Set(_itemSeleccionadoProspectoSegmento,Self.Selected.Value);
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_datosVista
+                  Width: =877
+                  X: =495
+                  Y: =487
+            - subsegmento_combobox_4:
+                Control: Classic/ComboBox@2.4.0
+                Group: Group15_1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  ChevronBackground: =Color.Transparent
+                  ChevronFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                  DefaultSelectedItems: =[_itemSeleccionadoProspecto1.subsegmento]
+                  DisplayFields: =["Value"]
+                  DisplayMode: =DisplayMode.View
+                  Fill: =Color.White
+                  Font: =Font.'Open Sans'
+                  Height: =46
+                  HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                  HoverFill: =RGBA(235, 222, 184, 1)
+                  InputTextPlaceholder: =
+                  Items: |
+                    =["Restaurante Fine Dining",
+                    "Restaurante Premium",
+                    "Restaurante Otros",
+                    "Club Social",
+                    "Hotel",
+                    "Cafeteria / Pasteleria",
+                    "Miscelaneos",
+                    "Oficinas",
+                    "Retail / Tienda"]
+                  OnChange: =Set(_itemSeleccionadoProspectoSubSegmento,Self.Selected.Value);
+                  PressedColor: =RGBA(255, 255, 255, 1)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  SearchFields: =["Value"]
+                  SelectMultiple: =false
+                  SelectionColor: =RGBA(255, 255, 255, 1)
+                  SelectionFill: =RGBA(198, 179, 126, 1)
+                  Size: =16
+                  Visible: =_datosVista
+                  Width: =877
+                  X: =495
+                  Y: =552
+            - Button2_510:
+                Control: Classic/Button@2.2.0
+                Group: Group15_1
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -55%)
+                  BorderThickness: =0
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(186, 156, 137, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =40
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =Self.Fill
+                  OnSelect: |+
+                    =// hacer patch para crear el lead 
+
+
+                    Set(_itemSeleccionadoProspecto1,
+                    Patch(
+                        tab_leads,
+                        LookUp(tab_leads,ID = _itemSeleccionadoProspecto1.ID),
+                        {
+
+                            id_nesp_cop_nit: Value(id_nesp_cop_text_input_4.Text),
+                            ultima_actualizacion:Today()
+                        }
+                    ));
+
+                    //coleccion leads creados
+                    ClearCollect(
+                        colLeads,
+                        Filter(
+                            tab_leads,
+                            correo_comercial_creador = _infoUsuarioLoggeado.Email
+                        )
+                    );
+
+                    Notify("Información actualizada",NotificationType.Success,6000)
+
+
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Size: =16
+                  Text: ="ACTUALIZAR"
+                  Visible: =_datosVista
+                  Width: =206
+                  X: =818
+                  Y: =850
+      - Image2_35:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =80
+            Image: =nesp_cop
+            Width: =500
+            X: =811
+            Y: =10
+      - Label4_31:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =72
+            Size: =20
+            Text: =User().FullName
+            Width: =500
+            X: =1268
+            Y: =10
+      - Image11_22:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =60
+            Image: =picture_15506108
+            Width: =100
+            X: =1768
+            Y: =15
+      - Rectangle8_15:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(218, 195, 177, 0.5)
+            Height: =2
+            Width: =1900
+            X: =10
+            Y: =95
+      - Container5_20:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =70
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =350
+            X: =714
+            Y: =151
+          Children:
+            - Button2_389:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: "=If(\r\n    _maquinasVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |+
+                    =Set(_spinner,true);
+                    Set(_seguimientoVista,false);
+                    Set(_oportunidadVista,false);
+                    Set(_datosVista,false);
+                    Set(_crearAgenda,false);
+                    Set(_maquinasVista,true);
+                    ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
+                    Set(_spinner,false);
+
+                  PaddingLeft: =25
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: ="DOCUMENTOS"
+                  Width: =350
+      - boton_datos_3:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Height: =70
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =30
+            RadiusTopLeft: =0
+            RadiusTopRight: =30
+            Width: =350
+            X: =414
+            Y: =151
+          Children:
+            - Button2_85:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =RGBA(85, 69, 49, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: "=If(\r\n    _datosVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+                  Font: =Font.'Open Sans'
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |+
+                    =Set(_seguimientoVista,false);
+                    Set(_oportunidadVista,false);
+                    Set(_maquinasVista,false);
+                    Set(_crearAgenda,false);
+                    Set(_datosVista,true)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =20
+                  Size: =22
+                  Text: ="DATOS"
+                  Width: =350
+      - Container1_8:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(218, 195, 177, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(218, 195, 177, 1)
+            Height: =935
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =334
+            X: =23
+            Y: =125
+          Children:
+            - Gallery4_21:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =814
+                  Items: =col_navegacion_menu
+                  ShowScrollbar: =false
+                  TemplateSize: =78
+                  Width: =303
+                  X: =27
+                  Y: =26
+                Children:
+                  - Container7_8:
+                      Control: GroupContainer@1.3.0
+                      Variant: ManualLayout
+                      Properties:
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =If(ThisItem.ID = _idSeleccionadoPantalla, DropShadow.Semibold, DropShadow.None)
+                        Height: =70
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =283
+                        X: =8
+                      Children:
+                        - Rectangle5_29:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              Height: =70
+                              OnSelect: =
+                              Visible: =ThisItem.ID = _idSeleccionadoPantalla
+                              Width: =283
+                  - Button2_390:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Align: =Align.Left
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledColor: =Color.Transparent
+                        Fill: =Color.Transparent
+                        Font: =Font.'Open Sans'
+                        Height: =71
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: |
+                          =Set(_idSeleccionadoPantalla,ThisItem.ID);
+
+                          Navigate(ThisItem.pantalla)
+                        PaddingLeft: =60
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Size: =20
+                        Text: =ThisItem.nombre
+                        Width: =283
+                        X: =8
+                  - Image15_10:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =35
+                        Image: =ThisItem.img
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =35
+                        X: =22
+                        Y: =18
+                  - Rectangle5_30:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        Height: =71
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =283
+                        X: =8
+      - Button2_129:
+          Control: Classic/Button@2.2.0
+          Group: Group8_2
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            BorderThickness: =0
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =RGBA(255,255,255,0.50)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =1080
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =22
+            Text: =
+            Visible: =_mensajeConfirmacionVarios
+            Width: =1920
+      - Button2_130:
+          Control: Classic/Button@2.2.0
+          Group: Group8_2
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =Color.White
+            DisplayMode: =DisplayMode.Disabled
+            Fill: "=If(\r\n    _indicadoresVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+            Font: =Font.'Open Sans'
+            Height: =457
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =22
+            Text: =
+            Visible: =_mensajeConfirmacionVarios
+            Width: =1459
+            X: =247
+            Y: =252
+      - Button2_519:
+          Control: Classic/Button@2.2.0
+          Group: Group8_2
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |-
+              =
+
+              Set(_mensajeConfirmacionVarios,false)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Cerrar"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =133
+            X: =912
+            Y: =630
+      - TextCanvas6_7:
+          Control: Text@0.0.51
+          Group: Group8_2
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Font: =Font.Lato
+            FontColor: =RGBA(110, 93, 71, 1)
+            Height: =77
+            Size: =25
+            Text: ="Seleccione el documento que desea eliminar"
+            Visible: =_mensajeConfirmacionVarios
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =596
+            X: =681
+            Y: =291
+      - Gallery1_29:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Group: Group8_2
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =206
+            Items: =colDocumentosEliminar
+            TemplateSize: =44
+            Visible: =_mensajeConfirmacionVarios
+            Width: =1358
+            X: =300
+            Y: =420
+          Children:
+            - TextInputCanvas1_56:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =43
+                  Value: =ThisItem.Nombre
+                  Width: =378
+                  X: =31
+            - Rectangle8_69:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(218, 195, 177, 0.5)
+                  Height: =1
+                  Width: =1322
+                  X: =11
+                  Y: =42
+            - Icon5_18:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =24
+                  Icon: =Icon.View
+                  OnSelect: |
+                    =// dependiendo la cantidad de documentos 
+
+                    Set(_documentoSeleccionadoVer,LookUp(tab_documentos_cliente,ID = ThisItem.fk_id_tipo_documento));
+
+                    //
+                    ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+
+
+
+                    // validar si el documento ya se creo en al biblioteca 
+
+                    If(CountRows(colDocumentosVerPre)=0,
+
+                    Set(_mensajeAlerta,true),
+
+                    Clear(colDocumentosVer);
+
+                    ForAll(colDocumentosVerPre As Db,
+
+                    Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
+
+                    Set(_numeroDocumentoSeleccionado,1);
+
+                    Set(_visibleVerDocumentoSeleccionado,true));
+                  Width: =24
+                  X: =764
+                  Y: =9
+            - Button2_131:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(185, 5, 6, 1)
+                  Fill: =RGBA(185, 5, 6, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |+
+                    =Set(_documentoSeleccionadoEliminar,ThisItem);
+
+                    Set(_mensajeConfirmacionUnico,true);
+
+
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =8
+                  Text: ="X"
+                  Width: =20
+                  X: =1220
+                  Y: =13
+      - TextInputCanvas1_90:
+          Control: TextInput@0.0.54
+          Group: Group8_2
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Documento"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =254
+            X: =339
+            Y: =378
+      - TextInputCanvas1_91:
+          Control: TextInput@0.0.54
+          Group: Group8_2
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Ver"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =102
+            X: =1049
+            Y: =378
+      - TextInputCanvas1_92:
+          Control: TextInput@0.0.54
+          Group: Group8_2
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Borrar"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =127
+            X: =1492
+            Y: =378
+      - Button2_132:
+          Control: Classic/Button@2.2.0
+          Group: Group8_3
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            BorderThickness: =0
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =RGBA(255,255,255,0.50)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =1080
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =22
+            Text: =
+            Visible: =_mensajeConfirmacionVarios
+            Width: =1920
+      - Button2_133:
+          Control: Classic/Button@2.2.0
+          Group: Group8_3
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =Color.White
+            DisplayMode: =DisplayMode.Disabled
+            Fill: "=If(\r\n    _indicadoresVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+            Font: =Font.'Open Sans'
+            Height: =457
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =22
+            Text: =
+            Visible: =_mensajeConfirmacionVarios
+            Width: =1459
+            X: =247
+            Y: =252
+      - Button2_520:
+          Control: Classic/Button@2.2.0
+          Group: Group8_3
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |-
+              =
+
+              Set(_mensajeConfirmacionVarios,false)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Cerrar"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =133
+            X: =912
+            Y: =630
+      - TextCanvas6_8:
+          Control: Text@0.0.51
+          Group: Group8_3
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Font: =Font.Lato
+            FontColor: =RGBA(110, 93, 71, 1)
+            Height: =77
+            Size: =25
+            Text: ="Seleccione el documento que desea "& If(_aprobar,"aprobar","rechazar")
+            Visible: =_mensajeConfirmacionVarios
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =596
+            X: =681
+            Y: =291
+      - Gallery1_55:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Group: Group8_3
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =206
+            Items: =colDocumentosEliminar
+            TemplateSize: =44
+            Visible: =_mensajeConfirmacionVarios
+            Width: =1358
+            X: =300
+            Y: =420
+          Children:
+            - TextInputCanvas1_93:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =43
+                  Value: =ThisItem.Nombre
+                  Width: =378
+                  X: =31
+            - Rectangle8_70:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(218, 195, 177, 0.5)
+                  Height: =1
+                  Width: =1322
+                  X: =11
+                  Y: =42
+            - Icon5_19:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =RGBA(85, 69, 49, 1)
+                  Height: =24
+                  Icon: =Icon.View
+                  OnSelect: |
+                    =// dependiendo la cantidad de documentos 
+
+                    Set(_documentoSeleccionadoVer,LookUp(tab_documentos_cliente,ID = ThisItem.fk_id_tipo_documento));
+
+                    //
+                    ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+
+
+
+                    // validar si el documento ya se creo en al biblioteca 
+
+                    If(CountRows(colDocumentosVerPre)=0,
+
+                    Set(_mensajeAlerta,true),
+
+                    Clear(colDocumentosVer);
+
+                    ForAll(colDocumentosVerPre As Db,
+
+                    Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
+
+                    Set(_numeroDocumentoSeleccionado,1);
+
+                    Set(_visibleVerDocumentoSeleccionado,true));
+                  Width: =24
+                  X: =764
+                  Y: =9
+            - Button2_135:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(185, 5, 6, 1)
+                  Fill: =RGBA(185, 5, 6, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |+
+                    =
+                    Set(_spinner,true);
+
+
+                    Patch(tab_documentos_por_cliente,LookUp(tab_documentos_por_cliente, ID = ThisItem.ID ),{aprobado_back_office: 2,estado_documento:3});
+                    ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_documento_sharepoint =  _itemSeleccionadoProspecto1.ID));
+                    Notify("Documento rechazado correctamente",NotificationType.Success,5000);
+
+                    Set(_spinner,false);
+
+
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =8
+                  Text: =
+                  Visible: =!_aprobar
+                  Width: =20
+                  X: =1224
+                  Y: =11
+            - Button2_136:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: =Color.White
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =1
+                  Color: =Color.White
+                  DisabledBorderColor: =Color.White
+                  DisabledColor: =Color.White
+                  DisabledFill: =RGBA(185, 5, 6, 1)
+                  Fill: =RGBA(50,129,45,100)
+                  Font: =Font.'Open Sans'
+                  Height: =20
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                  OnSelect: |
+                    =
+                    Set(_spinner,true);
+                    Set(_documentoSeleccionadoVer,ThisItem);
+
+
+                    Patch(tab_documentos_por_cliente,LookUp(tab_documentos_por_cliente, fk_id_documento_sharepoint = ThisItem.ID),{aprobado_back_office: 1,estado_documento:1});
+                    ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
+                    Notify("Documento aprobado correctamente",NotificationType.Success,5000);
+
+                    Set(_spinner,false);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                  PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  RadiusBottomLeft: =100
+                  RadiusBottomRight: =100
+                  RadiusTopLeft: =100
+                  RadiusTopRight: =100
+                  Size: =8
+                  Text: =
+                  Visible: =_aprobar
+                  Width: =20
+                  X: =1224
+                  Y: =11
+      - TextInputCanvas1_94:
+          Control: TextInput@0.0.54
+          Group: Group8_3
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Documento"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =254
+            X: =339
+            Y: =378
+      - TextInputCanvas1_95:
+          Control: TextInput@0.0.54
+          Group: Group8_3
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Ver"
+            Visible: =_mensajeConfirmacionVarios
+            Width: =102
+            X: =1049
+            Y: =378
+      - TextInputCanvas1_96:
+          Control: TextInput@0.0.54
+          Group: Group8_3
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: =If(_aprobar,"Aprobar","Rechazar")
+            Visible: =_mensajeConfirmacionVarios
+            Width: =127
+            X: =1492
+            Y: =378
+      - Rectangle1_3:
+          Control: Rectangle@2.3.0
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(193,186,162,255)
+            BorderThickness: =3
+            Fill: =RGBA(193, 186, 162, 0.5)
+            Height: =1080
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =1920
+      - Button2_123:
+          Control: Classic/Button@2.2.0
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =Color.White
+            DisplayMode: =DisplayMode.Disabled
+            Fill: "=If(\r\n    _indicadoresVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+            Font: =Font.'Open Sans'
+            Height: =1028
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =22
+            Text: =
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =1853
+            X: =45
+            Y: =32
+      - Visor_documentos_edicion_1:
+          Control: PDFViewer@2.5.0
+          Group: Group12_1
+          Properties:
+            Document: |+
+              =
+
+
+              If( EndsWith(LookUp(colDocumentosVer,id_col = _numeroDocumentoSeleccionado).'Nombre de archivo con extensión',"pdf"),
+              // si el documento es de tipo pdf
+              LookUp(tab_documentos_por_cliente, fk_id_documento_sharepoint = LookUp(colDocumentosVer,id_col = _numeroDocumentoSeleccionado).ID).data_uri
+              // si es otro tipo de documento diferente a pdf
+              ,Substitute(LookUp(colDocumentosVer,id_col = _numeroDocumentoSeleccionado).Thumbnail.Large,"/thumbnail","/pdf"))
+
+
+
+            Height: =858
+            ShowControls: =true
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =1617
+            X: =171
+            Y: =65
+      - Icon1_6:
+          Control: Classic/Icon@2.5.0
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(193, 186, 162, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Icon: =Icon.CancelBadge
+            OnSelect: =Set(_visibleVerDocumentoSeleccionado,false)
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =80
+            X: =67
+            Y: =44
+      - Label1_112:
+          Control: Label@2.5.1
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(184, 0, 0, 1)
+            Font: =Font.Lato
+            Height: =63
+            Size: =15
+            Text: ="Si no puede visualizar el documento, lo puede descargar aqui --->"
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =581
+            X: =1225
+            Y: =981
+      - Icon3_2:
+          Control: Classic/Icon@2.5.0
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(193, 186, 162, 1)
+            Height: =53
+            Icon: =Icon.Download
+            OnSelect: |+
+              =Download("https://ness_cop.sharepoint.com/:x:/r/teams/siteb2bnesspreso/" &First(colDocumentosVer).'Ruta de acceso completa'& "?web=0")
+
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =69
+            X: =1807
+            Y: =991
+      - Button2_505:
+          Control: Classic/Button@2.2.0
+          Group: Group12_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =51
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |-
+              =Set(_spinner,true);
+
+              // traer coleccion de comentario 
+
+              ClearCollect(colComentariosDocumentos,Filter(tab_comentarios_documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_documento = LookUp(colDocumentosVer,id_col = _numeroDocumentoSeleccionado).ID));
+              Set(_verComentarios,true);
+
+              Set(_spinner,false);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Comentarios"
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =168
+            X: =171
+            Y: =970
+      - Image18_4:
+          Control: Image@2.2.3
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =40
+            Image: =Vector
+            OnSelect: |-
+              =If(_numeroDocumentoSeleccionado = 1 && _numeroDocumentoSeleccionado < Last(colDocumentosVer).id_col,
+
+              Set(_numeroDocumentoSeleccionado,_numeroDocumentoSeleccionado+1))
+            TabIndex: =0
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =40
+            X: =1028
+            Y: =958
+      - Image18_8:
+          Control: Image@2.2.3
+          Group: Group12_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =40
+            Image: ='Vector (1)'
+            OnSelect: |-
+              =If(_numeroDocumentoSeleccionado > 1,
+
+              Set(_numeroDocumentoSeleccionado,_numeroDocumentoSeleccionado-1))
+            TabIndex: =0
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =40
+            X: =890
+            Y: =958
+      - Label1_113:
+          Control: Label@2.5.1
+          Group: Group12_1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(207, 182, 157, 1)
+            Font: =Font.Lato
+            Height: =63
+            Size: =20
+            Text: =_numeroDocumentoSeleccionado&"/"&CountRows(colDocumentosVer)
+            Visible: =_visibleVerDocumentoSeleccionado
+            Width: =86
+            X: =938
+            Y: =946
+      - Button2_121:
+          Control: Classic/Button@2.2.0
+          Group: Group13
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            BorderThickness: =0
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =RGBA(255,255,255,0.50)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =1080
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =22
+            Text: =
+            Visible: =_verComentarios
+            Width: =1919
+      - Button2_124:
+          Control: Classic/Button@2.2.0
+          Group: Group13
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =Color.White
+            DisplayMode: =DisplayMode.Disabled
+            Fill: "=If(\r\n    _indicadoresVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+            Font: =Font.'Open Sans'
+            Height: =593
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =22
+            Text: =
+            Visible: =_verComentarios
+            Width: =1459
+            X: =247
+            Y: =220
+      - Button2_506:
+          Control: Classic/Button@2.2.0
+          Group: Group13
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |-
+              =
+
+              Set(_verComentarios,false)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Cerrar"
+            Visible: =_verComentarios
+            Width: =133
+            X: =904
+            Y: =723
+      - TextCanvas6_5:
+          Control: Text@0.0.51
+          Group: Group13
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Font: =Font.Lato
+            FontColor: =RGBA(110, 93, 71, 1)
+            Height: =77
+            Size: =25
+            Text: ="Comentarios"
+            Visible: =_verComentarios
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =596
+            X: =681
+            Y: =291
+      - Gallery1_11:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Group: Group13
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =256
+            Items: =colComentariosDocumentos
+            TemplateSize: =127
+            Visible: =_verComentarios
+            Width: =1358
+            X: =300
+            Y: =420
+          Children:
+            - TextInputCanvas1_84:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =127
+                  Value: =ThisItem.comentarios
+                  Width: =639
+                  X: =31
+            - Rectangle8_68:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(218, 195, 177, 0.5)
+                  Height: =3
+                  Width: =1322
+                  X: =12
+                  Y: =126
+            - TextInputCanvas1_85:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =127
+                  Value: =ThisItem.correo_quien_comenta
+                  Width: =426
+                  X: =689
+            - TextInputCanvas1_86:
+                Control: TextInput@0.0.54
+                Properties:
+                  Fill: =RGBA(132, 40, 38, 0)
+                  FontSize: =22
+                  Height: =127
+                  Value: =ThisItem.fk_rol_quien_comenta
+                  Width: =183
+                  X: =1164
+      - TextInputCanvas1_87:
+          Control: TextInput@0.0.54
+          Group: Group13
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Documento"
+            Visible: =_verComentarios
+            Width: =254
+            X: =339
+            Y: =378
+      - TextInputCanvas1_88:
+          Control: TextInput@0.0.54
+          Group: Group13
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Correo"
+            Visible: =_verComentarios
+            Width: =102
+            X: =1049
+            Y: =378
+      - TextInputCanvas1_89:
+          Control: TextInput@0.0.54
+          Group: Group13
+          Properties:
+            Fill: =RGBA(132, 40, 38, 0)
+            FontSize: =22
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Value: ="Rol"
+            Visible: =_verComentarios
+            Width: =127
+            X: =1492
+            Y: =378
+      - Button2_507:
+          Control: Classic/Button@2.2.0
+          Group: Group13
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |-
+              =
+
+              Set(_agregarComentarios,true)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Agregar"
+            Visible: =_verComentarios
+            Width: =133
+            X: =1512
+            Y: =257
+      - Button2_126:
+          Control: Classic/Button@2.2.0
+          Group: Group14
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            BorderThickness: =0
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =RGBA(255,255,255,0.50)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =1080
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =22
+            Text: =
+            Visible: =_agregarComentarios
+            Width: =1919
+            X: =1
+      - Button2_127:
+          Control: Classic/Button@2.2.0
+          Group: Group14
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =Color.White
+            DisplayMode: =DisplayMode.Disabled
+            Fill: "=If(\r\n    _indicadoresVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+            Font: =Font.'Open Sans'
+            Height: =593
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =22
+            Text: =
+            Visible: =_agregarComentarios
+            Width: =1459
+            X: =248
+            Y: =220
+      - Button2_508:
+          Control: Classic/Button@2.2.0
+          Group: Group14
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |-
+              =
+
+              Set(_agregarComentarios,false)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Cerrar"
+            Visible: =_agregarComentarios
+            Width: =133
+            X: =635
+            Y: =723
+      - Button2_509:
+          Control: Classic/Button@2.2.0
+          Group: Group14
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: |+
+              =
+
+              Set(_spinner,true);
+
+              If(IsBlank(TextInputCanvas2.Value),Notify("El campo de comentarios debe estar diligenciado",NotificationType.Error,6000),
+
+              Patch(tab_comentarios_documentos,Defaults(tab_comentarios_documentos),{comentarios:TextInputCanvas2.Value,
+              fk_id_lead:_itemSeleccionadoProspecto1.ID,
+              correo_quien_comenta:_infoUsuarioLoggeado.Email,
+              fk_id_documento:LookUp(colDocumentosVer,id_col = _numeroDocumentoSeleccionado).ID,
+              fk_rol_quien_comenta:2
+
+              });
+
+              Reset(TextInputCanvas2);
+
+
+              // traer coleccion de comentario 
+
+              ClearCollect(colComentariosDocumentos,Filter(tab_comentarios_documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_documento = LookUp(colDocumentosVer,id_col = _numeroDocumentoSeleccionado).ID));
+              Set(_verComentarios,true);
+              Set(_agregarComentarios,false)
+
+              );
+              Set(_spinner,false);
+
+
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Guardar"
+            Visible: =_agregarComentarios
+            Width: =133
+            X: =1186
+            Y: =723
+      - TextInputCanvas2:
+          Control: TextInput@0.0.54
+          Group: Group14
+          Properties:
+            FontSize: =22
+            Height: =245
+            Mode: ='TextInputCanvas.Mode'.Multiline
+            Visible: =_agregarComentarios
+            Width: =1225
+            X: =364
+            Y: =388
+      - TextCanvas6_6:
+          Control: Text@0.0.51
+          Group: Group14
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Font: =Font.Lato
+            FontColor: =RGBA(110, 93, 71, 1)
+            Height: =46
+            Size: =25
+            Text: ="Comentario:"
+            Visible: =_agregarComentarios
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =151
+            X: =364
+            Y: =342
+      - Button2_137:
+          Control: Classic/Button@2.2.0
+          Group: mensaje_pop_up_2
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            BorderThickness: =0
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =RGBA(255,255,255,0.50)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =1080
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =22
+            Text: =
+            Visible: =_mensajeConfirmacion
+            Width: =1920
+      - Button2_138:
+          Control: Classic/Button@2.2.0
+          Group: mensaje_pop_up_2
+          Properties:
+            BorderColor: =RGBA(186, 156, 137, 1)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(186, 156, 137, 1)
+            DisabledColor: =Color.White
+            DisabledFill: =Color.White
+            DisplayMode: =DisplayMode.Disabled
+            Fill: "=If(\r\n    _indicadoresVista,\r\n    RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw),  // Color cuando el grupo es visible \r\n    RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema) // Color original\r\n    \r\n)"
+            Font: =Font.'Open Sans'
+            Height: =361
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+            PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =22
+            Text: =
+            Visible: =_mensajeConfirmacion
+            Width: =768
+            X: =587
+            Y: =337
+      - Button2_523:
+          Control: Classic/Button@2.2.0
+          Group: mensaje_pop_up_2
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -55%)
+            BorderThickness: =0
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(186, 156, 137, 1)
+            Font: =Font.'Open Sans'
+            Height: =52
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =Self.Fill
+            OnSelect: =Set(_mensajeConfirmacion,false)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =16
+            Text: ="Sí"
+            Visible: =_mensajeConfirmacion
+            Width: =133
+            X: =891
+            Y: =598
+      - TextCanvas6_9:
+          Control: Text@0.0.51
+          Group: mensaje_pop_up_2
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Font: =Font.Lato
+            FontColor: =RGBA(110, 93, 71, 1)
+            Height: =88
+            Size: =25
+            Text: ="Aun no se ha asignado el ID nesp_cop para el cliente."
+            Visible: =_mensajeConfirmacion
+            Weight: ='TextCanvas.Weight'.Semibold
+            Width: =455
+            X: =732
+            Y: =437
+      - Rectangle4_8:
+          Control: Rectangle@2.3.0
+          Group: Spinner_8
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(243, 239, 230, 0.45)
+            Height: =1080
+            Visible: =_spinner
+            Width: =1919
+      - Image20_8:
+          Control: Image@2.2.3
+          Group: Spinner_8
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =435
+            Image: ='Gif nesspreso'
+            Visible: =_spinner
+            Width: =822
+            X: =618
+            Y: =322

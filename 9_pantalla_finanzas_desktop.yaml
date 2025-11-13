@@ -1,0 +1,464 @@
+Screens:
+  pantalla_finanzas_desktop:
+    Properties:
+      Fill: |-
+        =RGBA(243,239,230, 1
+        )
+      Height: =_altoDesktop
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Set(_spinner,true);
+        Set(_vencidasVista,false);
+        Set(_activasVista,false);
+        Set(_indicadoresVista,true);
+        Set(_mesVista,true);
+        Set(_semestreVista,false);
+        Set(_anioVista,false);
+
+        //coleccion leads creados
+        ClearCollect(
+            colLeads,
+            Filter(
+                tab_leads,
+                id_estado_negociacion = 4 Or id_estado_negociacion = 7
+            )
+        );
+        Set(_spinner,false);
+      Width: =_anchoDesktop
+    Children:
+      - Image2_38:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =80
+            Image: =nesp_cop
+            Width: =500
+            X: =811
+            Y: =10
+      - Label4_34:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Right
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =72
+            Size: =20
+            Text: =User().FullName
+            Width: =500
+            X: =1268
+            Y: =10
+      - Image11_25:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =60
+            Image: =picture_15506108
+            Width: =100
+            X: =1768
+            Y: =15
+      - Rectangle8_14:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(218, 195, 177, 0.5)
+            Height: =2
+            Width: =1900
+            X: =10
+            Y: =95
+      - Container1_11:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(218, 195, 177, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(218, 195, 177, 1)
+            Height: =935
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Width: =334
+            X: =23
+            Y: =125
+          Children:
+            - Gallery4_24:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =814
+                  Items: =col_navegacion_menu
+                  ShowScrollbar: =false
+                  TemplateSize: =78
+                  Width: =303
+                  X: =27
+                  Y: =26
+                Children:
+                  - Container7_11:
+                      Control: GroupContainer@1.3.0
+                      Variant: ManualLayout
+                      Properties:
+                        BorderStyle: =BorderStyle.None
+                        DropShadow: =If(ThisItem.ID = _idSeleccionadoPantalla, DropShadow.Semibold, DropShadow.None)
+                        Height: =70
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Width: =283
+                        X: =8
+                      Children:
+                        - Rectangle5_35:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                              Height: =70
+                              OnSelect: =
+                              Visible: =ThisItem.ID = _idSeleccionadoPantalla
+                              Width: =283
+                  - Button2_369:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Align: =Align.Left
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =1
+                        Color: =RGBA(85, 69, 49, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisabledColor: =Color.Transparent
+                        Fill: =Color.Transparent
+                        Font: =Font.'Open Sans'
+                        Height: =71
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        HoverFill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        OnSelect: |
+                          =Set(_idSeleccionadoPantalla,ThisItem.ID);
+
+                          Navigate(ThisItem.pantalla)
+                        PaddingLeft: =60
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =RGBA(_r_fondo_crema,_g_fondo_crema, _b_fondo_crema, _a_fondo_crema)
+                        PressedFill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        RadiusBottomLeft: =20
+                        RadiusBottomRight: =20
+                        RadiusTopLeft: =20
+                        RadiusTopRight: =20
+                        Size: =20
+                        Text: =ThisItem.nombre
+                        Width: =283
+                        X: =8
+                  - Rectangle5_36:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(_rBotonClaro,_gBotonClaro,_bBotonClaro,_aBotonClaro)
+                        Height: =71
+                        OnSelect: =Select(Parent)
+                        Visible: =false
+                        Width: =283
+                        X: =8
+                  - Image15_15:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =35
+                        Image: =ThisItem.img
+                        OnSelect: =Select(Parent)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =35
+                        X: =22
+                        Y: =18
+      - Container2_52:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =RGBA(243, 239, 230, 1)
+            BorderThickness: =1
+            DropShadow: =DropShadow.Bold
+            Fill: =RGBA(243,239,230,255)
+            Height: =930
+            RadiusBottomLeft: =30
+            RadiusBottomRight: =30
+            RadiusTopLeft: =30
+            RadiusTopRight: =30
+            Visible: =_indicadoresVista
+            Width: =1510
+            X: =385
+            Y: =125
+          Children:
+            - Container5_17:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                  Height: =70
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  X: =59
+                  Y: =60
+                Children:
+                  - ComboBox1_46:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =0
+                        ChevronBackground: =Color.Transparent
+                        ChevronFill: =RGBA(92, 75, 55, 1)
+                        ChevronHoverBackground: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["Value"]
+                        Fill: =RGBA(_r_boton_claro_nw, _g_boton_claro_nw, _b_boton_claro_nw,_a_boton_claro_nw)
+                        Font: =Font.'Open Sans'
+                        Height: =60
+                        HoverBorderColor: =RGBA(_r_fondo_claro,_g_fondo_claro,_b_fondo_claro,_a_fondo_claro)
+                        HoverFill: =RGBA(235, 222, 184, 1)
+                        InputTextPlaceholder: ="Razón Social"
+                        Items: =Distinct(colLeads,razon_social_prospecto)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(198, 179, 126, 1)
+                        Size: =22
+                        Width: =452
+                        X: =27
+                        Y: =3
+            - Container_Galeria_5:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Regular
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =707
+                  RadiusBottomLeft: =30
+                  RadiusBottomRight: =30
+                  RadiusTopLeft: =30
+                  RadiusTopRight: =30
+                  Width: =1441
+                  X: =39
+                  Y: =183
+                Children:
+                  - Label5_30:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Size: =23
+                        Text: ="Razón Social"
+                        Width: =290
+                        X: =18
+                        Y: =24
+                  - Label5_31:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Size: =23
+                        Text: ="Solicitante"
+                        Width: =290
+                        X: =517
+                        Y: =24
+                  - Label5_49:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Size: =23
+                        Text: ="Fecha"
+                        Width: =343
+                        X: =842
+                        Y: =24
+                  - Label5_50:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(110, 93, 71, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =54
+                        OnSelect: =
+                        Size: =23
+                        Text: ="Estado"
+                        Width: =290
+                        X: =1151
+                        Y: =24
+                  - Icon7_15:
+                      Control: Classic/Icon@2.5.0
+                      Group: Group2_15
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =39
+                        Icon: =Icon.ArrowUp
+                        Width: =39
+                        X: =1353
+                        Y: =31
+                  - Icon8_15:
+                      Control: Classic/Icon@2.5.0
+                      Group: Group2_15
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(92, 75, 55, 1)
+                        Height: =39
+                        Icon: =Icon.ArrowDown
+                        Width: =39
+                        X: =1370
+                        Y: =31
+                  - Rectangle8_12:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(218, 195, 177, 0.5)
+                        Height: =2
+                        Width: =1441
+                        Y: =95
+                  - Gallery1_7:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        BorderStyle: =BorderStyle.None
+                        Height: =514
+                        Items: |-
+                          =Filter(colLeads, id_estado_negociacion = 4,
+                          IsBlank(ComboBox1_46.Selected.Value)  || ComboBox1_46.Selected.Value = razon_social_prospecto
+
+
+                          )
+                        OnSelect: =
+                        TabIndex: =0
+                        TemplateSize: =112
+                        Transition: =Transition.Pop
+                        Width: =1423
+                        X: =18
+                        Y: =141
+                      Children:
+                        - Container6_8:
+                            Control: GroupContainer@1.3.0
+                            Variant: ManualLayout
+                            Properties:
+                              BorderColor: =RGBA(214, 221, 224, 1)
+                              BorderThickness: =2
+                              DropShadow: =DropShadow.Semibold
+                              Height: =84
+                              RadiusBottomLeft: =30
+                              RadiusBottomRight: =30
+                              RadiusTopLeft: =30
+                              RadiusTopRight: =30
+                              Width: =1382
+                              X: =10
+                              Y: =5
+                        - Label5_129:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =20
+                              PaddingLeft: =20
+                              PaddingRight: =20
+                              PaddingTop: =20
+                              Text: =ThisItem.razon_social_prospecto
+                              Width: =378
+                              X: =37
+                              Y: =21
+                        - Label5_332:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              Text: =ThisItem.correo_comercial_creador
+                              Width: =466
+                              X: =404
+                              Y: =21
+                        - Label5_333:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              Text: =ThisItem.fecha_creacion_lead
+                              Width: =280
+                              X: =853
+                              Y: =21
+                        - Label5_334:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Color: =RGBA(85, 69, 49, 1)
+                              Font: =Font.Lato
+                              Height: =52
+                              OnSelect: =Select(Parent)
+                              Text: =LookUp(colEstadoNegociaciones, id_estado_negociacion =  ThisItem.id_estado_negociacion,estado_negociacion)
+                              Width: =280
+                              X: =1112
+                              Y: =21
+                        - Button1_20:
+                            Control: Classic/Button@2.2.0
+                            Properties:
+                              BorderColor: =Color.Transparent
+                              Color: =Color.Transparent
+                              DisabledBorderColor: =Color.Transparent
+                              DisabledColor: =Color.Transparent
+                              DisabledFill: =Color.Transparent
+                              Fill: =Color.Transparent
+                              Font: =Font.'Open Sans'
+                              Height: =106
+                              HoverBorderColor: =Color.Transparent
+                              HoverColor: =Color.Transparent
+                              HoverFill: =Color.Transparent
+                              OnSelect: |-
+                                =Set(_itemSeleccionadoProspecto1,ThisItem);
+                                Set(_consulta,true);
+                                Navigate(finanzas_documentos_datos);
+                                    ClearCollect(
+                                        colDocumentosProspecto,
+                                        Filter(
+                                            tab_documentos_por_cliente,
+                                            fk_id_lead = _itemSeleccionadoProspecto1.ID
+                                        )
+                                    );
+                              PressedBorderColor: =Self.Fill
+                              PressedColor: =Self.Fill
+                              PressedFill: =Self.Color
+                              Width: =1403
+                              X: =10
+                              Y: =5

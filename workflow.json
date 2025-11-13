@@ -1,0 +1,366 @@
+{
+  "type": "OpenApiConnection",
+  "inputs": {
+    "parameters": {
+      "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
+      "table": "326c61e6-3942-4e9a-ae73-4d4f72976dcb"
+    },
+    "host": {
+      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+      "connection": "shared_sharepointonline_1",
+      "operationId": "GetOnNewItems"
+    }
+  },
+  "recurrence": {
+    "interval": 5,
+    "frequency": "Minute"
+  },
+  "splitOn": "@triggerOutputs()?['body/value']",
+  "metadata": {
+    "operationMetadataId": "351d10e5-2eb9-4ccc-b936-feedaa0d6372"
+  }
+}
+
+{
+  "type": "InitializeVariable",
+  "inputs": {
+    "variables": [
+      {
+        "name": "nombreArchivo",
+        "type": "string",
+        "value": "\"\""
+      }
+    ]
+  },
+  "runAfter": {},
+  "metadata": {
+    "operationMetadataId": "e5e59a20-3fbb-4cd6-a033-67f15c912f14"
+  }
+}
+
+{
+  "type": "Compose",
+  "inputs": "@triggerBody()",
+  "runAfter": {
+    "Initialize_variable": [
+      "Succeeded"
+    ]
+  },
+  "metadata": {
+    "operationMetadataId": "45f2c637-2593-4410-9023-26420e243739"
+  }
+}
+
+{
+  "type": "ParseJson",
+  "inputs": {
+    "content": "@triggerBody()",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "@@odata.etag": {
+          "type": "string"
+        },
+        "ItemInternalId": {
+          "type": "string"
+        },
+        "ID": {
+          "type": "integer"
+        },
+        "fk_id_nesp_corp_cliente": {
+          "type": "integer"
+        },
+        "estado_documento": {
+          "type": "string"
+        },
+        "fk_id_lead": {
+          "type": "integer"
+        },
+        "fk_id_doc": {
+          "type": "integer"
+        },
+        "nompre_tipo_de_documento": {
+          "type": "string"
+        },
+        "nombre_carpeta_cliente": {
+          "type": "string"
+        },
+        "Modified": {
+          "type": "string"
+        },
+        "Created": {
+          "type": "string"
+        },
+        "Author": {
+          "type": "object",
+          "properties": {
+            "@@odata.type": {
+              "type": "string"
+            },
+            "Claims": {
+              "type": "string"
+            },
+            "DisplayName": {
+              "type": "string"
+            },
+            "Email": {
+              "type": "string"
+            },
+            "Picture": {
+              "type": "string"
+            },
+            "Department": {},
+            "JobTitle": {}
+          }
+        },
+        "Author#Claims": {
+          "type": "string"
+        },
+        "Editor": {
+          "type": "object",
+          "properties": {
+            "@@odata.type": {
+              "type": "string"
+            },
+            "Claims": {
+              "type": "string"
+            },
+            "DisplayName": {
+              "type": "string"
+            },
+            "Email": {
+              "type": "string"
+            },
+            "Picture": {
+              "type": "string"
+            },
+            "Department": {},
+            "JobTitle": {}
+          }
+        },
+        "Editor#Claims": {
+          "type": "string"
+        },
+        "{Identifier}": {
+          "type": "string"
+        },
+        "{IsFolder}": {
+          "type": "boolean"
+        },
+        "{Thumbnail}": {
+          "type": "object",
+          "properties": {
+            "Large": {},
+            "Medium": {},
+            "Small": {}
+          }
+        },
+        "{Link}": {
+          "type": "string"
+        },
+        "{Name}": {
+          "type": "string"
+        },
+        "{FilenameWithExtension}": {
+          "type": "string"
+        },
+        "{Path}": {
+          "type": "string"
+        },
+        "{FullPath}": {
+          "type": "string"
+        },
+        "{ContentType}": {
+          "type": "object",
+          "properties": {
+            "@@odata.type": {
+              "type": "string"
+            },
+            "Id": {
+              "type": "string"
+            },
+            "Name": {
+              "type": "string"
+            }
+          }
+        },
+        "{ContentType}#Id": {
+          "type": "string"
+        },
+        "{HasAttachments}": {
+          "type": "boolean"
+        },
+        "{VersionNumber}": {
+          "type": "string"
+        },
+        "{TriggerWindowStartToken}": {
+          "type": "string"
+        },
+        "{TriggerWindowEndToken}": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "runAfter": {
+    "traer_el_cuerpo_del_item_creado_para_crear_esquema": [
+      "Succeeded"
+    ]
+  },
+  "metadata": {
+    "operationMetadataId": "941c1212-e17e-456d-b914-6989f03443d2"
+  }
+}
+
+{
+  "type": "Compose",
+  "inputs": "@body('esquema_de_la_informacion_del_item_JSON')?['nombre_carpeta_cliente']",
+  "runAfter": {
+    "esquema_de_la_informacion_del_item_JSON": [
+      "Succeeded"
+    ]
+  },
+  "metadata": {
+    "operationMetadataId": "733b660a-7818-419d-817e-ea74722d8c36"
+  }
+}
+{
+  "type": "Foreach",
+  "foreach": "@outputs('Obtener_datos_adjuntos')?['body']",
+  "actions": {
+    "Obtener_contenido_de_archivo": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "parameters": {
+          "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
+          "id": "@items('For_each')?['Id']",
+          "inferContentType": true
+        },
+        "host": {
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+          "connection": "shared_sharepointonline_1",
+          "operationId": "GetFileContent"
+        }
+      },
+      "metadata": {
+        "operationMetadataId": "17695f61-d8c1-47e1-9a39-012fb2c43708"
+      }
+    },
+    "pasar_a_base_g4_el_contenido_del_archivo": {
+      "type": "Compose",
+      "inputs": "@dataUri(body('Obtener_contenido_de_archivo'))",
+      "runAfter": {
+        "Obtener_contenido_de_archivo": [
+          "Succeeded"
+        ]
+      },
+      "metadata": {
+        "operationMetadataId": "c99c2c97-2455-448b-a651-a256e5c27dab"
+      }
+    },
+    "Establecer_variable": {
+      "type": "SetVariable",
+      "inputs": {
+        "name": "nombreArchivo",
+        "value": "@items('For_each')?['DisplayName']"
+      },
+      "runAfter": {
+        "pasar_a_base_g4_el_contenido_del_archivo": [
+          "Succeeded"
+        ]
+      },
+      "metadata": {
+        "operationMetadataId": "5fdfb15e-fa0e-45bb-9ad3-764070e86bfc"
+      }
+    },
+    "Crear_archivo": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "parameters": {
+          "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
+          "folderPath": "/Shared Documents/CarpetaClientesB2B/@{outputs('Nombre_Empresa')}/@{triggerBody()?['nompre_tipo_de_documento']}",
+          "name": "@items('For_each')?['DisplayName']",
+          "body": "@body('Obtener_contenido_de_archivo')"
+        },
+        "host": {
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+          "connection": "shared_sharepointonline_1",
+          "operationId": "CreateFile"
+        }
+      },
+      "runAfter": {
+        "Establecer_variable": [
+          "Succeeded"
+        ]
+      },
+      "runtimeConfiguration": {
+        "contentTransfer": {
+          "transferMode": "Chunked"
+        }
+      },
+      "metadata": {
+        "operationMetadataId": "dab11c23-3120-4de1-a307-27478a14f8ad"
+      }
+    },
+    "Actualizar_elemento": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "parameters": {
+          "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
+          "table": "39087977-3de1-4f25-8e5f-d73b3b6b7734",
+          "id": "@triggerBody()?['ID']",
+          "item/fk_id_documento_sharepoint": "@outputs('Crear_archivo')?['body/ItemId']",
+          "item/data_uri": "@outputs('pasar_a_base_g4_el_contenido_del_archivo')",
+          "item/nombre_documento": "@outputs('Crear_archivo')?['body/DisplayName']"
+        },
+        "host": {
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+          "connection": "shared_sharepointonline_1",
+          "operationId": "PatchItem"
+        }
+      },
+      "runAfter": {
+        "Actualizar_propiedades_del_archivo": [
+          "Succeeded"
+        ]
+      },
+      "metadata": {
+        "operationMetadataId": "56087f25-c74e-405a-b8b9-94366863b52d"
+      }
+    },
+    "Actualizar_propiedades_del_archivo": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "parameters": {
+          "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
+          "table": "415823cb-80d4-40ad-b976-49ebdad7c394",
+          "id": "@outputs('Crear_archivo')?['body/ItemId']",
+          "item/fk_id_lead": "@triggerBody()?['fk_id_lead']",
+          "item/fk_id_nesp_corp": "@triggerBody()?['fk_id_nesp_corp_cliente']",
+          "item/fk_id_tipo_documento": "@triggerBody()?['fk_id_doc']"
+        },
+        "host": {
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+          "connection": "shared_sharepointonline_1",
+          "operationId": "PatchFileItem"
+        }
+      },
+      "runAfter": {
+        "Crear_archivo": [
+          "Succeeded"
+        ]
+      },
+      "metadata": {
+        "operationMetadataId": "01ac6e92-04c4-4b11-9682-7d9770e4220e"
+      }
+    }
+  },
+  "runAfter": {
+    "Obtener_datos_adjuntos": [
+      "Succeeded"
+    ]
+  },
+  "metadata": {
+    "operationMetadataId": "81e2df5f-5577-4e57-9cb6-806676b482b5"
+  }
+}

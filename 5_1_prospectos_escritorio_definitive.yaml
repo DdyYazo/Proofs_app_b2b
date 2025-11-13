@@ -3059,7 +3059,7 @@ Screens:
                           Patch(
                               tab_cuentas,
                               _itemSeleccionadoProspect,
-                              {RequiereCredito: true}
+                              {RequiereCredito: 1}
                           );
                           Reset(RadioButton_Contado_Client);
                           Set(
@@ -3146,10 +3146,10 @@ Screens:
                       Properties:
                         DefaultSelectedItems: =[_itemSeleccionadoProspect.PlazoCredito]
                         Fill: =RGBA(214, 21, 21, 0)
-                        FontSize: =22
+                        FontSize: =15
                         Height: =40
-                        Items: =["30","45","60", "90"]
-                        OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_cuentas,LookUp(tab_cuentas,ID = _itemSeleccionadoProspect.ID)
+                        Items: =Choices(tab_cuentas.PlazoCredito)
+                        OnChange: =If(IsBlank(Self.Selected.Value),"",Patch(tab_cuentas,LookUp(tab_cuentas,ID = _itemSeleccionadoProspect.ID)))
                         Visible: =_necesitaCredito = 1
                         Width: =100
                         X: =1243
@@ -4563,29 +4563,29 @@ Screens:
                   Text: ="SOLICITAR APROBACIÓN"
                   Visible: |-
                     =_documentosVista && If(
-                        _itemSeleccionadoProspecto1.fk_estado_negociacion = 2 Or _itemSeleccionadoProspecto1.id_estado_negociacion = 7,
+                        _itemSeleccionadoProspect.fk_estado_negociacion = 2 Or _itemSeleccionadoProspect.fk_estado_negociacion = 7,
                         If(
-                            _necesitaCredito = 1,
+                            _necesitaCredito = 1;
                             If(
-                                CountRows(Filter(colDocumentosProspecto, estado_documento = "1")) = Sum(
+                                CountRows(Filter(colDocumentosProspecto; fk_estadoDocumento = 1)) = Sum(
                                     Filter(
-                                        colDocumentosCliente,
+                                        colDocumentosCliente;
                                         ID <> 10
-                                    ),
+                                    );
                                     cantidad_de_documentos
-                                ),
-                                true,
+                                );
+                                true;
                                 false
-                            ),
-                            CountRows(Filter(colDocumentosProspecto, estado_documento = "1")) = Sum(
+                            );
+                            CountRows(Filter(colDocumentosProspecto; fk_estadoDocumento = 1)) = Sum(
                                 Filter(
-                                    colDocumentosCliente,
-                                    tipo_documento = 1,
+                                    colDocumentosCliente;
+                                    tipo_documento = 1;
                                     ID <> 10
-                                ),
+                                );
                                 cantidad_de_documentos
-                            ),
-                            true,
+                            );
+                            true;
                             false
                         ),
                         false
@@ -4774,7 +4774,7 @@ Screens:
             RadiusTopLeft: =30
             RadiusTopRight: =30
             Width: =250
-            X: '=If(_itemSeleccionadoProspecto1.requiere_documentos = 1,1438,1228)  '
+            X: '=If(_itemSeleccionadoProspect.RequiereDocumentos = 1,1438,1228)  '
             Y: =140
           Children:
             - Button_Edit_secc_seriales_verProspec:
@@ -4888,10 +4888,11 @@ Screens:
                         _solicitudVista,
                         false
                     );
+                    // Actualizar la variable principal con datos frescos de la tabla
                     Set(
-                        _itemSeleccionadoProspecto1,
+                        _itemSeleccionadoProspect;
                         LookUp(
-                            tab_cuentas,
+                            tab_cuentas;
                             ID = _itemSeleccionadoProspect.ID
                         )
                     );
@@ -5271,7 +5272,7 @@ Screens:
                   true
               );
               If(
-                  CountRows(DataCardValue23.Attachments) = 0,
+                  CountRows(DataCardValue3.Attachments) = 0,
                   Notify(
                       "Debe adjuntar un documento",
                       NotificationType.Error,
@@ -5285,8 +5286,8 @@ Screens:
                   ClearCollect(
                       colDocumentosProspecto,
                       Filter(
-                          tab_documentos_por_cliente,
-                          fk_id_lead = _itemSeleccionadoProspecto1.ID
+                          tab_documentos_porCuenta,
+                          fk_cuenta = _itemSeleccionadoProspect.ID
                       )
                   )
               );
@@ -5362,90 +5363,6 @@ Screens:
             X: =266
             Y: =336
           Children:
-            - fk_id_nesp_corp_cliente_DataCard3:
-                Control: TypedDataCard@1.0.7
-                Variant: ClassicNumberEdit
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_nesp_corp_cliente"
-                  Default: =Value(_itemSeleccionadoProspecto1.id_nesp_corp_nit)
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_nesp_corp_cliente)
-                  Required: =false
-                  Update: =Value(_itemSeleccionadoProspecto1.id_nesp_corp_nit)
-                  Width: =1387
-                  X: =0
-                  Y: =0
-                Children:
-                  - DataCardKey20:
-                      Control: Label@2.5.1
-                      MetadataKey: FieldName
-                      Properties:
-                        AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 18, 107, 1)
-                        Font: =Font.'Open Sans'
-                        Height: =48
-                        Text: =Parent.DisplayName
-                        Width: =Parent.Width - 60
-                        Wrap: =false
-                        X: =30
-                        Y: =10
-                  - DataCardValue20:
-                      Control: Classic/TextInput@2.3.2
-                      MetadataKey: FieldValue
-                      Properties:
-                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        Default: =Parent.Default
-                        DelayOutput: =true
-                        DisplayMode: =Parent.DisplayMode
-                        Font: =Font.'Open Sans'
-                        Format: =TextFormat.Number
-                        HoverBorderColor: =RGBA(0, 18, 107, 1)
-                        HoverFill: =RGBA(186, 202, 226, 1)
-                        PaddingLeft: =5
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Tooltip: =Parent.DisplayName
-                        Width: =Parent.Width - 60
-                        X: =30
-                        Y: =DataCardKey20.Y + DataCardKey20.Height + 5
-                  - ErrorMessage20:
-                      Control: Label@2.5.1
-                      MetadataKey: ErrorMessage
-                      Properties:
-                        AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(168, 0, 0, 1)
-                        Font: =Font.'Open Sans'
-                        FontWeight: =FontWeight.Semibold
-                        Height: =10
-                        Live: =Live.Assertive
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
-                        Size: =24
-                        Text: =Parent.Error
-                        Visible: =Parent.DisplayMode=DisplayMode.Edit
-                        Width: =Parent.Width - 60
-                        X: =30
-                        Y: =DataCardValue20.Y + DataCardValue20.Height
-                  - StarVisible20:
-                      Control: Label@2.5.1
-                      MetadataKey: FieldRequired
-                      Properties:
-                        Align: =Align.Center
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 18, 107, 1)
-                        Font: =Font.'Open Sans'
-                        Height: =DataCardKey20.Height
-                        Text: ="*"
-                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                        Width: =30
-                        Wrap: =false
-                        Y: =DataCardKey20.Y
             - Datos adjuntos_DataCard2:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicAttachmentsEdit
@@ -5453,12 +5370,13 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="{Attachments}"
                   Default: =ThisItem.'Datos adjuntos'
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,'Datos adjuntos')
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta];DataSourceInfo.DisplayName;"Datos adjuntos")
                   Required: =false
                   Update: =DataCardValue23.Attachments
+                  Visible: =false
                   Width: =1387
                   X: =0
-                  Y: =1
+                  Y: =0
                 Children:
                   - DataCardKey23:
                       Control: Label@2.5.1
@@ -5576,21 +5494,107 @@ Screens:
                         Width: =1282
                         X: =30
                         Y: =28
-            - fk_id_lead_DataCard2:
+            - fk_cuenta_DataCard1:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicNumberEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_lead"
-                  Default: =Value(_itemSeleccionadoProspecto1.ID)
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_lead)
+                  DataField: ="fk_cuenta"
+                  Default: =Value(_itemSeleccionadoProspect.ID)
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,fk_cuenta)
                   Required: =false
-                  Update: =Value(_itemSeleccionadoProspecto1.ID)
+                  Update: =Value(_itemSeleccionadoProspect.ID)
+                  Visible: =false
+                  Width: =1387
+                  X: =0
+                  Y: =1
+                Children:
+                  - DataCardKey1:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue1:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                  - ErrorMessage1:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =24
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue1.Y + DataCardValue1.Height
+                  - StarVisible1:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey1.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey1.Y
+            - fk_tipoDocumento_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicNumberEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="fk_tipoDocumento"
+                  Default: =_itemSeleccionadoDocumentos.ID
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,fk_tipoDocumento)
+                  Required: =false
+                  Update: =_itemSeleccionadoDocumentos.ID
+                  Visible: =false
                   Width: =1387
                   X: =0
                   Y: =2
                 Children:
-                  - DataCardKey21:
+                  - DataCardKey2:
                       Control: Label@2.5.1
                       MetadataKey: FieldName
                       Properties:
@@ -5604,7 +5608,7 @@ Screens:
                         Wrap: =false
                         X: =30
                         Y: =10
-                  - DataCardValue21:
+                  - DataCardValue2:
                       Control: Classic/TextInput@2.3.2
                       MetadataKey: FieldValue
                       Properties:
@@ -5624,8 +5628,8 @@ Screens:
                         Tooltip: =Parent.DisplayName
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardKey21.Y + DataCardKey21.Height + 5
-                  - ErrorMessage21:
+                        Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                  - ErrorMessage2:
                       Control: Label@2.5.1
                       MetadataKey: ErrorMessage
                       Properties:
@@ -5645,8 +5649,8 @@ Screens:
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardValue21.Y + DataCardValue21.Height
-                  - StarVisible21:
+                        Y: =DataCardValue2.Y + DataCardValue2.Height
+                  - StarVisible2:
                       Control: Label@2.5.1
                       MetadataKey: FieldRequired
                       Properties:
@@ -5654,29 +5658,27 @@ Screens:
                         BorderColor: =RGBA(0, 0, 0, 1)
                         Color: =RGBA(0, 18, 107, 1)
                         Font: =Font.'Open Sans'
-                        Height: =DataCardKey21.Height
+                        Height: =DataCardKey2.Height
                         Text: ="*"
                         Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                         Width: =30
                         Wrap: =false
-                        Y: =DataCardKey21.Y
-            - fk_id_doc_DataCard2:
+                        Y: =DataCardKey2.Y
+            - Datos adjuntos_DataCard3:
                 Control: TypedDataCard@1.0.7
-                Variant: ClassicNumberEdit
+                Variant: ClassicAttachmentsEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="fk_id_doc"
-                  Default: |-
-                    =
-                    _itemSeleccionadoDocumentos.ID
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,fk_id_doc)
+                  DataField: ="{Attachments}"
+                  Default: =ThisItem.'Datos adjuntos'
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,'Datos adjuntos')
                   Required: =false
-                  Update: =_itemSeleccionadoDocumentos.ID
+                  Update: =DataCardValue3.Attachments
                   Width: =1387
                   X: =0
                   Y: =3
                 Children:
-                  - DataCardKey24:
+                  - DataCardKey3:
                       Control: Label@2.5.1
                       MetadataKey: FieldName
                       Properties:
@@ -5686,32 +5688,12 @@ Screens:
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
+                        Visible: =false
                         Width: =Parent.Width - 60
                         Wrap: =false
                         X: =30
                         Y: =10
-                  - DataCardValue24:
-                      Control: Classic/TextInput@2.3.2
-                      MetadataKey: FieldValue
-                      Properties:
-                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        Default: =Parent.Default
-                        DelayOutput: =true
-                        DisplayMode: =Parent.DisplayMode
-                        Font: =Font.'Open Sans'
-                        Format: =TextFormat.Number
-                        HoverBorderColor: =RGBA(0, 18, 107, 1)
-                        HoverFill: =RGBA(186, 202, 226, 1)
-                        PaddingLeft: =5
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                        Tooltip: =Parent.DisplayName
-                        Width: =Parent.Width - 60
-                        X: =30
-                        Y: =DataCardKey24.Y + DataCardKey24.Height + 5
-                  - ErrorMessage24:
+                  - ErrorMessage3:
                       Control: Label@2.5.1
                       MetadataKey: ErrorMessage
                       Properties:
@@ -5731,8 +5713,8 @@ Screens:
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardValue24.Y + DataCardValue24.Height
-                  - StarVisible24:
+                        Y: =DataCardValue3.Y + DataCardValue3.Height
+                  - StarVisible3:
                       Control: Label@2.5.1
                       MetadataKey: FieldRequired
                       Properties:
@@ -5740,28 +5722,91 @@ Screens:
                         BorderColor: =RGBA(0, 0, 0, 1)
                         Color: =RGBA(0, 18, 107, 1)
                         Font: =Font.'Open Sans'
-                        Height: =DataCardKey24.Height
+                        Height: =DataCardKey3.Height
                         Text: ="*"
                         Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                         Width: =30
                         Wrap: =false
-                        Y: =DataCardKey24.Y
-            - nombre_carpeta_cliente_DataCard2:
+                        Y: =DataCardKey3.Y
+                  - Button2_8:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        BorderThickness: =4
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(186,182,176,255)
+                        DisabledColor: =Color.White
+                        DisabledFill: =Color.White
+                        DisplayMode: =DisplayMode.Disabled
+                        Fill: =RGBA(56, 96, 178, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =371
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        RadiusBottomLeft: =30
+                        RadiusBottomRight: =30
+                        RadiusTopLeft: =30
+                        RadiusTopRight: =30
+                        Size: =15
+                        Width: =1339
+                        X: =20
+                  - DataCardValue3:
+                      Control: Attachments@2.3.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        BorderThickness: =0
+                        DisplayMode: =Parent.DisplayMode
+                        DropTargetBackgroundColor: =RGBA(255, 255, 255, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =294
+                        HoverFill: =RGBA(222, 237, 252, 1)
+                        ItemColor: =RGBA(255, 255, 255, 1)
+                        ItemFill: =RGBA(56, 96, 178, 1)
+                        ItemHoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Parent.Default
+                        MaxAttachmentSize: =500
+                        MaxAttachments: =2
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(180, 214, 250, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =1282
+                        X: =48
+                        Y: =10
+                  - Image4_8:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Height: =150
+                        Image: ='google-docs'
+                        Width: =159
+                        X: =614
+                        Y: =110
+            - Nombre_carpeta_cliente_DataCard1:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicTextualEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="nombre_carpeta_cliente"
-                  Default: =Substitute(_itemSeleccionadoProspecto1.razon_social_prospecto," ","")
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,nombre_carpeta_cliente)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, nombre_carpeta_cliente)
+                  DataField: ="Nombre_carpeta_cliente"
+                  Default: =Substitute(_itemSeleccionadoProspect.RazonSocial," ","")
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Nombre_carpeta_cliente)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, Nombre_carpeta_cliente)
                   Required: =false
-                  Update: =Substitute(_itemSeleccionadoProspecto1.razon_social_prospecto," ","")
+                  Update: =Substitute(_itemSeleccionadoProspect.RazonSocial," ","")
+                  Visible: =false
                   Width: =1387
                   X: =0
                   Y: =4
                 Children:
-                  - DataCardKey25:
+                  - DataCardKey5:
                       Control: Label@2.5.1
                       MetadataKey: FieldName
                       Properties:
@@ -5775,7 +5820,7 @@ Screens:
                         Wrap: =false
                         X: =30
                         Y: =10
-                  - DataCardValue25:
+                  - DataCardValue5:
                       Control: Classic/TextInput@2.3.2
                       MetadataKey: FieldValue
                       Properties:
@@ -5795,8 +5840,8 @@ Screens:
                         Tooltip: =Parent.DisplayName
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardKey25.Y + DataCardKey25.Height + 5
-                  - ErrorMessage25:
+                        Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                  - ErrorMessage4:
                       Control: Label@2.5.1
                       MetadataKey: ErrorMessage
                       Properties:
@@ -5816,8 +5861,8 @@ Screens:
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardValue25.Y + DataCardValue25.Height
-                  - StarVisible25:
+                        Y: =DataCardValue5.Y + DataCardValue5.Height
+                  - StarVisible4:
                       Control: Label@2.5.1
                       MetadataKey: FieldRequired
                       Properties:
@@ -5825,30 +5870,29 @@ Screens:
                         BorderColor: =RGBA(0, 0, 0, 1)
                         Color: =RGBA(0, 18, 107, 1)
                         Font: =Font.'Open Sans'
-                        Height: =DataCardKey25.Height
+                        Height: =DataCardKey5.Height
                         Text: ="*"
                         Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                         Width: =30
                         Wrap: =false
-                        Y: =DataCardKey25.Y
-            - nompre_tipo_de_documento_DataCard2:
+                        Y: =DataCardKey5.Y
+            - Nombre_documento_DataCard1:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicTextualEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="nompre_tipo_de_documento"
-                  Default: =_itemSeleccionadoDocumentos.nombre_carpeta_documento
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,nompre_tipo_de_documento)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, nompre_tipo_de_documento)
+                  DataField: ="Nombre_documento"
+                  Default: =First(DataCardValue3.Attachments).Name
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,Nombre_documento)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, Nombre_documento)
                   Required: =false
-                  Update: |-
-                    =
-                    Substitute(_itemSeleccionadoDocumentos.nombre_carpeta_documento," ","")
+                  Update: =First(DataCardValue3.Attachments).Name
+                  Visible: =false
                   Width: =1387
                   X: =0
                   Y: =5
                 Children:
-                  - DataCardKey26:
+                  - DataCardKey6:
                       Control: Label@2.5.1
                       MetadataKey: FieldName
                       Properties:
@@ -5862,7 +5906,7 @@ Screens:
                         Wrap: =false
                         X: =30
                         Y: =10
-                  - DataCardValue26:
+                  - DataCardValue6:
                       Control: Classic/TextInput@2.3.2
                       MetadataKey: FieldValue
                       Properties:
@@ -5882,8 +5926,8 @@ Screens:
                         Tooltip: =Parent.DisplayName
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardKey26.Y + DataCardKey26.Height + 5
-                  - ErrorMessage26:
+                        Y: =DataCardKey6.Y + DataCardKey6.Height + 5
+                  - ErrorMessage5:
                       Control: Label@2.5.1
                       MetadataKey: ErrorMessage
                       Properties:
@@ -5903,8 +5947,8 @@ Screens:
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardValue26.Y + DataCardValue26.Height
-                  - StarVisible26:
+                        Y: =DataCardValue6.Y + DataCardValue6.Height
+                  - StarVisible5:
                       Control: Label@2.5.1
                       MetadataKey: FieldRequired
                       Properties:
@@ -5912,29 +5956,28 @@ Screens:
                         BorderColor: =RGBA(0, 0, 0, 1)
                         Color: =RGBA(0, 18, 107, 1)
                         Font: =Font.'Open Sans'
-                        Height: =DataCardKey26.Height
+                        Height: =DataCardKey6.Height
                         Text: ="*"
                         Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                         Width: =30
                         Wrap: =false
-                        Y: =DataCardKey26.Y
-            - nombre_documento_DataCard5:
+                        Y: =DataCardKey6.Y
+            - fk_estadoDocumento_DataCard1:
                 Control: TypedDataCard@1.0.7
-                Variant: ClassicTextualEdit
+                Variant: ClassicNumberEdit
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
-                  DataField: ="nombre_documento"
-                  Default: =First(DataCardValue23.Attachments).Name
-                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,nombre_documento)
-                  MaxLength: =DataSourceInfo([@tab_documentos_por_cliente], DataSourceInfo.MaxLength, nombre_documento)
+                  DataField: ="fk_estadoDocumento"
+                  Default: =ThisItem.fk_estadoDocumento
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,fk_estadoDocumento)
                   Required: =false
-                  Update: =First(DataCardValue23.Attachments).Name
+                  Update: =Value(DataCardValue8.Text)
                   Visible: =false
                   Width: =1387
                   X: =0
                   Y: =6
                 Children:
-                  - DataCardKey45:
+                  - DataCardKey7:
                       Control: Label@2.5.1
                       MetadataKey: FieldName
                       Properties:
@@ -5948,7 +5991,7 @@ Screens:
                         Wrap: =false
                         X: =30
                         Y: =10
-                  - DataCardValue45:
+                  - DataCardValue8:
                       Control: Classic/TextInput@2.3.2
                       MetadataKey: FieldValue
                       Properties:
@@ -5957,9 +6000,9 @@ Screens:
                         DelayOutput: =true
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
                         HoverBorderColor: =RGBA(0, 18, 107, 1)
                         HoverFill: =RGBA(186, 202, 226, 1)
-                        MaxLength: =Parent.MaxLength
                         PaddingLeft: =5
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
@@ -5968,8 +6011,8 @@ Screens:
                         Tooltip: =Parent.DisplayName
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardKey45.Y + DataCardKey45.Height + 5
-                  - ErrorMessage45:
+                        Y: =DataCardKey7.Y + DataCardKey7.Height + 5
+                  - ErrorMessage6:
                       Control: Label@2.5.1
                       MetadataKey: ErrorMessage
                       Properties:
@@ -5989,8 +6032,8 @@ Screens:
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
                         X: =30
-                        Y: =DataCardValue45.Y + DataCardValue45.Height
-                  - StarVisible45:
+                        Y: =DataCardValue8.Y + DataCardValue8.Height
+                  - StarVisible6:
                       Control: Label@2.5.1
                       MetadataKey: FieldRequired
                       Properties:
@@ -5998,12 +6041,353 @@ Screens:
                         BorderColor: =RGBA(0, 0, 0, 1)
                         Color: =RGBA(0, 18, 107, 1)
                         Font: =Font.'Open Sans'
-                        Height: =DataCardKey45.Height
+                        Height: =DataCardKey7.Height
                         Text: ="*"
                         Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                         Width: =30
                         Wrap: =false
-                        Y: =DataCardKey45.Y
+                        Y: =DataCardKey7.Y
+            - tipoDocumento_detail_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="tipoDocumento_detail"
+                  Default: =_itemSeleccionadoDocumentos.nombre_carpeta_documento
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,tipoDocumento_detail)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, tipoDocumento_detail)
+                  Required: =false
+                  Update: =_itemSeleccionadoDocumentos.nombre_carpeta_documento
+                  Visible: =false
+                  Width: =1387
+                  X: =0
+                  Y: =7
+                Children:
+                  - DataCardKey8:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue9:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey8.Y + DataCardKey8.Height + 5
+                  - ErrorMessage7:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =24
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue9.Y + DataCardValue9.Height
+                  - StarVisible7:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey8.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey8.Y
+            - UsuarioCarga_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="UsuarioCarga"
+                  Default: =_correoLoggeado
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,UsuarioCarga)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, UsuarioCarga)
+                  Required: =false
+                  Update: =_correoLoggeado
+                  Visible: =false
+                  Width: =1387
+                  X: =0
+                  Y: =8
+                Children:
+                  - DataCardKey9:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue10:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey9.Y + DataCardKey9.Height + 5
+                  - ErrorMessage8:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =24
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue10.Y + DataCardValue10.Height
+                  - StarVisible8:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey9.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey9.Y
+            - UsuarioCarga_Nombre_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="UsuarioCarga_Nombre"
+                  Default: =_infoUsuarioLoggeado.FullName
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,UsuarioCarga_Nombre)
+                  MaxLength: =DataSourceInfo([@tab_documentos_porCuenta], DataSourceInfo.MaxLength, UsuarioCarga_Nombre)
+                  Required: =false
+                  Update: =_infoUsuarioLoggeado.FullName
+                  Visible: =false
+                  Width: =1387
+                  X: =0
+                  Y: =9
+                Children:
+                  - DataCardKey10:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue11:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                  - ErrorMessage9:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =24
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue11.Y + DataCardValue11.Height
+                  - StarVisible9:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey10.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey10.Y
+            - FechaCarga_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicDateEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="FechaCarga"
+                  Default: =Now()
+                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta],DataSourceInfo.DisplayName,FechaCarga)
+                  Required: =false
+                  Update: =Now()
+                  Visible: =false
+                  Width: =1387
+                  X: =0
+                  Y: =10
+                Children:
+                  - DataCardKey11:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =48
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue12:
+                      Control: Classic/DatePicker@2.6.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DefaultDate: =Parent.Default
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        Font: =Font.'Open Sans'
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey11.Y + DataCardKey11.Height + 5
+                  - ErrorMessage10:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =24
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue12.Y + DataCardValue12.Height
+                  - StarVisible10:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey11.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey11.Y
       - Button_viewBackground_View_deleteManyFiles:
           Control: Classic/Button@2.2.0
           Group: GroupCon5_Pop_up3_message_deleteManyFiles
@@ -6145,12 +6529,12 @@ Screens:
                   Height: =24
                   Icon: =Icon.View
                   OnSelect: |
-                    =// dependiendo la cantidad de documentos 
+                    =// Dependiendo la cantidad de documentos por tipo
 
-                    Set(_documentoSeleccionadoVer,LookUp(tab_documentos_cliente,ID = ThisItem.fk_id_tipo_documento));
+                    Set(_documentoSeleccionadoVer;LookUp(tab_documentos_cliente;ID = ThisItem.fk_tipoDocumento));
 
-                    //
-                    ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
+                    // Filtrar documentos del prospecto seleccionado por tipo
+                    ClearCollect(colDocumentosVerPre;Filter(Documentos; fk_cuenta = _itemSeleccionadoProspect.ID && fk_tipoDocumento = _documentoSeleccionadoVer.ID));
 
 
 
@@ -6454,26 +6838,36 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =Self.Fill
             OnSelect: |-
-              =Set(_spinner,true);
+              =Set(_spinner;true);
 
+              // Eliminar de la lista de documentos por cuenta
+              RemoveIf(
+                  tab_documentos_porCuenta;
+                  fk_tipoDocumento = _documentoSeleccionadoVer.ID && fk_cuenta = _itemSeleccionadoProspect.ID
+              );
 
+              // Eliminar de la biblioteca de SharePoint
+              ClearCollect(
+                  colDocumentosEliminar;
+                  Filter(
+                      Documentos;
+                      fk_cuenta = _itemSeleccionadoProspect.ID && fk_tipoDocumento = _documentoSeleccionadoVer.ID
+                  )
+              );
 
-              // eliminar de la lista de documentos 
-              RemoveIf(tab_documentos_por_cliente, fk_id_doc = _documentoSeleccionadoVer.ID && fk_id_lead = _itemSeleccionadoProspecto1.ID);
+              ForAll(
+                  colDocumentosEliminar As DB;
+                  RemoveIf(Documentos; ID = DB.ID)
+              );
 
-
-              // eliminar de la biblioteca de sharepoint 
-
-
-              ClearCollect(colDocumentosEliminar,Filter(Documentos, fk_id_lead = _itemSeleccionadoProspecto1.ID && fk_id_tipo_documento = _documentoSeleccionadoVer.ID));
-
-              ForAll(colDocumentosEliminar As DB,
-
-
-              RemoveIf(Documentos, ID = DB.ID));
-
-
-                  ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
+              // Actualizar colección de documentos del prospecto
+              ClearCollect(
+                  colDocumentosProspecto;
+                  Filter(
+                      tab_documentos_porCuenta;
+                      fk_cuenta = _itemSeleccionadoProspect.ID
+                  )
+              );
 
               Set(_spinner,false);
 
@@ -6600,14 +6994,25 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =Self.Fill
             OnSelect: |-
-              =Set(_spinner,true);
+              =Set(_spinner;true);
 
+              // Eliminar de la lista de documentos por cuenta
+              RemoveIf(
+                  tab_documentos_porCuenta;
+                  fk_id_documento_sharepoint = _documentoSeleccionadoEliminar.ID
+              );
 
+              // Eliminar de la biblioteca de SharePoint
+              RemoveIf(Documentos; ID = _documentoSeleccionadoEliminar.ID);
 
-              // eliminar de la lista de documentos 
-              RemoveIf(tab_documentos_por_cliente, fk_id_documento_sharepoint = _documentoSeleccionadoEliminar.ID);
-              RemoveIf(Documentos,ID = _documentoSeleccionadoEliminar.ID);
-                  ClearCollect(colDocumentosProspecto,Filter(tab_documentos_por_cliente, fk_id_lead =  _itemSeleccionadoProspecto1.ID));
+              // Actualizar colección de documentos del prospecto
+              ClearCollect(
+                  colDocumentosProspecto;
+                  Filter(
+                      tab_documentos_porCuenta;
+                      fk_cuenta = _itemSeleccionadoProspect.ID
+                  )
+              );
 
 
 
@@ -6682,14 +7087,14 @@ Screens:
                       ).'Nombre de archivo con extensión',
                       "pdf"
                   ),
-              // si el documento es de tipo pdf
+              // Si el documento es de tipo PDF
                   LookUp(
-                      tab_documentos_por_cliente,
+                      tab_documentos_porCuenta;
                       fk_id_documento_sharepoint = LookUp(
-                          colDocumentosVer,
+                          colDocumentosVer;
                           id_col = _numeroDocumentoSeleccionado
                       ).ID
-                  ).data_uri
+                  ).URLDocumento
               // si es otro tipo de documento diferente a pdf
               ,
                   Substitute(
@@ -6768,11 +7173,11 @@ Screens:
               );
               // traer coleccion de comentario 
               ClearCollect(
-                  colComentariosDocumentos,
+                  colComentariosDocumentos;
                   Filter(
-                      tab_comentarios_documentos,
-                      fk_id_lead = _itemSeleccionadoProspecto.ID && fk_id_documento = LookUp(
-                          colDocumentosVer,
+                      tab_hist_comentDocumentos;
+                      fk_cuenta = _itemSeleccionadoProspect.ID && fk_id_regisDoc = LookUp(
+                          colDocumentosVer;
                           id_col = _numeroDocumentoSeleccionado
                       ).ID
                   )

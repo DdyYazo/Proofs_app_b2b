@@ -251,14 +251,12 @@ fk_id_Maquina	Número
 Columna (hacer clic para editar)	Tipo	Requerida
 URLDocumento	Varias líneas de texto	
 FechaCarga	Fecha y hora	
-UsuarioCarga	Una línea de texto	
-UsuarioCarga_Nombre	Una línea de texto	
 AprobadoBackOffice	Número	
 FechaAprobacionBackOffice	Fecha y hora	
-UsuarioAprobadorBackOffice	Una línea de texto	
+UsuarioAprobadorBackOffice	Persona o grupo	
 AprobadoFinanzas	Número	
 FechaAprobacionFinanzas	Fecha y hora	
-UsuarioAprobadorFinanzas	Una línea de texto	
+UsuarioAprobadorFinanzas	Persona o grupo	
 AprobacionOficialCumplimiento	Número	
 AprobacionBEO	Número	
 Nombre_documento	Una línea de texto	
@@ -266,7 +264,10 @@ Nombre_carpeta_cliente	Una línea de texto
 fk_cuenta	Número	
 fk_tipoDocumento	Número	
 tipoDocumento_detail	Una línea de texto	
-fk_estadoDocumento	Número
+fk_estadoDocumento	Número	
+UsuarioCarga	Una línea de texto	
+UsuarioCarga_Nombre	Una línea de texto	
+fk_idDoc_foldSharepoint	Número
 
 22.   **tab_hist_comentDocumentos**
 
