@@ -67,23 +67,62 @@
         "ID": {
           "type": "integer"
         },
-        "fk_id_nesp_corp_cliente": {
-          "type": "integer"
-        },
-        "estado_documento": {
+        "URLDocumento": {
           "type": "string"
         },
-        "fk_id_lead": {
-          "type": "integer"
-        },
-        "fk_id_doc": {
-          "type": "integer"
-        },
-        "nompre_tipo_de_documento": {
+        "FechaCarga": {
           "type": "string"
         },
-        "nombre_carpeta_cliente": {
+        "AprobadoBackOffice": {
+          "type": "integer"
+        },
+        "FechaAprobacionBackOffice": {
           "type": "string"
+        },
+        "UsuarioAprobadorBackOffice": {
+          "type": "string"
+        },
+        "AprobadoFinanzas": {
+          "type": "integer"
+        },
+        "FechaAprobacionFinanzas": {
+          "type": "string"
+        },
+        "UsuarioAprobadorFinanzas": {
+          "type": "string"
+        },
+        "AprobacionOficialCumplimiento": {
+          "type": "integer"
+        },
+        "AprobacionBEO": {
+          "type": "integer"
+        },
+        "Nombre_documento": {
+          "type": "string"
+        },
+        "Nombre_carpeta_cliente": {
+          "type": "string"
+        },
+        "fk_cuenta": {
+          "type": "integer"
+        },
+        "fk_tipoDocumento": {
+          "type": "integer"
+        },
+        "tipoDocumento_detail": {
+          "type": "string"
+        },
+        "fk_estadoDocumento": {
+          "type": "integer"
+        },
+        "UsuarioCarga": {
+          "type": "string"
+        },
+        "UsuarioCarga_Nombre": {
+          "type": "string"
+        },
+        "fk_idDoc_foldSharepoint": {
+          "type": "integer"
         },
         "Modified": {
           "type": "string"
@@ -214,7 +253,7 @@
 
 {
   "type": "Compose",
-  "inputs": "@body('esquema_de_la_informacion_del_item_JSON')?['nombre_carpeta_cliente']",
+  "inputs": "@body('esquema_de_la_informacion_del_item_JSON')?['Nombre_carpeta_cliente']",
   "runAfter": {
     "esquema_de_la_informacion_del_item_JSON": [
       "Succeeded"
@@ -224,6 +263,7 @@
     "operationMetadataId": "733b660a-7818-419d-817e-ea74722d8c36"
   }
 }
+
 {
   "type": "Foreach",
   "foreach": "@outputs('Obtener_datos_adjuntos')?['body']",
@@ -278,7 +318,7 @@
       "inputs": {
         "parameters": {
           "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
-          "folderPath": "/Shared Documents/CarpetaClientesB2B/@{outputs('Nombre_Empresa')}/@{triggerBody()?['nompre_tipo_de_documento']}",
+          "folderPath": "/Shared Documents/CarpetaClientesB2B/@{outputs('Nombre_Empresa')}/@{triggerBody()?['tipoDocumento_detail']}",
           "name": "@items('For_each')?['DisplayName']",
           "body": "@body('Obtener_contenido_de_archivo')"
         },
@@ -309,9 +349,10 @@
           "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
           "table": "39087977-3de1-4f25-8e5f-d73b3b6b7734",
           "id": "@triggerBody()?['ID']",
-          "item/fk_id_documento_sharepoint": "@outputs('Crear_archivo')?['body/ItemId']",
-          "item/data_uri": "@outputs('pasar_a_base_g4_el_contenido_del_archivo')",
-          "item/nombre_documento": "@outputs('Crear_archivo')?['body/DisplayName']"
+          "item/fk_idDoc_foldSharepoint": "@outputs('Crear_archivo')?['body/ItemId']",
+          "item/URLDocumento": "@outputs('pasar_a_base_g4_el_contenido_del_archivo')",
+          "item/Nombre_documento": "@outputs('Crear_archivo')?['body/DisplayName']",
+          "item/FechaCarga": "@utcNow()"
         },
         "host": {
           "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
@@ -335,9 +376,9 @@
           "dataset": "https://domain.sharepoint.com/teams/siteb2bnesspreso",
           "table": "415823cb-80d4-40ad-b976-49ebdad7c394",
           "id": "@outputs('Crear_archivo')?['body/ItemId']",
-          "item/fk_id_lead": "@triggerBody()?['fk_id_lead']",
-          "item/fk_id_nesp_corp": "@triggerBody()?['fk_id_nesp_corp_cliente']",
-          "item/fk_id_tipo_documento": "@triggerBody()?['fk_id_doc']"
+          "item/fk_id_cuenta": "@triggerBody()?['fk_cuenta']",
+          "item/fk_tipo_oDoc": "@triggerBody()?['fk_tipoDocumento']",
+          "item/fk_estadoDocumento": "@triggerBody()?['fk_estadoDocumento']"
         },
         "host": {
           "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",

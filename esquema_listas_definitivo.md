@@ -253,10 +253,8 @@ URLDocumento	Varias líneas de texto
 FechaCarga	Fecha y hora	
 AprobadoBackOffice	Número	
 FechaAprobacionBackOffice	Fecha y hora	
-UsuarioAprobadorBackOffice	Persona o grupo	
 AprobadoFinanzas	Número	
 FechaAprobacionFinanzas	Fecha y hora	
-UsuarioAprobadorFinanzas	Persona o grupo	
 AprobacionOficialCumplimiento	Número	
 AprobacionBEO	Número	
 Nombre_documento	Una línea de texto	
@@ -267,9 +265,11 @@ tipoDocumento_detail	Una línea de texto
 fk_estadoDocumento	Número	
 UsuarioCarga	Una línea de texto	
 UsuarioCarga_Nombre	Una línea de texto	
-fk_idDoc_foldSharepoint	Número
+fk_idDoc_foldSharepoint	Número	
+UsuarioAprobadorBackOffice	Una línea de texto	
+UsuarioAprobadorFinanzas	Una línea de texto
 
-22.   **tab_hist_comentDocumentos**
+22.    **tab_hist_comentDocumentos**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 UsuarioComenta	Una línea de texto	
@@ -302,3 +302,16 @@ Modificado	Fecha y hora
 Creado	Fecha y hora	
 Creado por	Una línea de texto	
 Modificado por	Una línea de texto
+
+24. **Documentos**
+
+fk_id_cuenta Número
+fk_tipo_oDoc Número
+fk_estadoDocumento Número
+ID
+
+
+fk_id_lead Número
+fk_id_nesp_corp Número
+fk_id_tipo_documento Número
+Estado de aprobación Una línea de texto
