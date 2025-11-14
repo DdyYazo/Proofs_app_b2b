@@ -4565,27 +4565,37 @@ Screens:
                     =_documentosVista && If(
                         _itemSeleccionadoProspect.fk_estado_negociacion = 2 Or _itemSeleccionadoProspect.fk_estado_negociacion = 7,
                         If(
-                            _necesitaCredito = 1;
+                            _necesitaCredito = 1,
                             If(
-                                CountRows(Filter(colDocumentosProspecto; fk_estadoDocumento = 1)) = Sum(
+                                CountRows(
                                     Filter(
-                                        colDocumentosCliente;
+                                        colDocumentosProspecto,
+                                        fk_estadoDocumento = 1
+                                    )
+                                ) = Sum(
+                                    Filter(
+                                        colDocumentosCliente,
                                         ID <> 10
-                                    );
+                                    ),
                                     cantidad_de_documentos
-                                );
-                                true;
+                                ),
+                                true,
                                 false
-                            );
-                            CountRows(Filter(colDocumentosProspecto; fk_estadoDocumento = 1)) = Sum(
+                            ),
+                            CountRows(
                                 Filter(
-                                    colDocumentosCliente;
-                                    tipo_documento = 1;
+                                    colDocumentosProspecto,
+                                    fk_estadoDocumento = 1
+                                )
+                            ) = Sum(
+                                Filter(
+                                    colDocumentosCliente,
+                                    tipo_documento = 1,
                                     ID <> 10
-                                );
+                                ),
                                 cantidad_de_documentos
-                            );
-                            true;
+                            ),
+                            true,
                             false
                         ),
                         false
@@ -4890,9 +4900,9 @@ Screens:
                     );
                     // Actualizar la variable principal con datos frescos de la tabla
                     Set(
-                        _itemSeleccionadoProspect;
+                        _itemSeleccionadoProspect,
                         LookUp(
-                            tab_cuentas;
+                            tab_cuentas,
                             ID = _itemSeleccionadoProspect.ID
                         )
                     );
@@ -5370,7 +5380,7 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="{Attachments}"
                   Default: =ThisItem.'Datos adjuntos'
-                  DisplayName: =DataSourceInfo([@tab_documentos_porCuenta];DataSourceInfo.DisplayName;"Datos adjuntos")
+                  DisplayName: =DataSourceInfo([@tab_documentos_por_cliente],DataSourceInfo.DisplayName,'Datos adjuntos')
                   Required: =false
                   Update: =DataCardValue23.Attachments
                   Visible: =false
@@ -6528,31 +6538,33 @@ Screens:
                   Color: =RGBA(85, 69, 49, 1)
                   Height: =24
                   Icon: =Icon.View
-                  OnSelect: |
-                    =// Dependiendo la cantidad de documentos por tipo
+                  OnSelect: |-
+                    =
 
-                    Set(_documentoSeleccionadoVer;LookUp(tab_documentos_cliente;ID = ThisItem.fk_tipoDocumento));
+                    // Dependiendo la cantidad de documentos por tipo
 
-                    // Filtrar documentos del prospecto seleccionado por tipo
-                    ClearCollect(colDocumentosVerPre;Filter(Documentos; fk_cuenta = _itemSeleccionadoProspect.ID && fk_tipoDocumento = _documentoSeleccionadoVer.ID));
+                                        Set(_documentoSeleccionadoVer,LookUp(tab_documentos_cliente,ID = ThisItem.fk_tipoDocumento));
+
+                                        // Filtrar documentos del prospecto seleccionado por tipo
+                                        ClearCollect(colDocumentosVerPre,Filter(Documentos, fk_id_cuenta = _itemSeleccionadoProspect.ID && fk_tipo_Doc = _documentoSeleccionadoVer.ID));
 
 
 
-                    // validar si el documento ya se creo en al biblioteca 
+                                        // validar si el documento ya se creo en al biblioteca 
 
-                    If(CountRows(colDocumentosVerPre)=0,
+                                        If(CountRows(colDocumentosVerPre)=0,
 
-                    Set(_mensajeAlerta,true),
+                                        Set(_mensajeAlerta,true),
 
-                    Clear(colDocumentosVer);
+                                        Clear(colDocumentosVer);
 
-                    ForAll(colDocumentosVerPre As Db,
+                                        ForAll(colDocumentosVerPre As Db,
 
-                    Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
+                                        Collect(colDocumentosVer,AddColumns(Db,id_col,CountRows(colDocumentosVer)+1)));
 
-                    Set(_numeroDocumentoSeleccionado,1);
+                                        Set(_numeroDocumentoSeleccionado,1);
 
-                    Set(_visibleVerDocumentoSeleccionado,true));
+                                        Set(_visibleVerDocumentoSeleccionado,true))
                   Width: =24
                   X: =764
                   Y: =9
@@ -6838,40 +6850,42 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =Self.Fill
             OnSelect: |-
-              =Set(_spinner;true);
+              =
 
-              // Eliminar de la lista de documentos por cuenta
-              RemoveIf(
-                  tab_documentos_porCuenta;
-                  fk_tipoDocumento = _documentoSeleccionadoVer.ID && fk_cuenta = _itemSeleccionadoProspect.ID
-              );
 
-              // Eliminar de la biblioteca de SharePoint
-              ClearCollect(
-                  colDocumentosEliminar;
-                  Filter(
-                      Documentos;
-                      fk_cuenta = _itemSeleccionadoProspect.ID && fk_tipoDocumento = _documentoSeleccionadoVer.ID
-                  )
-              );
+              Set(_spinner,true);
+                            // Eliminar de la lista de documentos por cuenta
+                            RemoveIf(
+                                tab_documentos_porCuenta,
+                                fk_tipoDocumento = _documentoSeleccionadoVer.ID && fk_cuenta = _itemSeleccionadoProspect.ID
+                            );
 
-              ForAll(
-                  colDocumentosEliminar As DB;
-                  RemoveIf(Documentos; ID = DB.ID)
-              );
+                            // Eliminar de la biblioteca de SharePoint
+                            ClearCollect(
+                                colDocumentosEliminar,
+                                Filter(
+                                    Documentos,
+                                    fk_id_cuenta = _itemSeleccionadoProspect.ID && fk_tipo_Doc = _documentoSeleccionadoVer.ID
+                                )
+                            );
 
-              // Actualizar colección de documentos del prospecto
-              ClearCollect(
-                  colDocumentosProspecto;
-                  Filter(
-                      tab_documentos_porCuenta;
-                      fk_cuenta = _itemSeleccionadoProspect.ID
-                  )
-              );
+                            ForAll(
+                                colDocumentosEliminar As DB,
+                                RemoveIf(Documentos, ID = DB.ID)
+                            );
 
-              Set(_spinner,false);
+                            // Actualizar colección de documentos del prospecto
+                            ClearCollect(
+                                colDocumentosProspecto,
+                                Filter(
+                                    tab_documentos_porCuenta,
+                                    fk_cuenta = _itemSeleccionadoProspect.ID
+                                )
+                            );
 
-              Set(_mensajeConfirmacion,false)
+                            Set(_spinner,false);
+
+                            Set(_mensajeConfirmacion,false)
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
             PressedFill: =Self.Color
@@ -6994,32 +7008,40 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =Self.Fill
             OnSelect: |-
-              =Set(_spinner;true);
-
+              =Set(
+                  _spinner,
+                  true
+              );
               // Eliminar de la lista de documentos por cuenta
               RemoveIf(
-                  tab_documentos_porCuenta;
-                  fk_id_documento_sharepoint = _documentoSeleccionadoEliminar.ID
+                  tab_documentos_porCuenta,
+                  fk_idDoc_foldSharepoint = _documentoSeleccionadoEliminar.ID
               );
-
               // Eliminar de la biblioteca de SharePoint
-              RemoveIf(Documentos; ID = _documentoSeleccionadoEliminar.ID);
-
+              RemoveIf(
+                  Documentos,
+                  ID = _documentoSeleccionadoEliminar.ID
+              );
               // Actualizar colección de documentos del prospecto
               ClearCollect(
-                  colDocumentosProspecto;
+                  colDocumentosProspecto,
                   Filter(
-                      tab_documentos_porCuenta;
+                      tab_documentos_porCuenta,
                       fk_cuenta = _itemSeleccionadoProspect.ID
                   )
               );
-
-
-
-              Set(_mensajeConfirmacionUnico,false);
-
-              Set(_mensajeConfirmacionVarios,false);
-              Set(_spinner,false);
+              Set(
+                  _mensajeConfirmacionUnico,
+                  false
+              );
+              Set(
+                  _mensajeConfirmacionVarios,
+                  false
+              );
+              Set(
+                  _spinner,
+                  false
+              )
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
             PressedFill: =Self.Color
@@ -7087,11 +7109,11 @@ Screens:
                       ).'Nombre de archivo con extensión',
                       "pdf"
                   ),
-              // Si el documento es de tipo PDF
+              // si el documento es de tipo pdf
                   LookUp(
-                      tab_documentos_porCuenta;
-                      fk_id_documento_sharepoint = LookUp(
-                          colDocumentosVer;
+                      tab_documentos_porCuenta,
+                      fk_idDoc_foldSharepoint = LookUp(
+                          colDocumentosVer,
                           id_col = _numeroDocumentoSeleccionado
                       ).ID
                   ).URLDocumento
@@ -7173,11 +7195,11 @@ Screens:
               );
               // traer coleccion de comentario 
               ClearCollect(
-                  colComentariosDocumentos;
+                  colComentariosDocumentos,
                   Filter(
-                      tab_hist_comentDocumentos;
-                      fk_cuenta = _itemSeleccionadoProspect.ID && fk_id_regisDoc = LookUp(
-                          colDocumentosVer;
+                      tab_comentarios_documentos,
+                      fk_id_documento = _itemSeleccionadoProspecto.ID && fk_id_documento = LookUp(
+                          colDocumentosVer,
                           id_col = _numeroDocumentoSeleccionado
                       ).ID
                   )
