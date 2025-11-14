@@ -12,7 +12,7 @@ pk_id_rol	Número
 Columna (hacer clic para editar)	Tipo	Requerida
 
 id_rol	Número	
-usuario	Persona o grupo	
+correo	Una línea de texto
 
 3. **tab_canales**
 
@@ -103,12 +103,12 @@ id_tipo_visi	Número
 14.  **tab_canal_por_comercial**
 
 Columna (hacer clic para editar)	Tipo	Requerida
-id_canal	Número	(canal relacionado al comercial)
+id_canal	Número	(canal relacionado al comercial segun el id tomado de la lista "tab_canales")
 canal	Una línea de texto	
-comercial_designado	Persona o grupo	
+correo_comercial Una línea de texto	(correo del comercial asignado al canal)	
 
 
-15.  **tab_cuentas**
+15.   **tab_cuentas**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 
@@ -121,7 +121,8 @@ NombreContacto	Una línea de texto
 ApellidosContacto	Una línea de texto	
 CargoContacto	Una línea de texto	
 EmailContacto	Una línea de texto	
-ComercialAsignado	Persona o grupo	
+ComercialAsignado	Una línea de texto	
+ComercialAsignado_Nombre	Una línea de texto	
 CupoSolicitado	Moneda	
 RequiereCredito	Número	(0: false y 1: true)
 PlazoCredito	Elección	
@@ -146,10 +147,11 @@ EstadoCuenta_Detail	Una línea de texto	(Puede ser: Lead, Prospecto o Cliente)
 ModalidadPago	Una línea de texto (Puede ser: Contado o Crédito)
 EvaluacionSagrilaft	Número (0: false y 1: true)
 
-16.  **tab_hist_cambioEstd_cuenta**
+16.   **tab_hist_cambioEstd_cuenta**
 
 Columna (hacer clic para editar)	Tipo	Requerida
-UsuarioResponsable	Persona o grupo	
+UsuarioResponsable	Una línea de texto	
+UsuarioResponsable_Nombre	Una línea de texto	
 DiasDuracionEstadoAnterior	Número	
 FechaCambioProspecto	Fecha y hora	
 FechaCambioCliente	Fecha y hora	
@@ -159,11 +161,12 @@ EstadoAnterior	Número	(Puede ser: 1: Lead o 2: Prospecto)
 EstadoNuevo	Número (Puede ser: 1: Lead o 2: Prospecto y 3: Cliente)
 FechaCreacion	Fecha y hora
 
-17.  **tab_seguimiento_porCuenta**
+17.   **tab_seguimiento_porCuenta**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 FechaSeguimiento	Fecha y hora	
-ComercialResponsable	Persona o grupo	
+ComercialResponsable	Una línea de texto	
+ComercialResponsable_Nombre	Una línea de texto	
 Anotaciones	Una línea de texto	
 Observaciones	Varias líneas de texto	
 RequiereAccion	Número	
@@ -174,11 +177,12 @@ Cuenta_RazSoc	Una línea de texto
 EstadoCuentaEnSeguimiento	Número 
 
 
-18.    **tab_oportunidades_cuenta**
+18.     **tab_oportunidades_cuenta**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 FechaIdentificacion	Fecha y hora	
-ComercialIdentifica	Persona o grupo	
+ComercialIdentifica	Una línea de texto	
+ComercialIdentifica_Nombre	Una línea de texto	
 Detalle	Una línea de texto	
 Construccion_marca	Varias líneas de texto	
 fk_cuenta	Número	
@@ -187,21 +191,22 @@ EstadoCuentaInicial	Número
 fk_TipoOportunidad	Número
 
 
-19. **tab_maquinas_porCuenta**
+19.  **tab_maquinas_porCuenta**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 FechaSolicitud	Fecha y hora	
-ComercialSolicitante	Persona o grupo	
+ComercialSolicitante	Una línea de texto	
+ComercialSolicitante_Nombre	Una línea de texto	
 ConsumoMinimoSugerido	Número	
 MesColocacionEstimado	Elección	
 TieneCondicionesEspeciales	Número	
 DescripcionCondiciones	Varias líneas de texto	
 AprobadoBackOffice	Número	
-UsuarioAprobadorBackOffice	Persona o grupo	
+UsuarioAprobadorBackOffice	Una línea de texto	
 FechaAprobacionBackOffice	Fecha y hora	
 AprobadoSupply	Número	
 FechaAprobacionSupply	Fecha y hora	
-UsuarioAprobadorSupply	Persona o grupo	
+UsuarioAprobadorSupply	Una línea de texto	
 SerialMaquina	Una línea de texto	
 FechaAsignacionSerial	Fecha y hora	
 FechaInstalacion	Fecha y hora	
@@ -222,11 +227,12 @@ maquina	Una línea de texto
 Status_maquina_detail	Una línea de texto
 
 
-20. **tab_hist_cambioEstd_maqu**
+20.  **tab_hist_cambioEstd_maqu**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 FechaCambio	Fecha y hora	
-UsuarioResponsable	Persona o grupo	
+UsuarioResponsable	Una línea de texto	
+UsuarioResponsable_Nombre	Una línea de texto	
 Comentario	Varias líneas de texto	
 MaquinaAnterior	Una línea de texto	
 MaquinaNueva	Una línea de texto	
@@ -240,18 +246,15 @@ fk_EstadoAnterior	Número
 fk_EstadoNuevo	Número	
 fk_id_Maquina	Número
 
-21. **tab_documentos_porCuenta**
+21.  **tab_documentos_porCuenta**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 URLDocumento	Varias líneas de texto	
 FechaCarga	Fecha y hora	
-UsuarioCarga	Persona o grupo	
 AprobadoBackOffice	Número	
 FechaAprobacionBackOffice	Fecha y hora	
-UsuarioAprobadorBackOffice	Persona o grupo	
 AprobadoFinanzas	Número	
 FechaAprobacionFinanzas	Fecha y hora	
-UsuarioAprobadorFinanzas	Persona o grupo	
 AprobacionOficialCumplimiento	Número	
 AprobacionBEO	Número	
 Nombre_documento	Una línea de texto	
@@ -259,12 +262,18 @@ Nombre_carpeta_cliente	Una línea de texto
 fk_cuenta	Número	
 fk_tipoDocumento	Número	
 tipoDocumento_detail	Una línea de texto	
-fk_estadoDocumento	Número
+fk_estadoDocumento	Número	
+UsuarioCarga	Una línea de texto	
+UsuarioCarga_Nombre	Una línea de texto	
+fk_idDoc_foldSharepoint	Número	
+UsuarioAprobadorBackOffice	Una línea de texto	
+UsuarioAprobadorFinanzas	Una línea de texto
 
-22.  **tab_hist_comentDocumentos**
+22.    **tab_hist_comentDocumentos**
 
 Columna (hacer clic para editar)	Tipo	Requerida
-UsuarioComenta	Persona o grupo	
+UsuarioComenta	Una línea de texto	
+UsuarioComenta_Nombre	Una línea de texto	
 FechaComentario	Fecha y hora	
 Comentario	Varias líneas de texto	
 fk_id_regisDoc	Número	
@@ -273,7 +282,7 @@ fk_rolUsuario	Número
 TipoComentario	Número	
 Cuenta_RazSoc	Una línea de texto
 
-23. **tab_visitas_porCuenta**
+23.  **tab_visitas_porCuenta**
 
 Columna (hacer clic para editar)	Tipo	Requerida
 Título	Una línea de texto	
@@ -281,7 +290,8 @@ Cuenta	Búsqueda
 TipoVisita	Búsqueda	
 FechaProgramada	Fecha y hora	
 FechaRealizacion	Fecha y hora	
-UsuarioResponsable	Persona o grupo	
+UsuarioResponsable	Una línea de texto	
+UsuarioResponsable_Nombre	Una línea de texto	
 DireccionVisita	Varias líneas de texto	
 EstadoVisita	Elección	
 ObservacionesComercial	Varias líneas de texto	
@@ -290,5 +300,18 @@ FechaCierre	Fecha y hora
 RequiereAccionCorrectiva	Sí o No	
 Modificado	Fecha y hora	
 Creado	Fecha y hora	
-Creado por	Persona o grupo	
-Modificado por	Persona o grupo
+Creado por	Una línea de texto	
+Modificado por	Una línea de texto
+
+24. **Documentos**
+
+fk_id_cuenta Número
+fk_tipo_oDoc Número
+fk_estadoDocumento Número
+ID
+
+
+fk_id_lead Número
+fk_id_nesp_corp Número
+fk_id_tipo_documento Número
+Estado de aprobación Una línea de texto
