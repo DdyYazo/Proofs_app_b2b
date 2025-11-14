@@ -1,4 +1,3 @@
-OnStart: = 
 // 1. Inicializar Spinner de carga inicial de app
 Set(
     _spinner;

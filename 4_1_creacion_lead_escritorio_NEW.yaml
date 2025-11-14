@@ -2511,47 +2511,6 @@ Screens:
                                     Picture: ""
                                 }
                             }
-                        );
-                        // Actualizar estado en tab_seguimiento_porCuenta
-                        ForAll(
-                            Filter(
-                                tab_seguimiento_porCuenta,
-                                Cuenta.Id = _itemSeleccionadoLead.ID
-                            ),
-                            Patch(
-                                tab_seguimiento_porCuenta,
-                                ThisRecord,
-                                {EstadoCuentaEnSeguimiento: {Value: _estadoSeleccionadoLead}}
-                            )
-                        );
-                        // Actualizar estado en tab_oportunidades_cuenta
-                        ForAll(
-                            Filter(
-                                tab_oportunidades_cuenta,
-                                Cuenta.Id = _itemSeleccionadoLead.ID
-                            ),
-                            Patch(
-                                tab_oportunidades_cuenta,
-                                ThisRecord,
-                                {EstadoActualCuenta: {Value: _estadoSeleccionadoLead}}
-                            )
-                        );
-                        // Actualizar estado en tab_maquinas_porCuenta
-                        ForAll(
-                            Filter(
-                                tab_maquinas_porCuenta,
-                                Cuenta.Id = _itemSeleccionadoLead.ID
-                            ),
-                            Patch(
-                                tab_maquinas_porCuenta,
-                                ThisRecord,
-                                {EstadoActualCuenta: {Value: _estadoSeleccionadoLead}}
-                            )
-                        );
-                        // Si el nuevo estado es Prospecto, navegar a pantalla de prospectos
-                        If(
-                            _estadoSeleccionadoLead = "Prospecto",
-                            Navigate('5_pantalla_prospectos_desktop', ScreenTransition.Fade)
                         )
                     );
                     ClearCollect(
@@ -3199,7 +3158,7 @@ Screens:
                   RadiusTopRight: =30
                   Size: =16
                   Text: ="FINALIZAR TAREA"
-                  Visible: =_crearAgenda && !_nuevaAgenda && _actividadSeleccionada.EstadoSeguimiento.Value = "Pendiente"
+                  Visible: =_crearAgenda && !_nuevaAgenda && _actividadSeleccionada.EstadoSeguimiento = 1
                   Width: =246
                   X: =1181
                   Y: =116
@@ -3412,7 +3371,7 @@ Screens:
                         !IsBlank(
                             LookUp(
                                 tab_oportunidades_cuenta,
-                                Cuenta.Id = _itemSeleccionadoLead.ID
+                                fk_cuenta = _itemSeleccionadoLead.ID
                             )
                         ),
                         [
@@ -3420,8 +3379,8 @@ Screens:
                                 colOportunidad,
                                 ID = LookUp(
                                     tab_oportunidades_cuenta,
-                                    Cuenta.Id = _itemSeleccionadoLead.ID
-                                ).TipoOportunidad.Id
+                                    fk_cuenta = _itemSeleccionadoLead.ID
+                                ).fk_TipoOportunidad
                             )
                         ],
                         []
@@ -3796,7 +3755,7 @@ Screens:
                             !IsBlank(_maquinaSeleccionada),
                             LookUp(
                                 colNombreMaquinas,
-                                ID = _maquinaSeleccionada.TipoMaquina.Id
+                                ID = _maquinaSeleccionada.fk_tipoMaquina
                             )
                         )
                     ]
@@ -3882,21 +3841,21 @@ Screens:
                         Last(
                             Filter(
                                 tab_cuentas,           // ✅ Nueva tabla
-                                NIT = Value(Self.Text) && EstadoCuenta.Value = "Lead"  // ✅ Nuevos campos
+                                iD = EstadoCuenta = 1//NIT = Value(Self.Text) && EstadoCuenta = 1  // ✅ Nuevos campos
                             )
                         )
                     );
                     Set(
                         _itemSeleccionadoLeadCiudad,
-                        _itemSeleccionadoLead.Ciudad.Value   // ✅ Capitalizado
+                        _itemSeleccionadoLead.Ciudad   // ✅ Capitalizado
                     );
                     Set(
                         _itemSeleccionadoLeadSegmento,
-                        _itemSeleccionadoLead.Segmento.Value // ✅ Capitalizado
+                        _itemSeleccionadoLead.Segmento // ✅ Capitalizado
                     );
                     Set(
                         _itemSeleccionadoLeadSubSegmento,
-                        _itemSeleccionadoLead.Subsegmento.Value  // ✅ Capitalizado
+                        _itemSeleccionadoLead.Subsegmento  // ✅ Capitalizado
                     );
                     Set(
                         _requiereDocumentos,
